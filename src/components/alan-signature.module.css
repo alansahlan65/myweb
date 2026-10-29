@@ -1,0 +1,4 @@
+.signature { display: block; inline-size: 192px; max-inline-size: 100%; block-size: 96px; margin-block-start: 12px; color: var(--ink); }
+.signature > svg { display: block; inline-size: 100%; block-size: 100%; overflow: visible; }
+.mask { transform-box: fill-box; transform-origin: 0 0; }
+@media (max-width: 599px) { .signature { inline-size: 176px; block-size: 88px; } }

@@ -1,0 +1,42 @@
+.magnet {
+  --magnetic-fill: var(--ink);
+  position: relative;
+  isolation: isolate;
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+}
+.fallback { position: absolute; inset: 0; border-radius: 50%; background: var(--magnetic-fill); pointer-events: none; }
+.magnet[data-enhanced="true"] .fallback { visibility: hidden; }
+.liquid { position: absolute !important; inset: 0; pointer-events: none; }
+.surface { display: block; width: 100%; height: 100%; border-radius: 50%; }
+.trigger { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; padding: 0; border: 0; border-radius: 50%; background: transparent; color: var(--canvas); }
+/* The fixed target includes the silhouette's travel, so it never escapes a click. */
+.trigger::after { content: ""; position: absolute; inset: -14px; border-radius: 50%; }
+.trigger:focus-visible { outline-color: var(--cobalt); outline-offset: 16px; }
+.icon { display: flex; align-items: center; justify-content: center; pointer-events: none; }
+.pill { flex: 0 0 auto; width: calc(144px - 100px * var(--rail-progress, 0)); height: 44px; }
+.pill .trigger { font-size: 14px; font-weight: 500; line-height: 20px; border-radius: var(--radius-pill); }
+.pill .surface, .pill .fallback, .pill .trigger::after { border-radius: var(--radius-pill); }
+.pill .trigger::after { inset: -8px; }
+.pill .trigger:focus-visible { outline-offset: 10px; }
+.pill .icon { gap: calc(8px * (1 - var(--rail-progress, 0))); }
+.pill .icon svg { width: calc(16px + 2px * var(--rail-progress, 0)); height: calc(16px + 2px * var(--rail-progress, 0)); }
+.pillLabel { max-width: calc(90px * (1 - var(--rail-progress, 0))); overflow: clip; opacity: calc(1 - 1.6 * var(--rail-progress, 0)); white-space: nowrap; }
+.magnet[data-enhanced="false"]:has(.trigger:active) .fallback { transform: scale(.94); }
+@media (hover: hover) and (pointer: fine) {
+  .magnet:has(.trigger:hover) { --magnetic-fill: var(--action-hover); }
+}
+@media (max-width: 1000px) {
+  .magnet { flex-basis: 48px; width: 48px; height: 48px; }
+  .pill { flex-basis: auto; width: 144px; height: 44px; }
+  .icon svg { width: 24px; height: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .magnet[data-enhanced="false"]:has(.trigger:active) .fallback { transform: none; background: var(--action-hover); }
+}
+@media (forced-colors: active) {
+  .fallback { background: ButtonFace; border: 1px solid ButtonText; }
+  .trigger { color: ButtonText; forced-color-adjust: auto; }
+  .trigger:focus-visible { outline-color: Highlight; }
+}

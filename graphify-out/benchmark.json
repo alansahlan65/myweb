@@ -1,0 +1,26 @@
+{
+  "corpus_tokens": 27072,
+  "corpus_words": 20304,
+  "nodes": 568,
+  "edges": 896,
+  "avg_query_tokens": 4424,
+  "reduction_ratio": 6.1,
+  "per_question": [
+    {
+      "question": "How do Shelf quotes work?",
+      "query_tokens": 9013,
+      "reduction": 3.0
+    },
+    {
+      "question": "How does AlanCharacter respond to input?",
+      "query_tokens": 2740,
+      "reduction": 9.9
+    },
+    {
+      "question": "How is the contact modal opened?",
+      "query_tokens": 1520,
+      "reduction": 17.8
+    }
+  ],
+  "baseline_note": "Text corpus only; visual image tokens excluded. Context sizes are character-based estimates, not measured model tokens."
+}

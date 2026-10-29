@@ -1,0 +1,50 @@
+[
+  {
+    "label": "Close navigation",
+    "foreground": "rgb(10, 10, 10)",
+    "background": "rgb(242, 242, 242)",
+    "ratio": 17.68489386009229
+  },
+  {
+    "label": "Home",
+    "foreground": "rgb(10, 10, 10)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 19.79814571052481
+  },
+  {
+    "label": "Know me better",
+    "foreground": "rgb(10, 10, 10)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 19.79814571052481
+  },
+  {
+    "label": "Get in touch",
+    "foreground": "rgb(255, 255, 255)",
+    "background": "rgb(10, 10, 10)",
+    "ratio": 19.79814571052481
+  },
+  {
+    "label": "See my resume",
+    "foreground": "rgb(10, 10, 10)",
+    "background": "rgb(247, 247, 247)",
+    "ratio": 18.480359606270653
+  },
+  {
+    "label": "LinkedIn",
+    "foreground": "rgb(98, 98, 98)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 6.09972980752698
+  },
+  {
+    "label": "Instagram",
+    "foreground": "rgb(98, 98, 98)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 6.09972980752698
+  },
+  {
+    "label": "Behance",
+    "foreground": "rgb(98, 98, 98)",
+    "background": "rgb(255, 255, 255)",
+    "ratio": 6.09972980752698
+  }
+]

@@ -1,0 +1,361 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-26T09:56:57.691Z",
+  "title": "Design system: Alan Sahlan's personal website",
+  "extensions": {
+    "colorMeta": {
+      "cobalt": {
+        "role": "primary",
+        "displayName": "Cobalt"
+      },
+      "blue-surface": {
+        "role": "primary",
+        "displayName": "Pale blue surface"
+      },
+      "canvas": {
+        "role": "neutral",
+        "displayName": "Canvas"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Ink"
+      },
+      "blue-secondary": {
+        "role": "primary",
+        "displayName": "Blue secondary text",
+        "purpose": "Contact-panel support copy and Shelf attribution only."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Home display",
+        "purpose": "Desktop Home heading; responsive sizes are recorded in DESIGN.md."
+      },
+      "headline": {
+        "displayName": "Dialog heading",
+        "purpose": "The existing Contact modal title; project titles have their own role."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Regular page copy."
+      },
+      "label": {
+        "displayName": "Control label",
+        "purpose": "Navigation and pill buttons."
+      },
+      "hand": {
+        "displayName": "Personal note",
+        "purpose": "Caveat notes and Shelf prompt."
+      },
+      "about-heading": {
+        "displayName": "About heading",
+        "purpose": "About introduction heading; 40px in the compact layout."
+      },
+      "contact-heading": {
+        "displayName": "Contact heading",
+        "purpose": "Shared contact-panel heading; 30px in the compact layout."
+      },
+      "project-title": {
+        "displayName": "Project title",
+        "purpose": "Project names below the preview artwork."
+      },
+      "introduction": {
+        "displayName": "Introduction",
+        "purpose": "Home and About introduction copy; Home reduces to 16px in the compact layout."
+      },
+      "project-description": {
+        "displayName": "Project description",
+        "purpose": "Factual project descriptions below title and category."
+      },
+      "project-category": {
+        "displayName": "Project category",
+        "purpose": "Secondary project category, aligned with the title baseline."
+      }
+    },
+    "shadows": [
+      {
+        "name": "quote-surface",
+        "value": "filter: drop-shadow(0 8px 12px #183d7318)",
+        "purpose": "A soft shadow around the Shelf bubble and its curved tail."
+      },
+      {
+        "name": "contact-modal",
+        "value": "0 16px 64px #0002",
+        "purpose": "Contact modal above the blurred backdrop."
+      },
+      {
+        "name": "personal-portrait",
+        "value": "0 0 0 1px var(--border)",
+        "purpose": "Border-like outline around the portrait."
+      }
+    ],
+    "motion": [
+      {
+        "name": "motion-fast",
+        "value": "120ms",
+        "purpose": "Button press and compact tooltip transitions."
+      },
+      {
+        "name": "motion-base",
+        "value": "140ms",
+        "purpose": "Shared hover and Shelf artwork transitions."
+      },
+      {
+        "name": "motion-slow",
+        "value": "240ms",
+        "purpose": "Contact modal transitions."
+      },
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(.23, 1, .32, 1)",
+        "purpose": "Shared reveal and input-feedback easing."
+      },
+      {
+        "name": "ease-in-out",
+        "value": "cubic-bezier(.77, 0, .175, 1)",
+        "purpose": "Existing shared easing token."
+      },
+      {
+        "name": "quote-reveal",
+        "value": "220ms var(--ease-out)",
+        "purpose": "One squash-and-stretch entrance, then rest. Disabled with reduced motion."
+      },
+      {
+        "name": "quote-pointer-follow",
+        "value": "1 - exp(-min(frameDelta, 32) / 40)",
+        "purpose": "Short position easing for fine pointers. Reduced motion anchors body and tail to artwork, including live preference changes."
+      },
+      {
+        "name": "quote-hover-delay",
+        "value": "90ms",
+        "purpose": "Fine-pointer quote reveal delay; touch and keyboard reveal immediately. Scroll-into-view in the opening frame preserves a new pointer reveal; later user scrolling dismisses it."
+      },
+      {
+        "name": "contact-magnet",
+        "value": "stiffness: 100; damping: 10; mass: 1; maximum pull: 18% of shorter dimension",
+        "purpose": "Shared contact-arrow and sidebar-pill feedback inside fixed hit areas. Liquid Gooey Move deforms only the silhouette; text and icons stay unfiltered. Touch gets press feedback; reduced motion and forced colors use static controls."
+      },
+      {
+        "name": "portrait-print",
+        "value": "critical damping; response: 0.16s; rotation: 0deg to -2deg",
+        "purpose": "Quickly rotate the entire smaller photo print and reveal its caption without changing the photo crop or layout during hover. Use uniform image scaling and automatic height to preserve natural proportions. Reduced motion keeps it straight and reveals the caption immediately."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "desktop-compact",
+        "value": "max-width: 1250px"
+      },
+      {
+        "name": "compact-shell",
+        "value": "max-width: 1000px"
+      },
+      {
+        "name": "tablet-project-grid",
+        "value": "min-width: 600px and max-width: 1000px"
+      },
+      {
+        "name": "single-project-column",
+        "value": "max-width: 599px"
+      },
+      {
+        "name": "narrow-phone",
+        "value": "max-width: 359px"
+      },
+      {
+        "name": "short-quote",
+        "value": "max-height: 400px"
+      }
+    ],
+    "layout": {
+      "signature": {
+        "surface": "About closing note after Sincerely",
+        "lettering": "Custom monoline Alan with tall capital A, looped l, connected a/n, and a short underline; ink token",
+        "size": "192px by 96px; 176px by 88px below 600px; 12px top margin",
+        "motion": "First-arrival delight, one time at 80% visibility; ten directional SVG mask transforms using WAAPI and linear timing; shared fast/base/slow tokens total 1660ms",
+        "accessibility": "Accessible text Alan; decorative SVG hidden; full signature with reduced motion or no JavaScript; live preference changes finish writing immediately"
+      },
+      "mobileMenu": {
+        "breakpoint": "max-width: 1000px",
+        "source": "https://blog.olivierlarose.com/tutorials/awwwards-side-menu",
+        "surface": "Neutral canvas with ink links, gray profiles, current-page dot, radius-large corners, and a light #0000001f backdrop",
+        "size": "max 420px by 520px, constrained to page gutters and available dynamic viewport height",
+        "anchor": "44px close target stays exactly over the hamburger, inset 16px inside the panel; window expands above and toward its trailing edge with 4px minimum viewport clearance; logical placement mirrors in RTL",
+        "type": "Geist Variable; links clamp(30px, 8.5vw, 40px); profiles 13px",
+        "motion": "One critical spring, damping ratio 1 and 0.3s response; shared reversible surface/backdrop/icon/content progress; transform and inverse transform preserve glyph and button size; position and velocity survive rapid retargeting",
+        "reducedMotion": "Final geometry and state immediately, including live preference changes; no spatial movement",
+        "elevation": "Outer drop-shadow(0 12px 24px #0000000d) drop-shadow(0 4px 8px #0000000a), separate from the inner reveal mask; system outlines in forced colors",
+        "behavior": "Focus trap, background scroll lock, Escape/backdrop close, focus restoration, close on page selection and desktop resize; Contact modal stacks above and restores its menu trigger"
+      },
+      "responsiveOverrides": [
+        {
+          "query": "max-width: 1250px",
+          "values": {
+            "page-gutter": "40px",
+            "layout-gap": "48px"
+          }
+        },
+        {
+          "query": "max-width: 1000px",
+          "values": {
+            "page-gutter": "24px",
+            "section-gap": "64px",
+            "artwork-gap": "24px"
+          },
+          "behavior": "Single-column shell up to 848px with the compact menu; project grid remains two columns from 600px through 1000px."
+        },
+        {
+          "query": "max-width: 359px",
+          "values": {
+            "page-gutter": "20px"
+          }
+        }
+      ],
+      "projectGrid": {
+        "desktopRowGap": "40px",
+        "compactRowGap": "32px",
+        "captionOffset": "16px",
+        "imageAspectRatio": "3 / 2",
+        "imageFit": "cover",
+        "imagePositions": {
+          "paylecta": "90% center",
+          "pawfriend": "85% center",
+          "aurelia": "right center",
+          "munchpal": "right center"
+        },
+        "imageSourceSizing": "Responsive source sizes allow for the roughly twofold crop of the supplied wide scenes."
+      },
+      "characters": {
+        "sidebar": "144px by 240px; vertical minimum 160px; margin 16px auto 0 reserves greeting clearance",
+        "homeCompact": "Home compact layout only (1000px and below): separate right grid column, 144px by 240px, 48px greeting allowance; desktop shows only the sidebar figure",
+        "homePhone": "Below 600px, 104px by 184px with 56px greeting allowance; full-width headline and text beside figure",
+        "greeting": {
+          "lineWrapping": "Single line on desktop and tablets; wraps inside the Home character column below 600px",
+          "desktopMaxWidth": "min(192px, calc(100vw - 48px))",
+          "desktopPlacement": "Bubble and tail centered above the character",
+          "compactPlacement": "12px above Home figure, with centered phone tail and no text overlap",
+          "testPart": "greeting-bubble"
+        },
+        "homeNarrow": "Below 360px, 96px by 168px",
+        "aboutCompact": "No caricature; use the portrait at the introduction top-right"
+      },
+      "shelf": {
+        "containerType": "inline-size",
+        "desktopQuery": "min-width: 1001px",
+        "desktopUnit": "min(.88px, calc((100cqw - 112px) / 872))",
+        "desktopWidth": "100%",
+        "desktopGap": "16px",
+        "originalHitWidthTotal": "872 units",
+        "reservedWidth": "112px: 48px edge padding and 64px for four gaps",
+        "scaledGeometry": "Cover, stage, record, open-book, hit-area dimensions, and reveal offsets scale together. Hit areas stay fixed during reveals; text sizes remain unchanged.",
+        "compactQuery": "max-width: 1000px",
+        "compactUnit": "1px",
+        "compactGap": "24px",
+        "compactBehavior": "Full-size horizontal scroller",
+        "quoteBehavior": "Existing quote content, portal positioning, input handling, and reduced-motion behavior are unchanged."
+      },
+      "aboutExperience": {
+        "placement": "Between the About introduction and Shelf",
+        "rows": [
+          "CADIT",
+          "Freelance",
+          "Digistar Class Telkom",
+          "Startup Campus"
+        ],
+        "organization": "15px, weight 600, line height 1.4",
+        "role": "14px secondary text, line height 1.5",
+        "dates": "13px secondary text, line height 1.6, tabular numerals",
+        "desktop": "Organization and role left, dates right, 18px row padding and fine separators",
+        "phone": "Below 600px dates stack beneath the role with a 6px gap"
+      },
+      "identity": {
+        "compact": "Name, role and Blob buddy grouped left; only the menu toggle right",
+        "desktop": "Identity and blob share the sidebar rail"
+      },
+      "aboutIntroduction": {
+        "placement": "Portrait floats top-right, text flows beside and beneath",
+        "portraitWidths": "248px desktop, 220px compact desktop, 184px tablet, 128px phone, 104px below 360px",
+        "headingSizes": "44px desktop, 40px tablet, 32px phone, 28px below 360px",
+        "phoneCaption": "Single line, 18px below 600px and 16px below 360px"
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Primary button",
+      "kind": "button",
+      "refersTo": "primary-button",
+      "description": "The site's primary contact action.",
+      "html": "<button class=\"ds-primary\" type=\"button\">Get in touch</button>",
+      "css": ".ds-primary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px 20px; border: 0; border-radius: var(--radius-pill, 9999px); background: var(--ink, #0a0a0a); color: var(--canvas, #fff); font-family: var(--font-sans, Arial, sans-serif); font-size: 14px; font-weight: 500; line-height: 20px; cursor: pointer; transition: background 140ms cubic-bezier(.23,1,.32,1), transform 120ms cubic-bezier(.23,1,.32,1); } .ds-primary:hover { background: var(--action-hover, #303030); } .ds-primary:focus-visible { outline: 2px solid var(--ink, #0a0a0a); outline-offset: 4px; } .ds-primary:active { transform: scale(.97); } @media (prefers-reduced-motion: reduce) { .ds-primary { transition-duration: .01ms; } }"
+    },
+    {
+      "name": "Secondary button",
+      "kind": "button",
+      "refersTo": "secondary-button",
+      "description": "The site's secondary resume action.",
+      "html": "<button class=\"ds-secondary\" type=\"button\">See my resume</button>",
+      "css": ".ds-secondary { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 44px; padding: 12px 20px; border: 0; border-radius: var(--radius-pill, 9999px); background: var(--subtle, #f7f7f7); color: var(--ink, #0a0a0a); font-family: var(--font-sans, Arial, sans-serif); font-size: 14px; font-weight: 500; line-height: 20px; cursor: pointer; transition: background 140ms cubic-bezier(.23,1,.32,1), transform 120ms cubic-bezier(.23,1,.32,1); } .ds-secondary:hover { background: var(--hover, #e8e8e8); } .ds-secondary:focus-visible { outline: 2px solid var(--ink, #0a0a0a); outline-offset: 4px; } .ds-secondary:active { transform: scale(.97); } @media (prefers-reduced-motion: reduce) { .ds-secondary { transition-duration: .01ms; } }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Desktop Home and About navigation uses a gray current-page fill. At compact widths, a neutral canvas panel with soft shadow, an inset close target, and perspective links contains existing contact/resume actions and social profiles.",
+      "html": "<nav class=\"ds-navigation\" aria-label=\"Main\"><a class=\"ds-nav-item\" href=\"/\">Home</a><a class=\"ds-nav-item\" href=\"/about\" aria-current=\"page\">Know me better</a></nav>",
+      "css": ".ds-navigation { display: flex; flex-direction: column; gap: 8px; } .ds-nav-item { display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 12px; border-radius: var(--radius-pill, 9999px); color: var(--secondary, #626262); font-family: var(--font-sans, Arial, sans-serif); font-size: 14px; font-weight: 500; line-height: 20px; text-decoration: none; transition: background 140ms cubic-bezier(.23,1,.32,1), color 140ms cubic-bezier(.23,1,.32,1); } .ds-nav-item[aria-current=page] { background: var(--secondary-action, #f2f2f2); color: var(--ink, #0a0a0a); } .ds-nav-item:hover { background: var(--subtle, #f7f7f7); color: var(--ink, #0a0a0a); } .ds-nav-item:focus-visible { outline: 2px solid var(--ink, #0a0a0a); outline-offset: 4px; } @media (prefers-reduced-motion: reduce) { .ds-nav-item { transition-duration: .01ms; } }"
+    },
+    {
+      "name": "Skill list",
+      "kind": "custom",
+      "refersTo": "skill-tags",
+      "description": "Flat static skill labels with fine separators and no action states.",
+      "html": "<ul class=\"ds-skills\" aria-label=\"Design skills\"><li>Product design</li><li>Design systems</li><li>Prototyping</li></ul>",
+      "css": ".ds-skills { display: flex; flex-wrap: wrap; gap: 8px 12px; padding: 0; margin: 0; list-style: none; font-family: var(--font-sans, Arial, sans-serif); } .ds-skills li { color: var(--secondary, #626262); font-size: 12px; line-height: 18px; } .ds-skills li:not(:last-child) { padding-right: 12px; border-right: 1px solid var(--border-control, #d6d6d6); }"
+    },
+    {
+      "name": "Project preview",
+      "kind": "card",
+      "refersTo": "project-card",
+      "description": "Static flat article with a 3:2 artwork frame and caption below. The token preview omits the supplied artwork.",
+      "html": "<article class=\"ds-project\"><div class=\"ds-project-artwork\" role=\"img\" aria-label=\"Project artwork omitted in token preview\"></div><div class=\"ds-project-caption\"><div class=\"ds-project-heading\"><h3>Paylecta</h3><span>Finance</span></div><p>Financial dashboard and mobile experience.</p></div></article>",
+      "css": ".ds-project { min-width: 0; color: var(--ink, #0a0a0a); font-family: var(--font-sans, Arial, sans-serif); } .ds-project-artwork { aspect-ratio: 3 / 2; overflow: hidden; border-radius: var(--radius-large, 16px); background: var(--subtle, #f7f7f7); } .ds-project-caption { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; } .ds-project-heading { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; } .ds-project-heading h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.4; letter-spacing: -.02em; } .ds-project-heading > span { color: var(--muted, #707070); font-size: 12px; line-height: 1.5; } .ds-project-caption > p { margin: 0; color: var(--secondary, #626262); font-size: 14px; line-height: 1.6; }"
+    },
+    {
+      "name": "Contact panel",
+      "kind": "custom",
+      "refersTo": "contact-panel",
+      "description": "Shared pale-blue contact panel. This static token preview omits the separately documented magnetic arrow.",
+      "html": "<section class=\"ds-contact\"><h2>Have something in mind?</h2><p>A project, a role, or a good conversation. I’d love to hear about it.</p></section>",
+      "css": ".ds-contact { padding: 40px; border-radius: var(--radius-large, 16px); background: var(--blue-surface, #edf3ff); font-family: var(--font-sans, Arial, sans-serif); } .ds-contact h2 { margin: 0; color: var(--ink, #0a0a0a); font-size: 36px; font-weight: 500; line-height: 1.15; letter-spacing: -.025em; } .ds-contact > p { max-width: var(--reading-width, 640px); margin: 12px 0 0; color: #50698b; font-size: 16px; line-height: 1.6; } @media (max-width: 1250px) { .ds-contact { padding: 32px; } } @media (max-width: 1000px) { .ds-contact { padding: 24px; } .ds-contact h2 { font-size: 30px; } }"
+    },
+    {
+      "name": "Shelf quote bubble",
+      "kind": "custom",
+      "refersTo": "quote-surface",
+      "description": "The shared game, film, and book quote treatment. The live component supplies viewport clamping, placement, and input handling.",
+      "html": "<div class=\"ds-quote-wrap\"><div class=\"ds-quote\" role=\"tooltip\"><p>“The world doesn’t need a hero. It needs a professional.”</p><span class=\"ds-quote-author\">Geralt of Rivia</span><svg class=\"ds-quote-tail\" width=\"28\" height=\"14\" viewBox=\"0 0 28 14\" aria-hidden=\"true\"><path d=\"M0 0H28C19 1 15 5 12 10C10 13 7 14 4 13C7 9 7 4 0 0Z\" /></svg></div></div>",
+      "css": ".ds-quote-wrap { width: 320px; max-width: calc(100vw - 48px); padding-block: 14px; } .ds-quote { position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 10px; padding: 22px 24px; border-radius: 26px 30px 28px 12px; background: var(--blue-surface, #edf3ff); color: #18365b; filter: drop-shadow(0 8px 12px #183d7318); font-family: var(--font-sans, Arial, sans-serif); transform-origin: 44px bottom; animation: ds-quote-reveal 220ms cubic-bezier(.23,1,.32,1) both; } .ds-quote p { margin: 0; font-size: 15px; font-weight: 450; line-height: 1.55; letter-spacing: -.08px; overflow-wrap: anywhere; } .ds-quote-author { font-size: 12px; font-weight: 400; line-height: 1.5; color: #50698b; } .ds-quote-tail { position: absolute; left: 32px; bottom: -12px; fill: var(--blue-surface, #edf3ff); } @keyframes ds-quote-reveal { 0% { opacity: .7; transform: translateY(4px) scale(.97,1.02); } 60% { opacity: 1; transform: scale(1.012,.992); } 100% { opacity: 1; transform: none; } } @media (max-height: 400px) { .ds-quote { padding: 14px 18px; } .ds-quote p { font-size: 14px; line-height: 1.5; } } @media (prefers-reduced-motion: reduce) { .ds-quote { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "overview": "This records the existing Home and About implementation. White space, dark text, restrained cobalt accents, and cover artwork carry the pages. The Alan character and Blob buddy provide the site's playful interactions. Geist carries the interface and prose; Caveat marks personal notes.\n\nThe Shelf quote bubble is a local extension approved on 2026-10-26. Its pale-blue fill relates to the existing Blob buddy and contact panel. It does not replace the site's buttons, Contact modal tooltips, or other containers.",
+    "keyCharacteristics": [
+      "A white canvas with gray controls and fine separators.",
+      "Rounded controls and artwork within flat project articles.",
+      "Brief input feedback with keyboard, touch, and reduced-motion alternatives."
+    ],
+    "rules": [],
+    "dos": [
+      "Do retain the shared source token names and font families when extending existing pages.",
+      "Do keep the entire Shelf bubble and tail within the viewport gutters.",
+      "Do preserve the Shelf's exact content, fixed hit areas, and keyboard and touch behavior.",
+      "Do anchor both quote and tail to the artwork when reduced motion is enabled."
+    ],
+    "donts": [
+      "Don't apply the Shelf's bubble shape or local dark-blue text colors to every site container.",
+      "Don't add the rejected dark cards or accent lines back to Shelf quotes.",
+      "Don't make quote readability depend on continuous motion or hover alone."
+    ]
+  }
+}

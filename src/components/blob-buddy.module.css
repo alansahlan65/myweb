@@ -1,0 +1,18 @@
+.blob { flex: 0 0 60px; width: 60px; height: 60px; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+.blob:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.float, .motion, .press, .breath, .flow { position: relative; width: 60px; height: 60px; transform-origin: 50% 70%; pointer-events: none; }
+.press { transform-origin: 50% 82%; }
+.face { position: absolute; inset: 0; overflow: visible; }
+.float { animation: float 7.2s var(--ease-in-out) infinite; }
+.breath { animation: breathe 4.8s var(--ease-in-out) infinite; }
+.flow { transform-origin: 50% 82%; animation: flow 8.4s var(--ease-in-out) infinite; }
+.blink { transform-box: fill-box; transform-origin: center; }
+.blob[data-paused="true"] :is(.float, .breath, .flow) { animation-play-state: paused; }
+@keyframes float { 0%, 100% { transform: translate(0, 0); } 28% { transform: translate(1px, -2px); } 63% { transform: translate(-1px, -.6px); } 82% { transform: translate(.4px, -1.5px); } }
+@keyframes breathe { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.035, .975); } }
+@keyframes flow { 0%, 100% { transform: skewX(0) scale(1); } 24% { transform: skewX(-2.3deg) scale(.98, 1.02); } 52% { transform: skewX(2deg) scale(1.03, .98); } 78% { transform: skewX(-1deg) scale(.99, 1.01); } }
+@media (prefers-reduced-motion: reduce), (forced-colors: active) {
+  .float, .breath, .flow { animation: none; }
+  .blob:active { background: var(--subtle); }
+}
+@media (hover: none), (pointer: coarse) { .blob:active { background: var(--subtle); } }

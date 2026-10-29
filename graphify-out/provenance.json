@@ -1,0 +1,47 @@
+{
+  "built_at": "2026-10-26T07:04:53.696986+00:00",
+  "scan_root": "D:\\Project\\pen.dev Personal Web",
+  "graphify_version": "0.9.82",
+  "directed": false,
+  "detected_files": 111,
+  "detected_word_estimate": 865241,
+  "text_word_estimate": 20304,
+  "visually_reviewed_images": 78,
+  "semantic_files_extracted": 91,
+  "semantic_chunks_completed": 79,
+  "failed_chunks": [],
+  "walk_errors": [],
+  "unclassified": [
+    "D:\\Project\\pen.dev Personal Web\\.gitignore",
+    "D:\\Project\\pen.dev Personal Web\\src\\app\\globals.css",
+    "D:\\Project\\pen.dev Personal Web\\src\\components\\alan-character.module.css",
+    "D:\\Project\\pen.dev Personal Web\\src\\components\\blob-buddy.module.css",
+    "D:\\Project\\pen.dev Personal Web\\src\\components\\magnetic-contact-button.module.css",
+    "D:\\Project\\pen.dev Personal Web\\src\\components\\speech-bubble.module.css"
+  ],
+  "raw_extraction_nodes": 567,
+  "raw_extraction_edges": 944,
+  "reference_only_files": 7,
+  "token_usage_status": "unavailable_host_session",
+  "supplemental_edges": {
+    "inferred_same_label_concept_bridges": 148,
+    "extracted_public_asset_references": 19
+  },
+  "offline_visualization_library": {
+    "name": "vis-network",
+    "version": "9.1.6",
+    "source_url": "https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js",
+    "integrity": "sha384-Ux6phic9PEHJ38YtrijhkzyJ8yQlH8i/+buBR8s3mAZOJrP1gwyvAcIYl3GWtpX1",
+    "original_sri_verified": true,
+    "embedded": true
+  },
+  "viewer_verification": {
+    "nodes": 568,
+    "edges": 896,
+    "searchResults": 20,
+    "canvas": true,
+    "pageErrors": [],
+    "remoteRequests": [],
+    "offline": true
+  }
+}

@@ -1,0 +1,51 @@
+Browser verification, 2026-10-26
+Project: D:/Project/pen.dev Personal Web
+
+Recorded from the executed Playwright command outputs.
+
+Command: npm test
+Result: 15 passed, 1 failed, 2.2 minutes.
+
+Passed:
+- Greeting clears the identity and the complete desktop Shelf fits with room for reveals
+- Home and About fit desktop, tablet, and narrow mobile screens
+- Portrait starts straight, tilts the whole print two degrees, and preserves its crop and layout
+- Contact modal has working destinations, keyboard focus, copy feedback, and Escape dismissal
+- Contact arrow pulls magnetically, squishes with a crisp icon, and keeps its click target fixed
+- Magnetic pill keeps native cursors, its fixed target, and gooey feedback
+- Laptop sidebars keep contact actions and the blob fully visible
+- Contact stays within a short viewport and scrolls to keyboard-focused controls
+- Shelf mouse reveals persist on click and quote tooltips follow, clamp, and dismiss
+- Shelf quotes use Geist and all reveal artwork has room inside the scroll area
+- Keyboard navigation reveals Shelf items as they scroll into view
+- Touch reveals toggle, mobile navigation works, and reduced motion stays calm
+- Blob tracks only within its response range and interrupted presses settle
+- Blob compresses while held, rebounds like jelly, and stops behind a modal
+- Alan's waving hand stays inside the visible character at every layout size
+
+Failed in full run:
+- Magnetic contact arrow respects reduced motion, forced colors, and touch
+  Timed out waiting for the already-visible arrow's data-enhanced attribute to become true.
+  No changes were made to the contact component or test before its isolated retry.
+
+Command: npm test -- --grep 'Magnetic contact arrow respects reduced motion'
+Result: 1 passed, 42.1 seconds including server startup; test itself 10.5 seconds.
+
+Targeted new regression evidence in tests/website.spec.ts:
+- Desktop widths 1440, 1280 and 1001 at height 900.
+- Active greeting below identity by at least 8px; body and tail inside sidebar.
+- Shelf scrollWidth <= clientWidth, all five covers inside its bounds.
+- Open-book reveal stays inside Shelf and does not introduce horizontal overflow.
+- Mobile widths 390 and 320 on Home and About; active greeting inside viewport.
+
+Existing Shelf checks also passed across keyboard, pointer, touch, live reduced-motion
+changes, quote boundaries, vinyl/label extents, and Escape dismissal.
+
+Additional targeted command: npm test -- --grep 'Greeting clears'
+Result: 1 passed, 17.2 seconds including server startup; test itself 12.0 seconds.
+This run also verifies zero intersection between the mobile greeting and actual
+introduction text rectangles at 320px and 390px, and saves active album/greeting captures.
+
+Production build: sandboxed output write failed with EPERM, then the retry with
+the required filesystem access passed TypeScript and static prerendering. The final
+build including the supplemental mobile text-flow correction also passed.

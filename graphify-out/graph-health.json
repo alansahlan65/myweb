@@ -1,0 +1,221 @@
+{
+  "node_count": 567,
+  "unverified_node_count": 0,
+  "raw_edge_count": 944,
+  "non_object_edges": 0,
+  "missing_endpoint_edges": 0,
+  "dangling_endpoint_edges": 0,
+  "external_reference_edges": 1,
+  "self_loop_edges": 0,
+  "valid_candidate_edges": 943,
+  "exact_duplicate_edges": 0,
+  "directed_unique_endpoint_pairs": 896,
+  "directed_same_endpoint_collapsed_edges": 47,
+  "undirected_unique_endpoint_pairs": 895,
+  "undirected_same_endpoint_collapsed_edges": 48,
+  "same_endpoint_group_count": 40,
+  "relation_variant_groups": 36,
+  "source_file_variant_groups": 0,
+  "source_location_variant_groups": 4,
+  "context_variant_groups": 0,
+  "post_build_graph_type": "Graph",
+  "post_build_node_count": 568,
+  "post_build_edge_count": 896,
+  "post_build_error": "",
+  "producer_suppression": {
+    "path": "C:\\Users\\DESKTOP-IOT0021\\AppData\\Roaming\\uv\\tools\\graphifyy\\Lib\\site-packages\\graphify\\extract.py",
+    "total_sites": 12,
+    "sites": [
+      {
+        "line": 1749,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids = {n[\"id\"] for n in nodes}"
+      },
+      {
+        "line": 2282,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids = {n[\"id\"] for n in nodes}"
+      },
+      {
+        "line": 2284,
+        "name": "seen_doc_refs",
+        "tuple_arity": 0,
+        "sample": "seen_doc_refs: set[str] = set()"
+      },
+      {
+        "line": 2762,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = {n[\"id\"] for n in nodes}"
+      },
+      {
+        "line": 2909,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids = {n.get(\"id\") for n in nodes}"
+      },
+      {
+        "line": 3743,
+        "name": "seen_keys",
+        "tuple_arity": 0,
+        "sample": "seen_keys: set[tuple] = set()"
+      },
+      {
+        "line": 3916,
+        "name": "seen_keys",
+        "tuple_arity": 0,
+        "sample": "seen_keys: set[tuple] = set()"
+      },
+      {
+        "line": 6273,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 6381,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 6460,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 6975,
+        "name": "seen_ids",
+        "tuple_arity": 0,
+        "sample": "seen_ids: set[str] = set()"
+      },
+      {
+        "line": 6976,
+        "name": "seen_edges",
+        "tuple_arity": 4,
+        "sample": "seen_edges: set[tuple[str, str, str, str | None]] = set()"
+      }
+    ],
+    "error": ""
+  },
+  "examples": [
+    {
+      "source": "src_components_alan_character_alancharacter",
+      "target": "src_components_alan_character_alancharacter_measure",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "contains",
+        "indirect_call"
+      ],
+      "source_files": [
+        "src/components/alan-character.tsx"
+      ],
+      "source_locations": [
+        "L106",
+        "L165",
+        "L170"
+      ],
+      "contexts": [
+        "",
+        "argument",
+        "call"
+      ]
+    },
+    {
+      "source": "src_components_blob_buddy_blobbuddy",
+      "target": "src_components_blob_buddy_blobbuddy_cancel",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "contains",
+        "indirect_call"
+      ],
+      "source_files": [
+        "src/components/blob-buddy.tsx"
+      ],
+      "source_locations": [
+        "L125",
+        "L127",
+        "L93"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "collection"
+      ]
+    },
+    {
+      "source": "src_components_blob_buddy_blobbuddy",
+      "target": "src_components_blob_buddy_blobbuddy_press",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "contains",
+        "indirect_call"
+      ],
+      "source_files": [
+        "src/components/blob-buddy.tsx"
+      ],
+      "source_locations": [
+        "L100",
+        "L125",
+        "L169"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "collection"
+      ]
+    },
+    {
+      "source": "src_components_blob_buddy_blobbuddy",
+      "target": "src_components_blob_buddy_blobbuddy_release",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "contains",
+        "indirect_call"
+      ],
+      "source_files": [
+        "src/components/blob-buddy.tsx"
+      ],
+      "source_locations": [
+        "L105",
+        "L125",
+        "L170"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "collection"
+      ]
+    },
+    {
+      "source": "src_components_blob_buddy_blobbuddy",
+      "target": "src_components_blob_buddy_blobbuddy_pulse",
+      "edge_count": 3,
+      "relations": [
+        "calls",
+        "contains",
+        "indirect_call"
+      ],
+      "source_files": [
+        "src/components/blob-buddy.tsx"
+      ],
+      "source_locations": [
+        "L113",
+        "L125",
+        "L177"
+      ],
+      "contexts": [
+        "",
+        "call",
+        "collection"
+      ]
+    }
+  ]
+}

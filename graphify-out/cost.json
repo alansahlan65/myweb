@@ -1,0 +1,15 @@
+{
+  "runs": [
+    {
+      "date": "2026-10-26T07:04:53.696986+00:00",
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "files": 111,
+      "token_usage_status": "unavailable_host_session",
+      "note": "Token usage was not returned by worker tools. Numeric zeros are placeholders, not measured zero usage."
+    }
+  ],
+  "total_input_tokens": 0,
+  "total_output_tokens": 0,
+  "token_usage_status": "unavailable_host_session"
+}

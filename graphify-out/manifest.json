@@ -1,0 +1,668 @@
+{
+  ".impeccable/design.json": {
+    "mtime": 1792987863.1795557,
+    "seen": 1792998293.6346507,
+    "ast_hash": "52cff79486cd5dfed3bcdb147c827fba",
+    "semantic_hash": "52cff79486cd5dfed3bcdb147c827fba"
+  },
+  ".impeccable/review/detector.json": {
+    "mtime": 1792982149.7828138,
+    "seen": 1792998293.6351557,
+    "ast_hash": "35d0e0b801444bb1f4c2115720f8e4f6",
+    "semantic_hash": "35d0e0b801444bb1f4c2115720f8e4f6"
+  },
+  "next-env.d.ts": {
+    "mtime": 1792978689.8345726,
+    "seen": 1792998293.6351557,
+    "ast_hash": "8195d2c60ce847a459ae9d308d6a5724",
+    "semantic_hash": "8195d2c60ce847a459ae9d308d6a5724"
+  },
+  "next.config.ts": {
+    "mtime": 1792849767.334476,
+    "seen": 1792998293.6351557,
+    "ast_hash": "eba4ede4365148f76dde1052cce1a606",
+    "semantic_hash": "eba4ede4365148f76dde1052cce1a606"
+  },
+  "package.json": {
+    "mtime": 1792984018.0900104,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fb2caf58716db6e96cb921c38611edcd",
+    "semantic_hash": "fb2caf58716db6e96cb921c38611edcd"
+  },
+  "playwright.config.ts": {
+    "mtime": 1792852024.9774508,
+    "seen": 1792998293.6351557,
+    "ast_hash": "8997399ecf1aa63b3bababcaec4d6162",
+    "semantic_hash": "8997399ecf1aa63b3bababcaec4d6162"
+  },
+  "src/app/about/page.tsx": {
+    "mtime": 1792853869.791249,
+    "seen": 1792998293.6351557,
+    "ast_hash": "3e7f22ad4039ae189bbdac0905aee588",
+    "semantic_hash": "3e7f22ad4039ae189bbdac0905aee588"
+  },
+  "src/app/layout.tsx": {
+    "mtime": 1792980187.0502381,
+    "seen": 1792998293.6351557,
+    "ast_hash": "e44aacb4cab4c6f5f7b8c31e92210c26",
+    "semantic_hash": "e44aacb4cab4c6f5f7b8c31e92210c26"
+  },
+  "src/app/page.tsx": {
+    "mtime": 1792853893.0031674,
+    "seen": 1792998293.6351557,
+    "ast_hash": "97b177314968996298af2f80ab6d4ee8",
+    "semantic_hash": "97b177314968996298af2f80ab6d4ee8"
+  },
+  "src/components/alan-character.tsx": {
+    "mtime": 1792852748.8540323,
+    "seen": 1792998293.6351557,
+    "ast_hash": "a2a9f76bb9429b9b757119458c766b32",
+    "semantic_hash": "a2a9f76bb9429b9b757119458c766b32"
+  },
+  "src/components/blob-buddy.tsx": {
+    "mtime": 1792978049.4686582,
+    "seen": 1792998293.6351557,
+    "ast_hash": "aa14f043aa7287d95418a356bff354fc",
+    "semantic_hash": "aa14f043aa7287d95418a356bff354fc"
+  },
+  "src/components/contact-panel.tsx": {
+    "mtime": 1792984202.4091938,
+    "seen": 1792998293.6351557,
+    "ast_hash": "ffcf3f847604ceab64bab06543bf5909",
+    "semantic_hash": "ffcf3f847604ceab64bab06543bf5909"
+  },
+  "src/components/contact.tsx": {
+    "mtime": 1792850164.3164282,
+    "seen": 1792998293.6351557,
+    "ast_hash": "b38a5a5b14b5bcb10144ef2b038f813a",
+    "semantic_hash": "b38a5a5b14b5bcb10144ef2b038f813a"
+  },
+  "src/components/magnetic-contact-button.tsx": {
+    "mtime": 1792987812.259243,
+    "seen": 1792998293.6351557,
+    "ast_hash": "96d5b3b3ad2f8edf9e014098ba3e876e",
+    "semantic_hash": "96d5b3b3ad2f8edf9e014098ba3e876e"
+  },
+  "src/components/portrait.tsx": {
+    "mtime": 1792985772.091571,
+    "seen": 1792998293.6351557,
+    "ast_hash": "691e52e304e56adcbed1df31ac80487b",
+    "semantic_hash": "691e52e304e56adcbed1df31ac80487b"
+  },
+  "src/components/shelf.tsx": {
+    "mtime": 1792986095.1368787,
+    "seen": 1792998293.6351557,
+    "ast_hash": "4783b1eb6909763ee0e439b623ae7fff",
+    "semantic_hash": "4783b1eb6909763ee0e439b623ae7fff"
+  },
+  "src/components/site-footer.tsx": {
+    "mtime": 1792853894.9721296,
+    "seen": 1792998293.6351557,
+    "ast_hash": "8218cb93bc38ff02e281efbe279111fc",
+    "semantic_hash": "8218cb93bc38ff02e281efbe279111fc"
+  },
+  "src/components/site-shell.tsx": {
+    "mtime": 1792987812.2552319,
+    "seen": 1792998293.6351557,
+    "ast_hash": "aac5ba681d46c9223a92cbbf0c74e74e",
+    "semantic_hash": "aac5ba681d46c9223a92cbbf0c74e74e"
+  },
+  "tests/website.spec.ts": {
+    "mtime": 1792987812.2630718,
+    "seen": 1792998293.6351557,
+    "ast_hash": "2e46614df7ac59c87c7dffd8c15ca928",
+    "semantic_hash": "2e46614df7ac59c87c7dffd8c15ca928"
+  },
+  "tsconfig.json": {
+    "mtime": 1792849763.1403708,
+    "seen": 1792998293.6351557,
+    "ast_hash": "170a55d23d52226adf1f469eae354ff7",
+    "semantic_hash": "170a55d23d52226adf1f469eae354ff7"
+  },
+  ".impeccable/surfaces/src-components-shelf-tsx.md": {
+    "mtime": 1792982018.9376001,
+    "seen": 1792998293.6351557,
+    "ast_hash": "4286ad82c867c71e28fd1b4501f2999d",
+    "semantic_hash": "4286ad82c867c71e28fd1b4501f2999d"
+  },
+  "AGENTS.md": {
+    "mtime": 1792850625.5829642,
+    "seen": 1792998293.6351557,
+    "ast_hash": "7b04e74b5abaa9d608cc5ae1de30fd62",
+    "semantic_hash": "7b04e74b5abaa9d608cc5ae1de30fd62"
+  },
+  "CONTEXT.md": {
+    "mtime": 1792849015.6883214,
+    "seen": 1792998293.6351557,
+    "ast_hash": "a08994e7d4f4ea1ab7860cab69af5bda",
+    "semantic_hash": "a08994e7d4f4ea1ab7860cab69af5bda"
+  },
+  "DESIGN.md": {
+    "mtime": 1792987863.1782677,
+    "seen": 1792998293.6351557,
+    "ast_hash": "f8ba82b09a7e5eef62a80a6a783a5244",
+    "semantic_hash": "f8ba82b09a7e5eef62a80a6a783a5244"
+  },
+  "docs/agents/domain.md": {
+    "mtime": 1792846887.5492563,
+    "seen": 1792998293.6351557,
+    "ast_hash": "a95811676e113d43faeba0ef9b80fd86",
+    "semantic_hash": "a95811676e113d43faeba0ef9b80fd86"
+  },
+  "docs/agents/issue-tracker.md": {
+    "mtime": 1792846885.7173383,
+    "seen": 1792998293.6351557,
+    "ast_hash": "90bc86c96b487684a6bf2c59a0923321",
+    "semantic_hash": "90bc86c96b487684a6bf2c59a0923321"
+  },
+  "docs/agents/triage-labels.md": {
+    "mtime": 1792846886.6227698,
+    "seen": 1792998293.6351557,
+    "ast_hash": "5df8e26d509e491e62ea900d95c501cb",
+    "semantic_hash": "5df8e26d509e491e62ea900d95c501cb"
+  },
+  "docs/interaction-spec.md": {
+    "mtime": 1792987863.1806948,
+    "seen": 1792998293.6351557,
+    "ast_hash": "f012b49076d970563a25212a30e380e2",
+    "semantic_hash": "f012b49076d970563a25212a30e380e2"
+  },
+  "docs/project-brief.md": {
+    "mtime": 1792852672.015103,
+    "seen": 1792998293.6351557,
+    "ast_hash": "1d492846040dd06a33c41bd8d84bd3e0",
+    "semantic_hash": "1d492846040dd06a33c41bd8d84bd3e0"
+  },
+  "docs/references/faizintifada-review/DESIGN.md": {
+    "mtime": 1792997425.5098574,
+    "seen": 1792998293.6351557,
+    "ast_hash": "ba50317a75cf5e83ebe6286f28df0a2a",
+    "semantic_hash": "ba50317a75cf5e83ebe6286f28df0a2a"
+  },
+  "docs/release-checklist.md": {
+    "mtime": 1792987863.182935,
+    "seen": 1792998293.6351557,
+    "ast_hash": "83048b889890ae66650e56c6c607cbca",
+    "semantic_hash": "83048b889890ae66650e56c6c607cbca"
+  },
+  "docs/shelf-tooltip-design.md": {
+    "mtime": 1792982015.0577242,
+    "seen": 1792998293.6351557,
+    "ast_hash": "ad0ce01499e217e74217f200bddbaf8a",
+    "semantic_hash": "ad0ce01499e217e74217f200bddbaf8a"
+  },
+  "public/resume/alan-sahlan-resume.pdf": {
+    "mtime": 1790453262.6398923,
+    "seen": 1792998293.6351557,
+    "ast_hash": "0216ac53e2416d90af3ae9aa7dc83768",
+    "semantic_hash": "0216ac53e2416d90af3ae9aa7dc83768"
+  },
+  ".impeccable/review/desktop.png": {
+    "mtime": 1792987442.4150972,
+    "seen": 1792998293.6351557,
+    "ast_hash": "8379102ff3fc36e839afd0dfa9e6de12",
+    "semantic_hash": "8379102ff3fc36e839afd0dfa9e6de12"
+  },
+  ".impeccable/review/mobile.png": {
+    "mtime": 1792987449.2151413,
+    "seen": 1792998293.6351557,
+    "ast_hash": "02227f07fdd2ea688e1a0ea10bd66ec6",
+    "semantic_hash": "02227f07fdd2ea688e1a0ea10bd66ec6"
+  },
+  ".impeccable/review/reduced-motion.png": {
+    "mtime": 1792987438.684043,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fcbe74727f444dc297cf882725ffd2b4",
+    "semantic_hash": "fcbe74727f444dc297cf882725ffd2b4"
+  },
+  ".impeccable/review/user-320.png": {
+    "mtime": 1792987452.2455833,
+    "seen": 1792998293.6351557,
+    "ast_hash": "d70d4064f681e45b47d8f4a4c850eed5",
+    "semantic_hash": "d70d4064f681e45b47d8f4a4c850eed5"
+  },
+  ".impeccable/review/user-640.png": {
+    "mtime": 1792987455.1363218,
+    "seen": 1792998293.6351557,
+    "ast_hash": "9f97967a779cd21faecdcb4f3fad5fbd",
+    "semantic_hash": "9f97967a779cd21faecdcb4f3fad5fbd"
+  },
+  ".impeccable/review/user-809.png": {
+    "mtime": 1792987445.9281673,
+    "seen": 1792998293.6351557,
+    "ast_hash": "98af6252979cfe277a7fe56e55221304",
+    "semantic_hash": "98af6252979cfe277a7fe56e55221304"
+  },
+  "docs/references/blob-pressed.png": {
+    "mtime": 1792987464.35861,
+    "seen": 1792998293.6351557,
+    "ast_hash": "05001b09beda8d530d4c21208383a4f2",
+    "semantic_hash": "05001b09beda8d530d4c21208383a4f2"
+  },
+  "docs/references/blob-rebound.png": {
+    "mtime": 1792987464.6967866,
+    "seen": 1792998293.6351557,
+    "ast_hash": "12b32d4bbf907913c168ea56b27ed51a",
+    "semantic_hash": "12b32d4bbf907913c168ea56b27ed51a"
+  },
+  "docs/references/book-hover-user-reference.png": {
+    "mtime": 1792979589.7038932,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fd448e5466500cab2fc26e161cb43acc",
+    "semantic_hash": "fd448e5466500cab2fc26e161cb43acc"
+  },
+  "docs/references/contact-gooey-pressed-about.png": {
+    "mtime": 1792987828.7450414,
+    "seen": 1792998293.6351557,
+    "ast_hash": "271c0199485563fbc4b2680b418aed43",
+    "semantic_hash": "271c0199485563fbc4b2680b418aed43"
+  },
+  "docs/references/contact-gooey-pressed-home.png": {
+    "mtime": 1792987824.931987,
+    "seen": 1792998293.6351557,
+    "ast_hash": "e7acdddd6b994d9a7f33ff1e3378e8ed",
+    "semantic_hash": "e7acdddd6b994d9a7f33ff1e3378e8ed"
+  },
+  "docs/references/contact-magnetic-about.png": {
+    "mtime": 1792987826.5307784,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fbfbf1b1a5c1f3ea3a47dcd71cb8a9c0",
+    "semantic_hash": "fbfbf1b1a5c1f3ea3a47dcd71cb8a9c0"
+  },
+  "docs/references/contact-magnetic-home.png": {
+    "mtime": 1792987822.7372258,
+    "seen": 1792998293.6351557,
+    "ast_hash": "eadb815a85ef24574f9782703b698eaf",
+    "semantic_hash": "eadb815a85ef24574f9782703b698eaf"
+  },
+  "docs/references/contact-magnetic-mobile.png": {
+    "mtime": 1792987837.5088744,
+    "seen": 1792998293.6351557,
+    "ast_hash": "40f10b4a2a30a09543f7a13fbef406ea",
+    "semantic_hash": "40f10b4a2a30a09543f7a13fbef406ea"
+  },
+  "docs/references/contact-magnetic-preview.png": {
+    "mtime": 1792987828.8473363,
+    "seen": 1792998293.6351557,
+    "ast_hash": "371a860ae18e9362f4c91f220a66efe7",
+    "semantic_hash": "371a860ae18e9362f4c91f220a66efe7"
+  },
+  "docs/references/contact-modal-default.png": {
+    "mtime": 1792848419.0465736,
+    "seen": 1792998293.6351557,
+    "ast_hash": "ef9a89e0a22d2159cbeb7ef5dcc37170",
+    "semantic_hash": "ef9a89e0a22d2159cbeb7ef5dcc37170"
+  },
+  "docs/references/contact-modal-hover.png": {
+    "mtime": 1792848428.022315,
+    "seen": 1792998293.6351557,
+    "ast_hash": "0e483ed6652ea46e3096b2ccf2b03319",
+    "semantic_hash": "0e483ed6652ea46e3096b2ccf2b03319"
+  },
+  "docs/references/faizintifada-review/current-home.png": {
+    "mtime": 1792997381.549429,
+    "seen": 1792998293.6351557,
+    "ast_hash": "3420f5bd2702aceb9287a1f27e4fd779",
+    "semantic_hash": "3420f5bd2702aceb9287a1f27e4fd779"
+  },
+  "docs/references/faizintifada-review/reference-home.png": {
+    "mtime": 1792997378.766469,
+    "seen": 1792998293.6351557,
+    "ast_hash": "a726fd350bab474716b73f32741f6cda",
+    "semantic_hash": "a726fd350bab474716b73f32741f6cda"
+  },
+  "docs/references/implementation-about-laptop.png": {
+    "mtime": 1792854862.7188869,
+    "seen": 1792998293.6351557,
+    "ast_hash": "129dcb964952c4ab9fe1767044e1de05",
+    "semantic_hash": "129dcb964952c4ab9fe1767044e1de05"
+  },
+  "docs/references/implementation-about-mobile.png": {
+    "mtime": 1792987396.4639895,
+    "seen": 1792998293.6351557,
+    "ast_hash": "178c8f1d921d466987cbc3ae77b01b12",
+    "semantic_hash": "178c8f1d921d466987cbc3ae77b01b12"
+  },
+  "docs/references/implementation-about-quote.png": {
+    "mtime": 1792854475.6516795,
+    "seen": 1792998293.6351557,
+    "ast_hash": "89490d853aad5f3c2bc6c522a221279e",
+    "semantic_hash": "89490d853aad5f3c2bc6c522a221279e"
+  },
+  "docs/references/implementation-about.png": {
+    "mtime": 1792987388.961568,
+    "seen": 1792998293.6351557,
+    "ast_hash": "2229a92742bedb3d11151be86c55a988",
+    "semantic_hash": "2229a92742bedb3d11151be86c55a988"
+  },
+  "docs/references/implementation-character-arm-fixed.png": {
+    "mtime": 1792855702.9146922,
+    "seen": 1792998293.6351557,
+    "ast_hash": "bc0e250fc5e098c4c5ce6b733a6b20ae",
+    "semantic_hash": "bc0e250fc5e098c4c5ce6b733a6b20ae"
+  },
+  "docs/references/implementation-character-arm-mobile.png": {
+    "mtime": 1792855410.8111193,
+    "seen": 1792998293.6351557,
+    "ast_hash": "1b6f960e3fb65ca1774695f1f7664441",
+    "semantic_hash": "1b6f960e3fb65ca1774695f1f7664441"
+  },
+  "docs/references/implementation-contact-short.png": {
+    "mtime": 1792853295.090012,
+    "seen": 1792998293.6351557,
+    "ast_hash": "b093a587cce5b75251f2692f7cbd8f99",
+    "semantic_hash": "b093a587cce5b75251f2692f7cbd8f99"
+  },
+  "docs/references/implementation-home-mobile.png": {
+    "mtime": 1792987395.5982897,
+    "seen": 1792998293.6351557,
+    "ast_hash": "9e1fd90199b2761bba0277017d973727",
+    "semantic_hash": "9e1fd90199b2761bba0277017d973727"
+  },
+  "docs/references/implementation-home.png": {
+    "mtime": 1792987387.980448,
+    "seen": 1792998293.6351557,
+    "ast_hash": "22bf7955ba67a5c94209707fd46bfa2d",
+    "semantic_hash": "22bf7955ba67a5c94209707fd46bfa2d"
+  },
+  "docs/references/magnetic-pill-mobile.png": {
+    "mtime": 1792987833.6999066,
+    "seen": 1792998293.6351557,
+    "ast_hash": "9dd246dfa3ecd82b967ec23b5d371c33",
+    "semantic_hash": "9dd246dfa3ecd82b967ec23b5d371c33"
+  },
+  "docs/references/magnetic-pill.png": {
+    "mtime": 1792987830.7268212,
+    "seen": 1792998293.6351557,
+    "ast_hash": "4fe0b2eedb6a43610c9debe8260c655f",
+    "semantic_hash": "4fe0b2eedb6a43610c9debe8260c655f"
+  },
+  "docs/references/pen-about.png": {
+    "mtime": 1792849709.366755,
+    "seen": 1792998293.6351557,
+    "ast_hash": "d1c0557832431b3e4ea7029748aece0a",
+    "semantic_hash": "d1c0557832431b3e4ea7029748aece0a"
+  },
+  "docs/references/pen-home.png": {
+    "mtime": 1792849709.359607,
+    "seen": 1792998293.6351557,
+    "ast_hash": "790aae224e22bc77a8bd1f74a7c0a8de",
+    "semantic_hash": "790aae224e22bc77a8bd1f74a7c0a8de"
+  },
+  "docs/references/pen-shelf.png": {
+    "mtime": 1792849709.374074,
+    "seen": 1792998293.6351557,
+    "ast_hash": "b6d06282ae2246cf2b9677d6568e5556",
+    "semantic_hash": "b6d06282ae2246cf2b9677d6568e5556"
+  },
+  "docs/references/portrait-hover-1440.png": {
+    "mtime": 1792987400.2494442,
+    "seen": 1792998293.6351557,
+    "ast_hash": "2afb7c0eba63e4125e4cb202f437797a",
+    "semantic_hash": "2afb7c0eba63e4125e4cb202f437797a"
+  },
+  "docs/references/portrait-hover-320.png": {
+    "mtime": 1792987408.9354658,
+    "seen": 1792998293.6351557,
+    "ast_hash": "da159facaf7f560e3af40e99cee7a806",
+    "semantic_hash": "da159facaf7f560e3af40e99cee7a806"
+  },
+  "docs/references/portrait-hover-390.png": {
+    "mtime": 1792987406.7211368,
+    "seen": 1792998293.6351557,
+    "ast_hash": "493520d98baf57955ee049a01337fd96",
+    "semantic_hash": "493520d98baf57955ee049a01337fd96"
+  },
+  "docs/references/portrait-straight.png": {
+    "mtime": 1792987399.6669295,
+    "seen": 1792998293.6351557,
+    "ast_hash": "e043204a0b415bfbe45cceb5ed2c6087",
+    "semantic_hash": "e043204a0b415bfbe45cceb5ed2c6087"
+  },
+  "docs/references/quote-inception.png": {
+    "mtime": 1792987441.5037081,
+    "seen": 1792998293.6351557,
+    "ast_hash": "f0700f6ce0b642cbd9e7c27c4d1db4e9",
+    "semantic_hash": "f0700f6ce0b642cbd9e7c27c4d1db4e9"
+  },
+  "docs/references/quote-rdr2.png": {
+    "mtime": 1792987440.6887527,
+    "seen": 1792998293.6351557,
+    "ast_hash": "61d5e13c519e4bbf6309ab7868510806",
+    "semantic_hash": "61d5e13c519e4bbf6309ab7868510806"
+  },
+  "docs/references/quote-witcher.png": {
+    "mtime": 1792987442.4901793,
+    "seen": 1792998293.6351557,
+    "ast_hash": "17abc6dc6a25b3e795ac075d8fbf06cd",
+    "semantic_hash": "17abc6dc6a25b3e795ac075d8fbf06cd"
+  },
+  "docs/references/shelf-hover-detail.png": {
+    "mtime": 1792987442.8249135,
+    "seen": 1792998293.6351557,
+    "ast_hash": "86a48467eee0e3215fa2fb3295c4fe12",
+    "semantic_hash": "86a48467eee0e3215fa2fb3295c4fe12"
+  },
+  "docs/references/shelf-quotes-user-reference.png": {
+    "mtime": 1792979467.169097,
+    "seen": 1792998293.6351557,
+    "ast_hash": "93980769bded743673951b7d60ca1094",
+    "semantic_hash": "93980769bded743673951b7d60ca1094"
+  },
+  "docs/references/shelf-witcher-hover.png": {
+    "mtime": 1792987442.6999657,
+    "seen": 1792998293.6351557,
+    "ast_hash": "7e4ff750d3e1d5e7abd4efa7f114ac49",
+    "semantic_hash": "7e4ff750d3e1d5e7abd4efa7f114ac49"
+  },
+  "docs/references/soft-speech-bubble-preview.png": {
+    "mtime": 1792982474.0300655,
+    "seen": 1792998293.6351557,
+    "ast_hash": "70d5a82645e7b16520e3d16c791f7a4f",
+    "semantic_hash": "70d5a82645e7b16520e3d16c791f7a4f"
+  },
+  "docs/references/sticky-cursor-pill.png": {
+    "mtime": 1792987662.2615216,
+    "seen": 1792998293.6351557,
+    "ast_hash": "f93e3a49cb3f9db5a4fb697cada774cd",
+    "semantic_hash": "f93e3a49cb3f9db5a4fb697cada774cd"
+  },
+  "public/images/alan-character-default.png": {
+    "mtime": 1790828308.7557976,
+    "seen": 1792998293.6351557,
+    "ast_hash": "d7d4ac4ab05c846cadd65a68c4740333",
+    "semantic_hash": "d7d4ac4ab05c846cadd65a68c4740333"
+  },
+  "public/images/alan-character-greeting.png": {
+    "mtime": 1790837713.7758257,
+    "seen": 1792998293.6351557,
+    "ast_hash": "68a95d6ea77e69d364528b144d4492a3",
+    "semantic_hash": "68a95d6ea77e69d364528b144d4492a3"
+  },
+  "public/images/alan-character-wave.png": {
+    "mtime": 1790828508.1766398,
+    "seen": 1792998293.6351557,
+    "ast_hash": "4dc54c337a7f7dff6fb092fa49359aba",
+    "semantic_hash": "4dc54c337a7f7dff6fb092fa49359aba"
+  },
+  "public/images/alan-head-bottom-greeting.png": {
+    "mtime": 1790838061.996449,
+    "seen": 1792998293.6351557,
+    "ast_hash": "4eb4da9c8e09de2d63c462fd011794cf",
+    "semantic_hash": "4eb4da9c8e09de2d63c462fd011794cf"
+  },
+  "public/images/alan-head-bottom-left-greeting.png": {
+    "mtime": 1790838315.2202346,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fde96af119ffe83d3e927a5b584397ab",
+    "semantic_hash": "fde96af119ffe83d3e927a5b584397ab"
+  },
+  "public/images/alan-head-bottom-left.png": {
+    "mtime": 1790836967.1133761,
+    "seen": 1792998293.6351557,
+    "ast_hash": "69a572390793b156975a9a9729c63a60",
+    "semantic_hash": "69a572390793b156975a9a9729c63a60"
+  },
+  "public/images/alan-head-bottom-right-greeting.png": {
+    "mtime": 1790838364.6612377,
+    "seen": 1792998293.6351557,
+    "ast_hash": "29e1793d81e5ac462503f666ee0e0a66",
+    "semantic_hash": "29e1793d81e5ac462503f666ee0e0a66"
+  },
+  "public/images/alan-head-bottom-right.png": {
+    "mtime": 1790837017.5273738,
+    "seen": 1792998293.6351557,
+    "ast_hash": "0fc12f114b845f14058029dd14fbdf48",
+    "semantic_hash": "0fc12f114b845f14058029dd14fbdf48"
+  },
+  "public/images/alan-head-bottom.png": {
+    "mtime": 1790836807.572003,
+    "seen": 1792998293.6351557,
+    "ast_hash": "a667097442902cec4446e92f7add82c5",
+    "semantic_hash": "a667097442902cec4446e92f7add82c5"
+  },
+  "public/images/alan-head-left-greeting.png": {
+    "mtime": 1790838113.991431,
+    "seen": 1792998293.6351557,
+    "ast_hash": "9ccd25392896a51fc814480d1002c191",
+    "semantic_hash": "9ccd25392896a51fc814480d1002c191"
+  },
+  "public/images/alan-head-left.png": {
+    "mtime": 1790836584.4082284,
+    "seen": 1792998293.6351557,
+    "ast_hash": "09d18cde6a02cbc20a1dcfd9da2740d8",
+    "semantic_hash": "09d18cde6a02cbc20a1dcfd9da2740d8"
+  },
+  "public/images/alan-head-right-greeting.png": {
+    "mtime": 1790838160.66059,
+    "seen": 1792998293.6351557,
+    "ast_hash": "abf3e07e90f66b3ba494930e6a712e7d",
+    "semantic_hash": "abf3e07e90f66b3ba494930e6a712e7d"
+  },
+  "public/images/alan-head-right.png": {
+    "mtime": 1790836758.2154562,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fda5126679ca784fb2a259ec0ee78a93",
+    "semantic_hash": "fda5126679ca784fb2a259ec0ee78a93"
+  },
+  "public/images/alan-head-top-greeting.png": {
+    "mtime": 1790838014.15953,
+    "seen": 1792998293.6351557,
+    "ast_hash": "d0e196ef363437c26fb24f76af020565",
+    "semantic_hash": "d0e196ef363437c26fb24f76af020565"
+  },
+  "public/images/alan-head-top-left-greeting.png": {
+    "mtime": 1790838216.6031816,
+    "seen": 1792998293.6351557,
+    "ast_hash": "3480878ad3f5a02dc44c0dc38d72dbd2",
+    "semantic_hash": "3480878ad3f5a02dc44c0dc38d72dbd2"
+  },
+  "public/images/alan-head-top-left.png": {
+    "mtime": 1790836856.8861847,
+    "seen": 1792998293.6351557,
+    "ast_hash": "85b22da044c717151575930c8d3dea19",
+    "semantic_hash": "85b22da044c717151575930c8d3dea19"
+  },
+  "public/images/alan-head-top-right-greeting.png": {
+    "mtime": 1790838265.17875,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fa47bd1c2fa205a49bd7b52531e4fe88",
+    "semantic_hash": "fa47bd1c2fa205a49bd7b52531e4fe88"
+  },
+  "public/images/alan-head-top-right.png": {
+    "mtime": 1790836913.2719576,
+    "seen": 1792998293.6351557,
+    "ast_hash": "67325aa4c7913e6b9253234a7749dbb4",
+    "semantic_hash": "67325aa4c7913e6b9253234a7749dbb4"
+  },
+  "public/images/alan-head-top.png": {
+    "mtime": 1790836641.331207,
+    "seen": 1792998293.6351557,
+    "ast_hash": "9ac709c31a9fa0afd7ac10455187fd69",
+    "semantic_hash": "9ac709c31a9fa0afd7ac10455187fd69"
+  },
+  "public/images/design/505-cover.jpg": {
+    "mtime": 1792552849.923011,
+    "seen": 1792998293.6351557,
+    "ast_hash": "db02af39318217f25d68682748738b2a",
+    "semantic_hash": "db02af39318217f25d68682748738b2a"
+  },
+  "public/images/design/alan-portrait.jpg": {
+    "mtime": 1792462615.6629274,
+    "seen": 1792998293.6351557,
+    "ast_hash": "0836de7b7a1d797fb33e55ba9cfa1dc4",
+    "semantic_hash": "0836de7b7a1d797fb33e55ba9cfa1dc4"
+  },
+  "public/images/design/aurelia-preview.jpg": {
+    "mtime": 1792462511.16029,
+    "seen": 1792998293.6351557,
+    "ast_hash": "5fb562621b3472e4e6f91bcb15a37734",
+    "semantic_hash": "5fb562621b3472e4e6f91bcb15a37734"
+  },
+  "public/images/design/blob-original.svg": {
+    "mtime": 1792849745.968363,
+    "seen": 1792998293.6351557,
+    "ast_hash": "8f6d5c8ca13cc44610d2291dfdc380e4",
+    "semantic_hash": "8f6d5c8ca13cc44610d2291dfdc380e4"
+  },
+  "public/images/design/inception-cover.jpg": {
+    "mtime": 1792554975.050736,
+    "seen": 1792998293.6351557,
+    "ast_hash": "b65b95cf1fb7077940cd248b40b01d0c",
+    "semantic_hash": "b65b95cf1fb7077940cd248b40b01d0c"
+  },
+  "public/images/design/mr-brightside-cover.jpg": {
+    "mtime": 1792552873.188502,
+    "seen": 1792998293.6351557,
+    "ast_hash": "5be4447a258414bde57bfb7aebb611c8",
+    "semantic_hash": "5be4447a258414bde57bfb7aebb611c8"
+  },
+  "public/images/design/munchpal-preview.jpg": {
+    "mtime": 1792462511.1888762,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fdb5f3ceade1c3948f4a5528eecf64d6",
+    "semantic_hash": "fdb5f3ceade1c3948f4a5528eecf64d6"
+  },
+  "public/images/design/pawfriend-preview.jpg": {
+    "mtime": 1792462511.1718276,
+    "seen": 1792998293.6351557,
+    "ast_hash": "ad93b67c98907c640d9763c96242d612",
+    "semantic_hash": "ad93b67c98907c640d9763c96242d612"
+  },
+  "public/images/design/paylecta-preview.jpg": {
+    "mtime": 1792462511.166323,
+    "seen": 1792998293.6351557,
+    "ast_hash": "b7d0999a2bcb71c967dd1218a4e9fef7",
+    "semantic_hash": "b7d0999a2bcb71c967dd1218a4e9fef7"
+  },
+  "public/images/design/rdr2-cover.jpg": {
+    "mtime": 1792552873.376803,
+    "seen": 1792998293.6351557,
+    "ast_hash": "071cbd529f826fd7b887c085452ae649",
+    "semantic_hash": "071cbd529f826fd7b887c085452ae649"
+  },
+  "public/images/design/vinyl-505.svg": {
+    "mtime": 1792849745.9835007,
+    "seen": 1792998293.6351557,
+    "ast_hash": "340c8ffa8de34003f6fa90f48570d945",
+    "semantic_hash": "340c8ffa8de34003f6fa90f48570d945"
+  },
+  "public/images/design/vinyl-mr-brightside.svg": {
+    "mtime": 1792849745.9845598,
+    "seen": 1792998293.6351557,
+    "ast_hash": "fe139d9286a69629e534fa13bc821c20",
+    "semantic_hash": "fe139d9286a69629e534fa13bc821c20"
+  },
+  "public/images/design/witcher-book-open.png": {
+    "mtime": 1792844975.5732536,
+    "seen": 1792998293.6351557,
+    "ast_hash": "61d0fe972ffe1a9e5ff6a18ad98280b8",
+    "semantic_hash": "61d0fe972ffe1a9e5ff6a18ad98280b8"
+  },
+  "public/images/design/witcher-cover.jpg": {
+    "mtime": 1792554978.3603642,
+    "seen": 1792998293.6351557,
+    "ast_hash": "df88c5723935189ddf680580f2178a3f",
+    "semantic_hash": "df88c5723935189ddf680580f2178a3f"
+  }
+}
