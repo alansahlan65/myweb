@@ -6,3 +6,11 @@ out/
 !.env.example
 playwright-report/
 test-results/
+
+# Visual-review captures and measurements regenerate on every test run.
+# Curated evidence cited by docs stays tracked; new captures stay out of git.
+.impeccable/review/*.png
+.impeccable/review/*.json
+
+# Graph build caches are machine-local and rebuild on demand.
+graphify-out/cache/

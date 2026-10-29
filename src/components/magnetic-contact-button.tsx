@@ -10,7 +10,7 @@ type Spring = { value: number; velocity: number; target: number };
 const spring = (): Spring => ({ value: 0, velocity: 0, target: 0 });
 const clamp = (value: number, limit: number) => Math.max(-limit, Math.min(value, limit));
 function advance(s: Spring, dt: number) {
-  s.velocity += ((s.target - s.value) * 100 - s.velocity * 10) * dt;
+  s.velocity += ((s.target - s.value) * 100 - s.velocity * 14) * dt;
   s.value += s.velocity * dt;
   if (Math.abs(s.target - s.value) < .001 && Math.abs(s.velocity) < .005) {
     s.value = s.target; s.velocity = 0; return false;
@@ -52,8 +52,8 @@ export function MagneticContactButton({ variant = "arrow", title }: { variant?: 
       const dy = clamp(y.value, diameter * .21);
       const squash = clamp(press.value, 1.1);
       // Liquid observes only this silhouette. Text and icons stay crisp above it.
-      if (surface.current) surface.current.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + squash * .13}, ${1 - squash * .17})`;
-      if (icon.current) icon.current.style.transform = `translate3d(${dx * 1.12}px, ${dy * 1.12}px, 0)`;
+      if (surface.current) surface.current.style.transform = `translate3d(${dx}px, ${dy}px, 0) scale(${1 + squash * .07}, ${1 - squash * .1})`;
+      if (icon.current) icon.current.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
       if (settling) frame = requestAnimationFrame(render);
       else container!.dataset.settled = "true";
     }
@@ -150,8 +150,8 @@ export function MagneticContactButton({ variant = "arrow", title }: { variant?: 
   return (
     <div ref={root} className={`${styles.magnet} ${variant === "pill" ? styles.pill : ""}`} data-variant={variant} data-enhanced={enhanced} data-magnetic="false" data-pressed="false" data-settled="true">
       <span className={styles.fallback} aria-hidden="true" />
-      {enhanced ? <Liquid className={styles.liquid} fill="var(--magnetic-fill)" blur={6} contrast={18} filterPadding={32} aria-hidden="true">
-        <Liquid.Item effect="move" move={{ springiness: .7, wobble: .35, stretch: .4, trail: .25, advanced: { force: .12 } }}>
+      {enhanced ? <Liquid className={styles.liquid} fill="var(--magnetic-fill)" blur={5} contrast={24} filterPadding={32} aria-hidden="true">
+        <Liquid.Item effect="move" move={{ springiness: .88, wobble: .06, stretch: .03, trail: 0 }}>
           <span ref={surface} className={styles.surface} />
         </Liquid.Item>
       </Liquid> : null}

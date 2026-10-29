@@ -26,7 +26,7 @@
 .content :is(a, button) { scroll-margin-block: 8px; }
 :is(.toggle, .close, .action):active { transform: scale(.96); }
 .links { display: flex; flex-direction: column; gap: 12px; }
-.link { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-block-size: 48px; inline-size: fit-content; max-inline-size: 100%; padding-block: 4px; font-size: clamp(30px, 8.5vw, 40px); font-weight: 500; line-height: 1.4; letter-spacing: -.03em; transform-origin: bottom; opacity: 1; transform: none; transition: color var(--motion-fast) ease; }
+.link { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-block-size: 48px; inline-size: fit-content; max-inline-size: 100%; padding-block: 4px; font-size: clamp(30px, 8.5vw, 40px); font-weight: 500; line-height: 1.4; letter-spacing: -.03em; transform-origin: bottom; opacity: 1; transform: none; transition: color var(--motion-fast) var(--ease-out); }
 .link > span:first-child { min-inline-size: 0; overflow-wrap: anywhere; }
 .current { flex: 0 0 6px; inline-size: 6px; block-size: 6px; border-radius: var(--radius-pill); background: currentColor; opacity: 0; }
 .link[aria-current="page"] .current { opacity: 1; }

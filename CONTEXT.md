@@ -14,7 +14,7 @@ The personal background and interests page, labelled "Know me better" in the nav
 A piece of Alan's product-design work presented in the portfolio. The initial selection is Paylecta, Aurelia, PawFriend, and Munchpal.
 
 **Project preview**:
-The image and title introducing a Project in Home's selected-work section.
+The image that introduces a Project in Home's selected-work section. Its name and arrow reveal on hover, keyboard focus, or touch.
 
 **Projects page**:
 A dedicated page for Alan's portfolio projects, distinct from Home's selected-work section.

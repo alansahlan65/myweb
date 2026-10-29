@@ -7,9 +7,24 @@
       "files": 111,
       "token_usage_status": "unavailable_host_session",
       "note": "Token usage was not returned by worker tools. Numeric zeros are placeholders, not measured zero usage."
+    },
+    {
+      "date": "2026-10-29T02:28:14.220105+00:00",
+      "mode": "incremental update",
+      "input_tokens": 3900,
+      "output_tokens": 3800,
+      "files": 56
+    },
+    {
+      "date": "2026-10-29T02:50:54.840454+00:00",
+      "mode": "incremental update",
+      "input_tokens": 323906,
+      "output_tokens": 94705,
+      "files": 21,
+      "token_usage_status": "measured_from_host_session"
     }
   ],
-  "total_input_tokens": 0,
-  "total_output_tokens": 0,
-  "token_usage_status": "unavailable_host_session"
+  "total_input_tokens": 327806,
+  "total_output_tokens": 98505,
+  "token_usage_status": "mixed_host_session"
 }

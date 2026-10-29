@@ -414,6 +414,19 @@ test("Contact stays within a short viewport and scrolls to keyboard-focused cont
   await expect(page.getByRole("dialog", { name: "Navigation", exact: true })).toBeVisible();
 });
 
+test("Footer local time follows the minute and resyncs when the tab regains focus", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-10-29T03:59:20Z") });
+  await page.goto("/about");
+  const clock = page.locator(".local-time");
+  await expect(clock).toContainText("10:59 AM GMT+7");
+  await page.clock.fastForward(41_000);
+  await expect(clock).toContainText("11:00 AM GMT+7");
+  await page.clock.setFixedTime(new Date("2026-10-29T04:07:45Z"));
+  await expect(clock).toContainText("11:00 AM GMT+7");
+  await page.evaluate(() => window.dispatchEvent(new Event("focus")));
+  await expect(clock).toContainText("11:07 AM GMT+7");
+});
+
 test("Shelf mouse reveals persist on click and quote tooltips follow, clamp, and dismiss", async ({ page }) => {
   await visit(page, "/about");
   const album = page.getByRole("button", { name: "505 by Arctic Monkeys. Reveal record.", exact: true });

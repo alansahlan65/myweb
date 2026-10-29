@@ -22,16 +22,6 @@
   pointer-events: none;
 }
 
-.leading::after {
-  inset-block-start: 50%;
-  inset-block-end: auto;
-  inset-inline-start: -12px;
-  width: 18px;
-  height: 22px;
-  clip-path: polygon(100% 0, 100% 100%, 0 80%);
-  transform: translateY(-50%);
-}
-
 .accent {
   position: absolute;
   inset-block-start: -24px;

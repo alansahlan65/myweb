@@ -27,7 +27,7 @@ Requirements and approved starting motion limits for the Home and About implemen
 ### Magnetic contact controls
 
 - The arrow CTA in Home and About's pale-blue contact panel pulls toward a fine pointer with bounded spring movement. Its target remains fixed, including a 14px pointer margin around the circle.
-- Use `liquid-gooey` 0.2.2 Move for a liquid silhouette beneath the crisp arrow. Held presses squish the surface; release rebounds. Keep the existing 64px desktop and 48px compact diameters, ink/hover colors, and immediate Contact modal action.
+- Use `liquid-gooey` 0.2.2 Move for a rigid silhouette beneath the crisp arrow: its shape does not change, with almost no velocity stretch and no droplet trail. Held presses squish the surface by at most 10%; release rebounds. Keep the existing 64px desktop and 48px compact diameters, ink/hover colors, and immediate Contact modal action.
 - Touch receives press feedback without magnetic tracking. Reduced motion and forced colors use a static circle, with keyboard operation and focus restoration preserved. Stop decorative motion offscreen, in a hidden tab, and behind the modal.
 - References: [Olivier Larose's magnetic button](https://blog.olivierlarose.com/tutorials/magnetic-button) and [Liquid Gooey](https://libraries.dev/gooey).
 

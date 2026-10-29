@@ -4,7 +4,7 @@
 
 Load these two skills before starting any work in this repo.
 
-`graphify` first. A graph already exists at `graphify-out/` (built 2026-10-26), so skip the build pipeline and go straight to `graphify query "<question>"` for anything about how the code works, what calls what, or where something lives. Read `graphify-out/GRAPH_REPORT.md` for the god nodes and community map. Rebuild only when the graph has drifted from the source, using `graphify . --update`.
+`graphify` first. A graph already exists at `graphify-out/` (built 2026-10-29), so skip the build pipeline and go straight to `graphify query "<question>"` for anything about how the code works, what calls what, or where something lives. Read `graphify-out/GRAPH_REPORT.md` for the god nodes and community map. Rebuild only when the graph has drifted from the source, using `graphify . --update`.
 
 `unslop` second. It applies to every piece of writing this agent produces: replies, commit messages, docs, code comments, and UI copy. No em dashes, no bolded label and colon lists, no "not just X but Y", no puffery.
 

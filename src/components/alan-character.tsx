@@ -62,10 +62,12 @@ export function AlanCharacter() {
     const character = characterRef.current;
     if (!character) return;
     const instant = keyboardRef.current || !directionalMotion || !CSS.supports("mix-blend-mode", "plus-lighter");
-    const easing = getComputedStyle(character).getPropertyValue("--project-title-ease").trim();
+    const computed = getComputedStyle(character);
+    const easing = computed.getPropertyValue("--ease-out").trim();
+    const duration = Number(computed.getPropertyValue("--alan-face-duration-ms"));
     const faces = [...character.querySelectorAll<HTMLElement>("[data-head-expression]")];
     const target = faces.findIndex(face => face.parentElement?.dataset.headView === displayedFacing && face.dataset.headExpression === (greetingActive ? "greeting" : "rest"));
-    blendsRef.current[0] = blendLayers(faces, target, blendsRef.current[0], 150, easing, instant);
+    blendsRef.current[0] = blendLayers(faces, target, blendsRef.current[0], duration, easing, instant);
   }, [displayedFacing, greetingActive, directionalMotion]);
 
   useLayoutEffect(() => {
@@ -73,7 +75,7 @@ export function AlanCharacter() {
     if (!character) return;
     const instant = keyboardRef.current || !directionalMotion || !CSS.supports("mix-blend-mode", "plus-lighter");
     const computed = getComputedStyle(character);
-    const easing = computed.getPropertyValue("--project-title-ease").trim();
+    const easing = computed.getPropertyValue("--ease-out").trim();
     const duration = Number(computed.getPropertyValue("--alan-pose-duration-ms"));
     const bodies = [...character.querySelectorAll<HTMLElement>('[data-character-part="rest-body"], [data-character-part="greeting-body"]')];
     blendsRef.current[1] = blendLayers(bodies, Number(greetingActive), blendsRef.current[1], duration, easing, instant);

@@ -179,7 +179,7 @@ Geist Variable and Caveat are loaded locally through the packages imported in `s
 - Home's main heading uses the display role, then `clamp(34px, 6vw, 44px)` at 1000px and below. Its line height and tracking remain unchanged.
 - About's main heading uses the about-heading role, reducing to 40px in the compact layout, 32px below 600px, and 28px below 360px. Location follows immediately beneath it.
 - Contact-panel headings use the contact-heading role and reduce to 30px in the compact layout.
-- Project titles, categories, and descriptions use their respective roles. The headline role remains in the Contact modal; it no longer describes project titles. The Shelf heading remains 26px on desktop and 24px in the compact layout.
+- Project names use white 20px text in a bottom overlay; the former category and description roles are no longer rendered. The headline role remains in the Contact modal. The Shelf heading remains 26px on desktop and 24px in the compact layout.
 - Home and About introductions use the introduction role. Home reduces to 16px in the compact layout; About reduces to 16px below 600px. Regular body copy uses the body role.
 - The shared identity uses 20px name text and a 14px role. Below 360px, the role uses 13px.
 - Caveat appears in personal notes, the Shelf prompt, and the portrait caption. Alan's closing signature uses custom vector lettering. Quote typography is unchanged.
@@ -191,7 +191,7 @@ The frontmatter's spacing tokens define the desktop shell: a sticky rail, a sepa
 
 Home uses section-gap between its main sections, reducing to 64px in the compact layout. Its introduction stops at reading-width, while project previews, experience, contact, and footer share the main column's edges. About retains 64px between sections on desktop and 48px in the compact layout.
 
-Project previews use two columns at widths of 600px and above, and one column below 600px. The desktop grid uses 40px row gaps and artwork-gap between columns. Compact layouts use 32px row gaps and a 24px artwork-gap. Each image has a 3:2 frame, followed by its caption after 16px.
+Project previews use two columns at widths of 600px and above, and one column below 600px. The desktop grid uses 40px row gaps and artwork-gap between columns. Compact layouts use 32px row gaps and a 24px artwork-gap. Each image has a 3:2 frame and carries no caption below it.
 
 The compact header groups the name, role, and Blob buddy together on the left, with only the menu toggle on the right. Desktop keeps the existing identity arrangement in its rail.
 
@@ -199,7 +199,7 @@ The sidebar Alan character occupies 144px by 240px and can shrink vertically to 
 
 The desktop Alan greeting stays on one line, with maximum width `min(192px, calc(100vw - 48px))` and both bubble and tail centered above the character. Compact Home positions the bubble 12px above its figure. Below 600px the greeting wraps inside the character column at 12px, with its tail centered. Keep the complete greeting and tail clear of text and within the page.
 
-The Shelf is an inline-size container. Above 1000px, all five items fit within a full-width row using 16px gaps and `--shelf-unit: min(.88px, calc((100cqw - 112px) / 872))`. The five original hit widths total 872 units; 112px reserves 48px edge padding and four gaps totaling 64px. Cover, stage, record, book, and reveal dimensions scale together while text sizes stay unchanged. Each hit area stays fixed during its reveal. At 1000px and below, the Shelf retains its full-size `1px` unit, 24px gaps, and horizontal scroller.
+The Shelf is an inline-size container. Above 1000px, all five items fit within a full-width row using 32px gaps and `--shelf-unit: min(.88px, calc((100cqw - 176px) / 872))`. The five original hit widths total 872 units; 176px reserves 48px edge padding and four gaps totaling 128px, which keeps the vinyl and open-book reveals clear of their neighbors. Cover, stage, record, book, and reveal dimensions scale together while text sizes stay unchanged. Each hit area stays fixed during its reveal. At 1000px and below, the Shelf retains its full-size `1px` unit, 24px gaps, and horizontal scroller.
 
 Quote bubbles render in a fixed portal outside that scroller. Their 320px preferred width shrinks within 24px viewport gutters, with 14px reserved above and below for the tail. Positioning also respects the visual viewport and flips above or below the artwork or pointer when space requires it.
 
@@ -255,7 +255,7 @@ About's Experience section sits between the introduction and the Shelf. Four row
 
 The skill list uses flat 12px labels with fine vertical separators, an 18px line height, and 8px by 12px wrapping gaps. It has no pill fill or action states.
 
-The four project previews are static articles. Rounded artwork carries the image; titles, categories, and descriptions sit outside it on the canvas. Images use cover crops focused on the existing product screens: Paylecta at 90% center, PawFriend at 85% center, and Aurelia and Munchpal at right center. Responsive image source sizes account for the roughly twofold cover crop. Preserve image proportions and the supplied artwork.
+The four project previews are static articles, so the image is the whole card. Rounded artwork carries the image only. Hovering or focusing a card fades in a bottom gradient with the project name at the left and an ArrowUpRight at the right, while the image scales to 1.03. Touch devices show the name and arrow without hover, and reduced motion removes the scale. Images use cover crops focused on the existing product screens: Paylecta at 90% center, PawFriend at 85% center, and Aurelia and Munchpal at right center. Responsive image source sizes account for the roughly twofold cover crop. Preserve image proportions and the supplied artwork.
 
 Home has no inactive view switch or View All control. Shared navigation exposes Home and About; the dormant Projects menu entry is removed until that page is designed.
 
@@ -277,7 +277,7 @@ Home and About's contact-panel arrow retains its circular ink surface and white 
 
 The sidebar's Get in touch pill shares the same component and liquid behavior. Keep its 144px by 44px footprint, white MessageCircle icon, and 14px label. Its pointer margin is 8px, and the sidebar reserves extra clipping room without changing content alignment. Limit its magnetic travel using the shorter 44px dimension.
 
-Fine-pointer hover attracts the surface toward the pointer, limited to 18% of the diameter. Independent springs use stiffness 100, damping 10, and mass 1, carrying velocity through direction changes and returning to center on leave. Liquid Gooey's Move effect gives the silhouette a soft trail and velocity deformation. The arrow lives on a separate, unfiltered layer. A held press compresses the surface, and release rebounds. Opening the Contact modal remains immediate.
+Fine-pointer hover attracts the surface toward the pointer, limited to 21% of the diameter. Independent springs use stiffness 100, damping 14, and mass 1, carrying velocity through direction changes and returning to center on leave. Liquid Gooey's Move effect keeps the silhouette rigid in shape: springiness 0.88, stretch 0.03, and no droplet trail, so the control reads as magnetically pulled rather than liquid. The icon sits on the surface. A held press compresses the surface 7% across and 10% down, and release rebounds. Opening the Contact modal remains immediate.
 
 Touch gets press feedback without magnetic tracking. Reduced motion and forced colors use a static circle and native keyboard focus. Decorative motion stops offscreen, in a hidden tab, and behind the Contact modal. Source: `src/components/magnetic-contact-button.tsx` and its CSS module.
 

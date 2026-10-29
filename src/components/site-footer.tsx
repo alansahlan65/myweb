@@ -9,10 +9,29 @@ const formatter = new Intl.DateTimeFormat("en-US", { timeZone: "Asia/Jakarta", h
 export function SiteFooter() {
   const [time, setTime] = useState<string | null>(null);
   useEffect(() => {
+    let timer = 0;
     const update = () => setTime(formatter.format(new Date()));
-    update();
-    const timer = setInterval(update, 30_000);
-    return () => clearInterval(timer);
+    const schedule = () => {
+      update();
+      const now = new Date();
+      const delay = 60_000 - (now.getSeconds() * 1000 + now.getMilliseconds()) + 50;
+      timer = window.setTimeout(schedule, delay);
+    };
+    const resync = () => {
+      if (document.visibilityState !== "visible") return;
+      window.clearTimeout(timer);
+      schedule();
+    };
+    schedule();
+    document.addEventListener("visibilitychange", resync);
+    window.addEventListener("focus", resync);
+    window.addEventListener("pageshow", resync);
+    return () => {
+      window.clearTimeout(timer);
+      document.removeEventListener("visibilitychange", resync);
+      window.removeEventListener("focus", resync);
+      window.removeEventListener("pageshow", resync);
+    };
   }, []);
   return (
     <footer className="site-footer">

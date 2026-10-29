@@ -1,5 +1,6 @@
 .character.character {
   --alan-pose-duration-ms: 240;
+  --alan-face-duration-ms: 150;
   display: block;
   padding: 0;
   border: 0;
@@ -14,8 +15,6 @@
   -webkit-tap-highlight-color: transparent;
 }
 .character:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 4px; border-radius: 12px; }
-/* Keep the entrance reveal, then release its mask for the greeting accents. */
-:global(.hero) .character.character { animation-fill-mode: backwards; }
 /* Leave room for the raised hand beside the compact About frame while
    containing the larger transparent pose canvas. */
 .artViewport { position: absolute; inset: 0 -16px; overflow: clip; }
@@ -39,10 +38,10 @@
    from the body; the lower cut now follows the gap beside the hand. */
 .restArm { clip-path: polygon(0 37%, 37.5% 37%, 39.5% 39%, 39.5% 52%, 37.8% 58%, 37.8% 70%, 0 70%); }
 /* A short arc around the shoulder shares the pose blend's clock. */
-.waveArm { clip-path: polygon(0 24%, 30% 24%, 30% 28.5%, 35% 29.5%, 35% 35.5%, 38.5% 38%, 39.7% 39%, 39.7% 50%, 0 50%); transform-origin: 39.5% 39%; opacity: 0; transform: rotate(-12deg); transition: transform calc(var(--alan-pose-duration-ms) * 1ms) var(--project-title-ease); }
+.waveArm { clip-path: polygon(0 24%, 30% 24%, 30% 28.5%, 35% 29.5%, 35% 35.5%, 38.5% 38%, 39.7% 39%, 39.7% 50%, 0 50%); transform-origin: 39.5% 39%; opacity: 0; transform: rotate(-12deg); transition: transform calc(var(--alan-pose-duration-ms) * 1ms) var(--ease-out); }
 .character[data-greeting="true"] .waveArm { transform: rotate(0); }
 .ground { position: absolute; left: 50%; inset-block-end: 3.5%; width: 46%; height: 2%; border-radius: 50%; background: #c5c1b5; opacity: .18; filter: blur(7px); transform: translateX(-50%); z-index: -1; }
-.bubble { position: absolute; inset-block-end: calc(100% - 8px); left: 50%; width: max-content; max-width: min(192px, calc(100vw - 48px)); padding: 6px 8px; border-radius: 12px; font-size: 13px; text-align: center; white-space: nowrap; opacity: 0; visibility: hidden; transform: translate3d(-50%, 4px, 0) scale(.97); transform-origin: 50% 100%; transition: opacity 150ms var(--project-title-ease), transform 150ms var(--project-title-ease), visibility 150ms; pointer-events: none; }
+.bubble { position: absolute; inset-block-end: calc(100% - 8px); left: 50%; width: max-content; max-width: min(192px, calc(100vw - 48px)); padding: 6px 8px; border-radius: 12px; font-size: 13px; text-align: center; white-space: nowrap; opacity: 0; visibility: hidden; transform: translate3d(-50%, 4px, 0) scale(.97); transform-origin: 50% 100%; transition: opacity calc(var(--alan-face-duration-ms) * 1ms) var(--ease-out), transform calc(var(--alan-face-duration-ms) * 1ms) var(--ease-out), visibility calc(var(--alan-face-duration-ms) * 1ms); pointer-events: none; }
 .bubble::after { inset-inline-start: calc(50% - 16px); }
 .bubble > span { display: none; }
 .character[data-greeting="true"] .bubble { opacity: 1; visibility: visible; transform: translate3d(-50%, 0, 0) scale(1); }

@@ -69,9 +69,15 @@ export function ContactProvider({ children }: { children: ReactNode }) {
             </Tooltip.Provider>
             <div className="email-fallback">
               <span className="email-address">{EMAIL}</span>
-              <button type="button" className="copy-email" onClick={copyEmail} aria-label={copyStatus === "copied" ? "Email address copied" : "Copy email address"}>
-                {copyStatus === "copied" ? <Check size={16} /> : <Copy size={16} />}
-                <span>{copyStatus === "copied" ? "Copied" : "Copy"}</span>
+              <button type="button" className="copy-email" data-status={copyStatus} onClick={copyEmail} aria-label={copyStatus === "copied" ? "Email address copied" : "Copy email address"}>
+                <span className="copy-email-icon" aria-hidden="true">
+                  <span data-glyph="copy"><Copy size={16} /></span>
+                  <span data-glyph="check"><Check size={16} /></span>
+                </span>
+                <span className="copy-email-label" aria-hidden="true">
+                  <span data-label="copy">Copy</span>
+                  <span data-label="copied">Copied</span>
+                </span>
               </button>
             </div>
             <span className="sr-only" role="status">{copyStatus === "copied" ? "Email address copied." : copyStatus === "failed" ? "Select the email address above to copy it." : ""}</span>

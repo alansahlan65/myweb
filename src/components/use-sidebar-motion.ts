@@ -25,8 +25,14 @@ export function useSidebarMotion(compact: boolean) {
     // Critical damping, 0.36s response. Apple's default for a direct toggle.
     const omega = 2 * Math.PI / .36;
 
+    let painted = -1;
     function paint() {
-      const p = clamp(spring.current.value);
+      // Quantize to four decimals. The custom property drives the shell's grid
+      // column, padding, gaps, and opacity, so a frame that repeats the same
+      // value would restyle the whole subtree for no visual change.
+      const p = Math.round(clamp(spring.current.value) * 1e4) / 1e4;
+      if (p === painted) return;
+      painted = p;
       root!.style.setProperty("--rail-progress", String(p));
       root!.dataset.sidebarProgress = String(p);
       root!.dataset.sidebarVelocity = String(spring.current.velocity);

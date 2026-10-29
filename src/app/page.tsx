@@ -1,12 +1,13 @@
 import Image from "next/image";
+import { ArrowUpRight } from "lucide-react";
 import { AlanCharacter } from "@/components/alan-character";
 import { ContactPanel } from "@/components/contact-panel";
 
 const projects = [
-  { title: "Paylecta", slug: "paylecta", category: "Finance", description: "Financial dashboard and mobile experience.", image: "paylecta-preview.jpg", alt: "Paylecta financial dashboard on a laptop and mobile phone" },
-  { title: "Aurelia", slug: "aurelia", category: "Hospitality", description: "Resort discovery and booking for web and mobile.", image: "aurelia-preview.jpg", alt: "Aurelia resort booking website and mobile experience" },
-  { title: "PawFriend", slug: "pawfriend", category: "Pet adoption", description: "A place to find your next best friend.", image: "pawfriend-preview.jpg", alt: "PawFriend pet adoption website and mobile app" },
-  { title: "Munchpal", slug: "munchpal", category: "Food sharing", description: "A mobile experience for sharing surplus food.", image: "munchpal-preview.jpg", alt: "Munchpal food-sharing website and mobile app" },
+  { title: "Paylecta", slug: "paylecta", image: "paylecta-preview.jpg", alt: "Paylecta financial dashboard on a laptop and mobile phone" },
+  { title: "Aurelia", slug: "aurelia", image: "aurelia-preview.jpg", alt: "Aurelia resort booking website and mobile experience" },
+  { title: "PawFriend", slug: "pawfriend", image: "pawfriend-preview.jpg", alt: "PawFriend pet adoption website and mobile app" },
+  { title: "Munchpal", slug: "munchpal", image: "munchpal-preview.jpg", alt: "Munchpal food-sharing website and mobile app" },
 ];
 
 export default function HomePage() {
@@ -25,12 +26,15 @@ export default function HomePage() {
         <div className="section-heading"><h2 id="work-heading">Selected work</h2></div>
         <div className="project-grid">
           {projects.map((project, index) => (
-            <article key={project.title} className={`project-card project-${project.slug}`}>
-              <div className="project-image"><Image src={`/images/design/${project.image}`} alt={project.alt} fill sizes="(max-width: 359px) calc(200vw - 80px), (max-width: 599px) calc(200vw - 96px), (max-width: 848px) calc(100vw - 72px), (max-width: 1000px) 776px, (max-width: 1250px) calc(100vw - 364px), (max-width: 1328px) calc(100vw - 396px), 932px" preload={index < 2} /></div>
-              <div className="project-caption">
-                <div className="project-heading"><h3>{project.title}</h3><span>{project.category}</span></div>
-                <p>{project.description}</p>
+            <article key={project.title} className={`project-card project-${project.slug}`} tabIndex={0} aria-labelledby={`project-${project.slug}`}>
+              <div className="project-image">
+                <Image src={`/images/design/${project.image}`} alt={project.alt} fill sizes="(max-width: 359px) calc(200vw - 80px), (max-width: 599px) calc(200vw - 96px), (max-width: 848px) calc(100vw - 72px), (max-width: 1000px) 776px, (max-width: 1250px) calc(100vw - 364px), (max-width: 1328px) calc(100vw - 396px), 932px" preload={index < 2} />
+                <div className="project-reveal" aria-hidden="true">
+                  <span className="project-name">{project.title}</span>
+                  <ArrowUpRight className="project-arrow" size={20} />
+                </div>
               </div>
+              <h3 id={`project-${project.slug}`} className="sr-only">{project.title}</h3>
             </article>
           ))}
         </div>
