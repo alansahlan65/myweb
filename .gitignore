@@ -14,3 +14,11 @@ test-results/
 
 # Graph build caches are machine-local and rebuild on demand.
 graphify-out/cache/
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
