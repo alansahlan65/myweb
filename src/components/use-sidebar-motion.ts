@@ -18,7 +18,9 @@ export function useSidebarMotion(compact: boolean) {
 
   useLayoutEffect(() => {
     const root = shell.current;
-    if (!root) return;
+    const sidebar = root?.querySelector<HTMLElement>(".sidebar");
+    const character = root?.querySelector<HTMLElement>(".sidebar-character");
+    if (!root || !sidebar) return;
     const preference = matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
     let last = 0;
@@ -26,20 +28,44 @@ export function useSidebarMotion(compact: boolean) {
     const omega = 2 * Math.PI / .36;
 
     let painted = -1;
+    // The theme button rises past the toggle first, then slides across above
+    // it. Staggering the two axes keeps the 44px controls from overlapping on
+    // the diagonal, while each axis still eases smoothly.
+    function easeStep(start: number, end: number, value: number) {
+      const step = clamp((value - start) / (end - start));
+      return step * step * (3 - 2 * step);
+    }
     function paint() {
-      // Quantize to four decimals. The custom property drives the shell's grid
-      // column, padding, gaps, and opacity, so a frame that repeats the same
-      // value would restyle the whole subtree for no visual change.
+      // Quantize to four decimals. The custom properties drive the sidebar's
+      // widths, gaps, and opacity, so a frame that repeats the same value would
+      // restyle the subtree for no visual change.
       const p = Math.round(clamp(spring.current.value) * 1e4) / 1e4;
       if (p === painted) return;
       painted = p;
-      root!.style.setProperty("--rail-progress", String(p));
+      // Custom properties are inherited, so writing the progress on the shell
+      // would restyle the page content on every frame. Write it on the sidebar
+      // instead and hand the shell only the one value it needs.
+      sidebar!.style.setProperty("--rail-progress", String(p));
+      sidebar!.style.setProperty("--rail-theme-rise", String(easeStep(0, .4, p)));
+      sidebar!.style.setProperty("--rail-theme-slide", String(easeStep(.3, 1, p)));
+      root!.style.gridTemplateColumns = `calc(var(--rail-expanded) * ${1 - p} + var(--rail-compact) * ${p}) minmax(0, 1fr)`;
       root!.dataset.sidebarProgress = String(p);
       root!.dataset.sidebarVelocity = String(spring.current.velocity);
     }
 
     function rest() {
       root!.dataset.sidebarMotion = "settled";
+      fitCharacter();
+    }
+
+    // The artwork keeps one raster and scales instead of resizing, so the
+    // blended layers are not re-rastered on every frame. Its scale must match
+    // the height the row is given, which is only trustworthy while the rail is
+    // expanded; mid-motion that height is the animated one.
+    function fitCharacter() {
+      if (!character || spring.current.value > .001) return;
+      const height = character.getBoundingClientRect().height;
+      character.style.setProperty("--rail-character-fit", String(Math.min(1, height / 240)));
     }
 
     function tick(now: number) {
@@ -78,13 +104,18 @@ export function useSidebarMotion(compact: boolean) {
     paint();
     retarget.current = update;
     update();
+    // Measure before the first paint: a short viewport otherwise shows the
+    // full-size raster cropped by the row for one frame.
+    fitCharacter();
     preference.addEventListener("change", update);
     document.addEventListener("visibilitychange", update);
+    window.addEventListener("resize", fitCharacter);
     return () => {
       cancelAnimationFrame(frame);
       retarget.current = null;
       preference.removeEventListener("change", update);
       document.removeEventListener("visibilitychange", update);
+      window.removeEventListener("resize", fitCharacter);
     };
   }, []);
 

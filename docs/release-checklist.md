@@ -1,5 +1,14 @@
 # First implementation milestone
 
+## Dark mode, 2026-11-03
+
+- Added a light and dark value for every color token in `src/app/globals.css`. Dark mode swaps canvas, ink, borders, control fills, cobalt, the blue surface, tooltips, and the artwork overlay through the same variable names, so existing components follow without per-theme overrides. Light mode keeps its exact values.
+- Added a 44px theme toggle in the rail footer beside the collapse control, and in the mobile identity row below 1001px. It shows a Lucide Moon in light and a Sun in dark, keeps the "Dark mode" accessible name with `aria-pressed`, and uses an action tooltip. Both rail footer controls now use the same secondary pill as the actions above them: subtle fill, ink glyph, pill radius, no border, the shared 140ms color ease, and the same hover fill as the navigation. In the compact rail they stack with the 14px inset that centers the navigation.
+- A saved choice in `localStorage` wins. Without one, the site follows the system preference and later system changes. An inline head script applies the theme before first paint, and `theme-color` follows it, so a saved dark visit never flashes white.
+- Switching themes eases every painted color over 240ms on a linear ramp, so the large brightness change never snaps. Only paint properties animate, which keeps pointer input live and leaves layout, transforms, and scroll alone. A press commits immediately, so a second press during the fade flips from the committed theme and the two quick presses return to the starting theme.
+- All 37 browser checks passed, including five theme checks for persistence, reload, system preference, rapid presses, pill geometry and hover, rail placement, compact stacking, and the mobile row. TypeScript and the production build passed.
+- Captures: [dark Home](../.impeccable/review/theme-dark.png), [dark About](../.impeccable/review/theme-about-dark.png), [dark compact rail](../.impeccable/review/theme-dark-compact.png), [dark contact modal](../.impeccable/review/theme-contact-dark.png), [mid-fade](../.impeccable/review/theme-fade.png), and [light Home](../.impeccable/review/theme-light.png).
+
 ## Compact desktop rail, 2026-10-27
 
 - Added a desktop-only toggle at the bottom of the rail. Collapsing takes the rail from 208px to 72px; the state lasts for the session and survives client-side navigation.

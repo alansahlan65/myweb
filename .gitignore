@@ -12,6 +12,10 @@ test-results/
 .impeccable/review/*.png
 .impeccable/review/*.json
 
+# Generated review frames and shots stay out of git.
+.impeccable/review/artifacts/
+.impeccable/review/shots/
+
 # Graph build caches are machine-local and rebuild on demand.
 graphify-out/cache/
 

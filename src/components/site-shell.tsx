@@ -10,6 +10,7 @@ import { ContactProvider } from "./contact";
 import { MagneticContactButton } from "./magnetic-contact-button";
 import { MobileNavigation } from "./mobile-navigation";
 import { scrollToTop } from "./smooth-scroll";
+import { ThemeToggle } from "./theme-toggle";
 import { useSidebarMotion } from "./use-sidebar-motion";
 
 const desktopQuery = "(min-width: 1001px)";
@@ -56,7 +57,10 @@ export function SiteShell({ children }: { children: ReactNode }) {
               </Link>
               <span className="identity-blob"><BlobBuddy /></span>
             </div>
-            <MobileNavigation pathname={pathname} onNavigate={navigate} />
+            <div className="identity-actions">
+              <ThemeToggle className="theme-toggle-mobile" />
+              <MobileNavigation pathname={pathname} onNavigate={navigate} />
+            </div>
           </div>
           <div className="sidebar-character" inert={compactRail}>
             <AlanCharacter />
@@ -76,17 +80,20 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 <SquareMenu size={16} aria-hidden="true" /><span className="action-label">See my resume</span>
               </a>
             </div>
-            <button
-              type="button"
-              className="sidebar-toggle"
-              onClick={() => setCompact(current => !current)}
-              aria-expanded={!compactRail}
-              aria-controls="site-sidebar"
-              aria-label={compactRail ? "Expand sidebar" : "Collapse sidebar"}
-              title={compactRail ? "Expand sidebar" : "Collapse sidebar"}
-            >
-              <ChevronsLeft className="sidebar-toggle-icon" size={16} aria-hidden="true" />
-            </button>
+            <div className="sidebar-controls">
+              <button
+                type="button"
+                className="sidebar-toggle"
+                onClick={() => setCompact(current => !current)}
+                aria-expanded={!compactRail}
+                aria-controls="site-sidebar"
+                aria-label={compactRail ? "Expand sidebar" : "Collapse sidebar"}
+                title={compactRail ? "Expand sidebar" : "Collapse sidebar"}
+              >
+                <ChevronsLeft className="sidebar-toggle-icon" size={16} aria-hidden="true" />
+              </button>
+              <ThemeToggle />
+            </div>
           </div>
         </aside>
         <main id="main" tabIndex={-1}>{children}</main>

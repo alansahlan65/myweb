@@ -92,6 +92,7 @@ export function BlobBuddy() {
       wobble: spring(),
       pop: spring(150, 15),
       focusTilt: spring(70, 12),
+      idleTilt: spring(),
     };
     const springs = Object.values(dynamics);
     const alive = () => motionPreference.matches && visible && !document.hidden && !modalOpen;
@@ -126,13 +127,14 @@ export function BlobBuddy() {
       const wobble = clamp(dynamics.wobble.value, -6, 6);
       const tilt = clamp(dynamics.tilt.value, -5, 5);
       const cock = clamp(dynamics.focusTilt.value, -2.6, 2.6);
+      const idleTilt = clamp(dynamics.idleTilt.value, -.8, .8);
       const pop = clamp(dynamics.pop.value, -1.4, 1.4);
       const eyeX = clamp(dynamics.eyeX.value + dynamics.gazeX.value + dynamics.pressX.value, -3, 3);
       const eyeY = clamp(dynamics.eyeY.value + dynamics.gazeY.value + dynamics.pressY.value - attention * .7, -3, 3);
-      moving!.style.transform = `translateY(${-attention * .8}px) rotate(${clamp(tilt + cock, -6, 6)}deg)`;
+      moving!.style.transform = `translateY(${-attention * .8}px) rotate(${clamp(tilt + cock + idleTilt, -6, 6)}deg)`;
       jelly!.style.transform = `translateY(${Math.min(0, squash) * 4}px) scale(${1 + squash * .18}, ${1 - squash * .24}) skewX(${wobble}deg)`;
       pupils!.setAttribute("transform", `translate(${eyeX} ${eyeY})`);
-      face!.setAttribute("transform", `translate(31 30) rotate(${(tilt + cock) * .3}) scale(${1 + attention * .06 + Math.max(0, squash) * .1 + pop * .05} ${1 + attention * .12 - Math.max(0, squash) * .3 + pop * .12}) translate(-31 -30)`);
+      face!.setAttribute("transform", `translate(31 30) rotate(${(tilt + cock + idleTilt) * .3}) scale(${1 + attention * .06 + Math.max(0, squash) * .1 + pop * .05} ${1 + attention * .12 - Math.max(0, squash) * .3 + pop * .12}) translate(-31 -30)`);
       const reaction = held ? "pressed" : Math.abs(squash) > .008 ? "jelly" : over || focused ? "curious" : "idle";
       if (trigger!.dataset.reaction !== reaction) trigger!.dataset.reaction = reaction;
       if (settling) frame = requestAnimationFrame(render);
@@ -160,6 +162,7 @@ export function BlobBuddy() {
       dynamics.tilt.target = dynamics.eyeX.target = dynamics.eyeY.target = 0;
       dynamics.gazeX.target = dynamics.gazeY.target = 0;
       dynamics.focusTilt.target = 0;
+      dynamics.idleTilt.target = 0;
       dynamics.pop.target = 0; dynamics.pop.velocity = 0;
       dynamics.attention.target = Number(focused);
       trigger!.dataset.mode = "idle"; schedule();
@@ -168,6 +171,9 @@ export function BlobBuddy() {
       if (!alive() || held) return;
       held = true; heldSince = performance.now();
       clearTimeout(originTimer);
+      clearTimeout(gazeReturn);
+      dynamics.gazeX.target = dynamics.gazeY.target = 0;
+      dynamics.idleTilt.target = 0;
       const box = trigger!.getBoundingClientRect();
       if (point) {
         const nx = clamp((point.x - box.left) / box.width, .2, .8);
@@ -189,9 +195,9 @@ export function BlobBuddy() {
       const heldFor = performance.now() - heldSince;
       held = false; releasedAt = performance.now(); dynamics.squash.target = 0;
       // A quick tap still compresses; a held press releases into a stretch.
-      dynamics.squash.velocity = clamp(dynamics.squash.velocity + (dynamics.squash.value < .35 ? 7 : -4), -10, 10);
-      dynamics.wobble.velocity = clamp(dynamics.wobble.velocity + 55, -70, 70);
-      dynamics.pop.velocity = clamp(dynamics.pop.velocity + 26, -30, 40);
+      dynamics.squash.velocity = clamp(dynamics.squash.velocity + (dynamics.squash.value < .35 ? 8 : -4), -10, 10);
+      dynamics.wobble.velocity = clamp(dynamics.wobble.velocity + 60, -70, 70);
+      dynamics.pop.velocity = clamp(dynamics.pop.velocity + 28, -30, 40);
       dynamics.pressX.target = dynamics.pressY.target = 0;
       originTimer = window.setTimeout(() => { jelly!.style.transformOrigin = "50% 82%"; }, 620);
       if (heldFor > 700) {
@@ -223,9 +229,11 @@ export function BlobBuddy() {
     function attend(next: boolean) {
       if (!pointerPreference.matches) return;
       over = next; dynamics.attention.target = Number(over || focused);
+      dynamics.focusTilt.target = focused ? 2.2 : next ? 1.2 : 0;
       dynamics.wobble.velocity = clamp(dynamics.wobble.velocity + (next ? 22 : -14), -70, 70);
       if (next) {
         clearTimeout(gazeReturn);
+        dynamics.idleTilt.target = 0;
         dynamics.gazeX.target = dynamics.gazeY.target = 0;
         dynamics.pop.velocity += 6;
       } else if (!focused) {
@@ -277,10 +285,12 @@ export function BlobBuddy() {
           if (roll < .5) {
             const look = IDLE_LOOKS[Math.floor(Math.random() * IDLE_LOOKS.length)];
             dynamics.gazeX.target = look.x; dynamics.gazeY.target = look.y;
+            dynamics.idleTilt.target = clamp(look.x * .25, -.6, .6);
             schedule();
             clearTimeout(gazeReturn);
             gazeReturn = window.setTimeout(() => {
-              dynamics.gazeX.target = dynamics.gazeY.target = 0; schedule();
+              dynamics.gazeX.target = dynamics.gazeY.target = 0;
+              dynamics.idleTilt.target = 0; schedule();
             }, randomBetween(1100, 2500));
           } else if (roll < .82) {
             dynamics.wobble.velocity = clamp(dynamics.wobble.velocity + (Math.random() < .5 ? -16 : 16), -70, 70);
@@ -310,9 +320,10 @@ export function BlobBuddy() {
       attend,
       focus: next => {
         focused = next; dynamics.attention.target = Number(over || focused);
-        dynamics.focusTilt.target = next ? 2.2 : 0;
+        dynamics.focusTilt.target = next ? 2.2 : over ? 1.2 : 0;
         if (next) {
           clearTimeout(gazeReturn);
+          dynamics.idleTilt.target = 0;
           dynamics.gazeX.target = dynamics.gazeY.target = 0;
           dynamics.pop.velocity += 8;
         }

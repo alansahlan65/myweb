@@ -66,6 +66,6 @@ test("Alan signature stays readable with reduced motion, live preference changes
   const staticSignature = staticPage.locator('[data-signature="alan"]');
   await expect(staticSignature).toContainText("Alan");
   await expect(staticSignature.locator("svg")).toBeVisible();
-  expect(await staticSignature.locator("rect").evaluateAll(elements => elements.every(element => getComputedStyle(element).transform === "none"))).toBe(true);
+  expect(await staticSignature.locator("path").evaluateAll(elements => elements.every(element => parseFloat(getComputedStyle(element).strokeDashoffset) === 0))).toBe(true);
   await staticContext.close();
 });
