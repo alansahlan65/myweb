@@ -216,7 +216,7 @@ export function AlanCharacter() {
       onFocus={() => { if (keyboardRef.current || characterRef.current?.matches(":focus-visible")) setGreeting(true); }}
       onBlur={() => setGreeting(false)}
       onClick={() => setGreeting(true)}>
-      <span className={styles.artViewport}><span className={styles.art}>
+      <span className={styles.artViewport}><span className={styles.art} data-character-part="art">
         <span className={styles.bodies}>
           <span className={styles.body} data-character-part="rest-body"><Image src={WAVE_POSE} alt="Alan Sahlan" fill preload sizes={IMAGE_SIZES} draggable={false} /></span>
           <span className={styles.bodyGreeting} data-character-part="greeting-body" aria-hidden="true"><Image src={GREETING_POSE} alt="" fill preload sizes={IMAGE_SIZES} draggable={false} /></span>

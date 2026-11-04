@@ -10,7 +10,7 @@ About covers my background, experience, and skills, then the Shelf: albums, game
 
 ## Interaction notes
 
-The sidebar collapses into a 72px icon rail as you scroll and expands again at the top. Contact opens a modal with email, WhatsApp, and Instagram, plus a button that copies the address. Motion runs on Lenis smooth scrolling with the easing tokens in `src/app/globals.css`, and it backs off under reduced motion and reduced transparency.
+The sidebar collapses into a 72px icon rail as you scroll and expands again at the top. A theme control beside the collapse button switches the page between its light and dark tokens, and the choice is saved for later visits. Contact opens a modal with email, WhatsApp, and Instagram, plus a button that copies the address. Motion runs on Lenis smooth scrolling with the easing tokens in `src/app/globals.css`, and it backs off under reduced motion and reduced transparency.
 
 ## Stack
 

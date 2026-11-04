@@ -18,7 +18,16 @@
 /* Leave room for the raised hand beside the compact About frame while
    containing the larger transparent pose canvas. */
 .artViewport { position: absolute; inset: 0 -16px; overflow: clip; }
-.art { position: absolute; inset-block-end: 0; left: 50%; height: 100%; aspect-ratio: 4 / 5; transform: translateX(-50%); }
+.art { position: absolute; inset-block-end: 0; left: 50%; height: var(--character-art-height, 100%); aspect-ratio: 4 / 5; transform: translateX(-50%); }
+/* The rail holds the art at one raster and scales it to the height the row is
+   given, so the blended layers are never re-rastered while the sidebar moves.
+   The shrinking viewport clips whatever is left over. */
+:global(.sidebar-character) .art {
+  inset-block-start: 0;
+  inset-block-end: auto;
+  transform-origin: 50% 0;
+  transform: translateX(-50%) scale(var(--rail-character-fit, 1));
+}
 .art img { object-fit: contain; user-select: none; }
 .bodies, .arms, .body, .bodyGreeting, .restArm, .waveArm, .head { position: absolute; inset: 0; pointer-events: none; }
 /* Add the complementary alpha weights on a transparent, isolated surface.

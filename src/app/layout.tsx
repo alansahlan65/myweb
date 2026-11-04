@@ -5,6 +5,7 @@ import "lenis/dist/lenis.css";
 import "./globals.css";
 import { SiteShell } from "@/components/site-shell";
 import { SmoothScroll } from "@/components/smooth-scroll";
+import { THEME_SCRIPT } from "@/components/theme";
 
 export const metadata: Metadata = {
   title: { default: "Alan Sahlan · Product designer", template: "%s · Alan Sahlan" },
@@ -16,7 +17,10 @@ export const viewport: Viewport = { width: "device-width", initialScale: 1, them
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth">
+    <html lang="en" data-theme="light" data-scroll-behavior="smooth" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+      </head>
       <body>
         <SmoothScroll />
         <a className="skip-link" href="#main">Skip to content</a>

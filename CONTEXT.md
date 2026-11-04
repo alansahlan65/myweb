@@ -31,6 +31,15 @@ The small blue face beside Alan's identity, distinct from the Alan character.
 **Compact rail**:
 The 72px desktop sidebar with icon-only navigation and actions, collapsed from its 208px expanded width. The shell keeps its expanded outer width, so the main column absorbs the freed 136px and grows to the left while its right edge stays put. Applies above 1000px only; the mobile header and menu are separate.
 
+**Theme**:
+The site's light or dark appearance, chosen by the visitor or inherited from the system. Every color comes from a token that has a light and a dark value.
+
+**Theme toggle**:
+The 44px Moon and Sun button that switches the Theme. It sits in the rail footer on desktop and in the mobile identity row below 1001px, and keeps the chosen Theme across reloads.
+
+**Stored theme**:
+A visitor's explicit Theme choice, saved in `localStorage` under `theme`. When absent, the site follows the system preference, including later changes.
+
 **Contact modal**:
 The contact-choice dialog for reaching Alan through his available communication channels.
 

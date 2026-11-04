@@ -149,6 +149,29 @@ test("Compact rail fits laptop heights with every control in view", async ({ pag
   }
 });
 
+test("Character keeps its full figure at rest and one raster while the rail moves", async ({ page }) => {
+  for (const viewport of [{ width: 1440, height: 900 }, { width: 1440, height: 700 }, { width: 1280, height: 640 }]) {
+    await page.setViewportSize(viewport);
+    await visit(page, "/about");
+    const character = page.locator(".sidebar-character");
+    const art = character.locator('[data-character-part="art"]');
+
+    // The row shrinks on short laptops. The art scales to fit it instead of
+    // being clipped, so the figure stays whole at rest.
+    const row = (await character.boundingBox())!;
+    const restArt = (await art.boundingBox())!;
+    expect(restArt.height, `art fills the row at ${viewport.width}x${viewport.height}`).toBeCloseTo(row.height, 0);
+    expect(restArt.y, `art sits at the top of the row at ${viewport.width}x${viewport.height}`).toBeCloseTo(row.y, 0);
+
+    // One raster: the art keeps its 240px layout height while the row animates.
+    expect(await art.evaluate(element => Math.round(element.getBoundingClientRect().height))).toBe(Math.round(row.height));
+    await page.getByRole("button", { name: "Collapse sidebar", exact: true }).click();
+    await expect(shell(page)).toHaveAttribute("data-sidebar-progress", "1");
+    expect(await art.evaluate(element => element.clientHeight)).toBe(240);
+    expect(await character.evaluate(element => element.getBoundingClientRect().height)).toBeCloseTo(0, 0);
+  }
+});
+
 test("Rail toggle holds the bottom of the viewport while the page scrolls", async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
   await visit(page, "/about");

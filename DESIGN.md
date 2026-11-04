@@ -1,6 +1,6 @@
 ---
 name: "Alan Sahlan's personal website"
-description: "The implemented Home and About visual system, with shared layout tokens and About's Shelf quote bubbles."
+description: "The implemented Home and About visual system, with shared layout tokens, light and dark themes, and About's Shelf quote bubbles."
 colors:
   canvas: "#fff"
   ink: "#0a0a0a"
@@ -15,7 +15,36 @@ colors:
   cobalt: "#245bc2"
   blue-surface: "#edf3ff"
   blue-secondary: "#50698b"
+  heading-ink: "#202020"
+  prose-ink: "#414141"
+  hand-ink: "#595959"
+  quote-ink: "#18365b"
+  artwork-ink: "#fff"
   scrim: "#0a0a0a66"
+  tooltip-surface: "#0a0a0a"
+  tooltip-ink: "#fff"
+darkColors:
+  canvas: "#0a0a0a"
+  ink: "#fff"
+  secondary: "#b5b5b5"
+  muted: "#a0a0a0"
+  subtle: "#1a1a1a"
+  secondary-action: "#202020"
+  hover: "#303030"
+  action-hover: "#e5e5e5"
+  border: "#2b2b2b"
+  border-control: "#404040"
+  cobalt: "#93b4ff"
+  blue-surface: "#15233d"
+  blue-secondary: "#93b4ff"
+  heading-ink: "#fff"
+  prose-ink: "#b5b5b5"
+  hand-ink: "#b5b5b5"
+  quote-ink: "#dbe7ff"
+  artwork-ink: "#fff"
+  scrim: "#00000099"
+  tooltip-surface: "#202020"
+  tooltip-ink: "#fff"
 typography:
   display:
     fontFamily: '"Geist Variable", "Geist", Arial, sans-serif'
@@ -113,9 +142,14 @@ components:
     rounded: "{rounded.radius-pill}"
     padding: "12px"
   rail-toggle:
-    backgroundColor: "{colors.canvas}"
-    textColor: "{colors.secondary}"
-    rounded: "{rounded.radius-small}"
+    backgroundColor: "{colors.subtle}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.radius-pill}"
+    padding: "0"
+  theme-toggle:
+    backgroundColor: "{colors.subtle}"
+    textColor: "{colors.ink}"
+    rounded: "{rounded.radius-pill}"
     padding: "0"
   skill-tags:
     textColor: "{colors.secondary}"
@@ -133,7 +167,7 @@ components:
     padding: "40px"
   quote-surface:
     backgroundColor: "{colors.blue-surface}"
-    textColor: "#18365b"
+    textColor: "{colors.quote-ink}"
     rounded: "26px 30px 28px 12px"
     padding: "22px 24px"
 ---
@@ -148,13 +182,13 @@ The Shelf quote bubble is a local extension approved on 2026-10-26. Its pale-blu
 
 Key characteristics:
 
-- A white canvas with gray controls and fine separators.
+- A white canvas with gray controls and fine separators, and a token-matched dark theme.
 - Rounded controls and artwork within flat project articles.
 - Brief input feedback with keyboard, touch, and reduced-motion alternatives.
 
 ## Colors
 
-The frontmatter preserves the shared color names from `src/app/globals.css` and records the scoped blue-secondary text color used by contact and Shelf attribution.
+The frontmatter preserves the shared color names from `src/app/globals.css` and records the scoped text colors used on blue surfaces, headings, hand notes, and tooltips. Light values live in `:root`; the `darkColors` set lives in `:root[data-theme="dark"]` and swaps through the same variable names.
 
 ### Primary
 
@@ -169,8 +203,22 @@ The frontmatter preserves the shared color names from `src/app/globals.css` and 
 - `subtle` and `secondary-action` fill artwork fallbacks, secondary buttons, and active navigation. Project articles and skill labels sit directly on the canvas.
 - `hover` and `action-hover` provide light and dark control hover states.
 - `border` and `border-control` separate sections and outline controls. `scrim` dims the page behind the Contact modal.
+- `heading-ink`, `prose-ink`, and `hand-ink` carry About's headings, body copy, and Caveat notes. `quote-ink` keeps the Shelf bubble's scoped dark blue.
+- `tooltip-surface` and `tooltip-ink` fill the Contact modal channel tooltips, so the tooltip stays inverse to the page in both themes.
+- `artwork-ink` keeps the project-name overlay white over its dark image gradient in both themes, since that overlay never sits on the page canvas.
 
-The Shelf quote text keeps its component-local dark blue from the frontmatter. The related Shelf surface brief remains authoritative for its local treatment and behavior.
+The Shelf quote text keeps its component-local dark blue in light mode and lifts to `#dbe7ff` in dark mode. The related Shelf surface brief remains authoritative for its local treatment and behavior.
+
+### Dark mode
+
+Dark mode is a complete token swap, not a filter or an overlay. Canvas, ink, borders, and every control fill invert together, so a page never mixes light surfaces with dark text. Cobalt brightens to `#93b4ff` and `blue-surface` deepens to `#15233d` to keep link and contact-panel contrast. The scrim thickens so modal separation survives on a dark page.
+
+- The theme is stored in `localStorage` under `theme` and applied as `data-theme` on the document element.
+- A saved choice wins. Without one, the system preference decides, and the page follows live system changes until the visitor chooses a theme.
+- An inline head script applies the theme before first paint, so a saved dark visit never flashes white.
+- Switching themes eases every painted color over 240ms with a linear ramp, so the large brightness change never snaps. The rule lives behind a `theme-switching` class that is present for that one fade and only animates paint properties, which keeps pointer input live and leaves layout, transforms, and scroll untouched. A second press mid-fade retargets from the color currently on screen.
+- `theme-color` follows the active theme so browser chrome matches the page.
+- Forced-colors mode still uses system colors; the theme only changes the site's own tokens.
 
 ## Typography
 
@@ -193,7 +241,7 @@ Home uses section-gap between its main sections, reducing to 64px in the compact
 
 Project previews use two columns at widths of 600px and above, and one column below 600px. The desktop grid uses 40px row gaps and artwork-gap between columns. Compact layouts use 32px row gaps and a 24px artwork-gap. Each image has a 3:2 frame and carries no caption below it.
 
-The compact header groups the name, role, and Blob buddy together on the left, with only the menu toggle on the right. Desktop keeps the existing identity arrangement in its rail.
+The compact header groups the name, role, and Blob buddy together on the left, with the theme toggle and menu toggle on the right. Desktop keeps the existing identity arrangement in its rail.
 
 The sidebar Alan character occupies 144px by 240px and can shrink vertically to 160px in a short viewport. A 16px top margin reserves clearance for its greeting. Desktop Home shows only this sidebar character; its introduction has no separate figure or empty character column. At 1000px and below, the hamburger replaces the sidebar and Home shows a right-hand 144px by 240px character beside the introduction. Below 600px, the headline spans both columns while the introduction and 104px by 184px character sit side by side. Below 360px the character is 96px by 168px. A separate greeting allowance keeps the bubble clear of text. About has no character in its compact layout; desktop retains the shared sidebar character.
 
@@ -227,15 +275,31 @@ Keep the eyes as the only facial feature. Reduced motion, forced colors, hidden 
 
 ### Desktop compact rail
 
-Above 1000px, the rail can collapse from 208px to 72px with a 44px toggle at the bottom of the sidebar. The toggle uses a 1px border-control border, the 8px small radius, a 16px Lucide ChevronsLeft icon, and the same hover and press treatment as the other secondary controls. Its icon rotates 180 degrees as the rail closes. The accessible label switches between Collapse sidebar and Expand sidebar, and aria-expanded reports the rail state.
+Above 1000px, the rail can collapse from 208px to 72px with a 44px toggle at the bottom of the sidebar. The toggle is a secondary pill like the actions above it: subtle fill, ink glyph, pill radius, a 16px Lucide ChevronsLeft icon, and the same hover fill and press scale. Its icon rotates 180 degrees as the rail closes. The accessible label switches between Collapse sidebar and Expand sidebar, and aria-expanded reports the rail state.
+
+The theme toggle and the collapse toggle share those pill styles. Hover moves both to the same `hover` fill the navigation and secondary actions use, and the color change eases over 140ms while the press responds immediately. Neither control draws a border, so the pair reads with the buttons above rather than as a separate control group.
 
 The toggle holds the bottom of the sticky rail in both states. Its auto margin carries it down on tall viewports, and sticky bottom positioning keeps it visible when the rail scrolls at short heights.
 
-One critically damped spring with a 0.36-second response drives a shared `--rail-progress` value. Rail width, label widths, navigation padding, action alignment, character exit, and icon centering all read that value, so a reversal keeps the live position and velocity. The shell keeps its expanded outer width, so the second grid column absorbs the 136px the rail gives up. The content's right edge holds still and its left edge follows the rail, which keeps the pressed toggle and the page's outer bounds from sliding under the pointer. Full-column elements such as the project grid, experience rules, footer, and contact panel widen with it, while intro copy stays at its reading measure. Labels stay in the DOM for accessible names and collapse with max-width and opacity. They fade faster than the geometry so half-words do not linger. Navigation, Get in touch, resume, and the toggle are 44px targets centered in the 72px rail. Navigation, contact, and resume add native title tooltips in compact mode.
+One critically damped spring with a 0.36-second response drives a shared `--rail-progress` value. Rail width, label widths, navigation padding, action alignment, character exit, and icon centering all read that value, so a reversal keeps the live position and velocity. The shell keeps its expanded outer width, so the second grid column absorbs the 136px the rail gives up. The content's right edge holds still and its left edge follows the rail, which keeps the pressed toggle and the page's outer bounds from sliding under the pointer. Full-column elements such as the project grid, experience rules, footer, and contact panel widen with it, while intro copy stays at its reading measure. Labels stay in the DOM for accessible names and collapse with max-width and opacity. They fade faster than the geometry so half-words do not linger. Navigation, Get in touch, resume, the theme toggle, and the toggle are 44px targets centered in the 72px rail. Navigation, contact, and resume add native title tooltips in compact mode.
 
-The Blob buddy stays visible at 60px and centered at the top of the rail. The identity copy leaves the tab order through aria-hidden and tabIndex -1, and the character wrapper becomes inert. The character loses height and fades, so its artwork scales uniformly instead of squashing.
+The rail footer holds the theme toggle and the collapse toggle side by side in the expanded state. Once the rail is compact they stack, theme first, with the same 14px inset that centers the navigation, so both stay on the rail's center line. The controls sit on the canvas so content scrolling beneath them stays readable.
+
+The Blob buddy stays visible at 60px and centered at the top of the rail. The identity copy leaves the tab order through aria-hidden and tabIndex -1, and the character wrapper becomes inert. The character loses height on the rail spring and fades on a shorter clock. Its artwork holds a fixed 240px raster that the shrinking frame clips, so the blended image layers are not re-rastered on every frame of the collapse.
 
 The mode is desktop-only and lasts for the session. It survives client-side navigation but not a reload. At 1000px and below the rail renders expanded, the toggle is hidden, and the compact state returns when the viewport crosses back above 1000px. Reduced motion, hidden tabs, and live preference changes snap to the endpoint without a spring transition.
+
+### Theme toggle
+
+A 44px icon button sits in the rail footer beside the collapse control, and in the mobile identity row below 1001px. It uses the secondary pill treatment: subtle fill, ink icon, pill radius, no border, with the shared hover fill and 140ms color ease. The glyph is a Moon in light mode and a Sun in dark mode, swapped by the same `data-theme` attribute that swaps the tokens, so the control renders correctly before hydration.
+
+The accessible name is always "Dark mode" and `aria-pressed` reports whether dark is active, so the button reads as a switch. The tooltip states the action instead: "Switch to light theme" or "Switch to dark theme".
+
+Placement follows the rail. In the expanded rail it sits left of the collapse control on one row. In the compact rail it stacks above the collapse control and both stay centered. In the compact header it precedes the menu toggle on the right, and at 320px both still fit without the row overflowing.
+
+A press commits immediately, so a second press during the fade flips from the committed theme and the colors retarget from wherever they are on screen. Two quick presses return to the starting theme.
+
+The control is independent of the rail's session-only state: the theme persists across reloads, while the rail returns to expanded.
 
 ### Compact side menu
 
@@ -273,9 +337,9 @@ The print stays at the introduction's top-right, with text flowing beside it and
 
 ### Magnetic contact controls
 
-Home and About's contact-panel arrow retains its circular ink surface and white Lucide icon. Its visible diameter is 64px on desktop and 48px in the compact layout. A fixed target includes 14px of extra pointer area around the circle; its center does not move with the artwork.
+Home and About's contact-panel arrow keeps a circular ink surface with a canvas-colored Lucide icon, so the whole control inverts with the theme. Its visible diameter is 64px on desktop and 48px in the compact layout. A fixed target includes 14px of extra pointer area around the circle; its center does not move with the artwork.
 
-The sidebar's Get in touch pill shares the same component and liquid behavior. Keep its 144px by 44px footprint, white MessageCircle icon, and 14px label. Its pointer margin is 8px, and the sidebar reserves extra clipping room without changing content alignment. Limit its magnetic travel using the shorter 44px dimension.
+The sidebar's Get in touch pill shares the same component and liquid behavior. Keep its 144px by 44px footprint, canvas-colored MessageCircle icon, and 14px label. Its pointer margin is 8px, and the sidebar reserves extra clipping room without changing content alignment. Limit its magnetic travel using the shorter 44px dimension.
 
 Fine-pointer hover attracts the surface toward the pointer, limited to 21% of the diameter. Independent springs use stiffness 100, damping 14, and mass 1, carrying velocity through direction changes and returning to center on leave. Liquid Gooey's Move effect keeps the silhouette rigid in shape: springiness 0.88, stretch 0.03, and no droplet trail, so the control reads as magnetically pulled rather than liquid. The icon sits on the surface. A held press compresses the surface 7% across and 10% down, and release rebounds. Opening the Contact modal remains immediate.
 
@@ -285,7 +349,7 @@ Touch gets press feedback without magnetic tracking. Reduced motion and forced c
 
 About's sign-off after Sincerely uses a custom monoline Alan, with a tall capital A, looped l, connected lowercase letters, and a light finishing underline. The original copy and introduction heading remain unchanged. The ink uses the existing ink token, 2.8-unit round strokes, and a 1.8-unit underline in a 240 by 120 SVG viewBox. The component is 192px by 96px, reducing to 176px by 88px below 600px, with a 12px top margin.
 
-This is a first-arrival delight, not a repeating decoration. Write once when at least 80% of the signature enters the viewport, then leave the complete name visible. Ten pen segments follow their natural drawing direction through animated clip-mask rectangles. WAAPI animates only the masks' transforms with linear pen timing. Segment durations reuse motion-fast, motion-base, and motion-slow, totaling 1660ms at the current token values. No runtime or font dependency is added.
+This is a first-arrival delight, not a repeating decoration. Write once when at least 80% of the signature enters the viewport, then leave the complete name visible. The ten pen segments sit in writing order, and each one reveals itself by animating stroke-dashoffset from its measured path length to zero, so the ink edge travels along the curve instead of a rectangle wiping the glyph in. Durations come from that length at 0.38 viewBox units per millisecond, and a 70ms pen lift separates the three strokes that leave the paper, so the 727 units take about 2.1 seconds. WAAPI animates only stroke-dashoffset, with linear easing, because a hand does not accelerate mid-letter. No runtime or font dependency is added.
 
 Keep accessible text Alan in reading order and hide the decorative SVG from assistive technology. Reduced motion displays the full signature immediately; changing the preference while writing completes it without movement. The full vector signature is also visible without JavaScript. Unmounting cancels animations and disconnects the observer. Source: `src/components/alan-signature.tsx` and its CSS module.
 
@@ -306,6 +370,7 @@ Pointer leave, later user scrolling, pointer cancellation, and Escape dismiss th
 ### Do:
 
 - Do retain the shared source token names and font families when extending existing pages.
+- Do define a light and dark value for every color token, and let components read the token rather than the theme.
 - Do keep the entire Shelf bubble and tail within the viewport gutters.
 - Do preserve the Shelf's exact content, fixed hit areas, and keyboard and touch behavior.
 - Do anchor both quote and tail to the artwork when reduced motion is enabled.
@@ -313,5 +378,6 @@ Pointer leave, later user scrolling, pointer cancellation, and Escape dismiss th
 ### Don't:
 
 - Don't apply the Shelf's bubble shape or local dark-blue text colors to every site container.
+- Don't introduce a new hardcoded color for one theme; add the matching second value to an existing token instead.
 - Don't add the rejected dark cards or accent lines back to Shelf quotes.
 - Don't make quote readability depend on continuous motion or hover alone.
