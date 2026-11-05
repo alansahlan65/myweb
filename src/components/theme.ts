@@ -1,6 +1,6 @@
 export type Theme = "light" | "dark";
 
-export const THEME_STORAGE_KEY = "theme";
+const THEME_STORAGE_KEY = "theme";
 export const THEME_CHANGE_EVENT = "site-theme-change";
 
 const THEME_SWITCH_CLASS = "theme-switching";
@@ -21,7 +21,7 @@ export function currentTheme(): Theme {
   return document.documentElement.dataset.theme === "dark" ? "dark" : "light";
 }
 
-export function paintThemeColor(theme: Theme) {
+function paintThemeColor(theme: Theme) {
   const meta = document.querySelector<HTMLMetaElement>('meta[name="theme-color"]');
   if (meta) meta.content = theme === "dark" ? "#0a0a0a" : "#ffffff";
 }

@@ -4,7 +4,6 @@ test("Sidebar controls swap positions smoothly when the rail compacts", async ({
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.goto("/");
 
-  const root = page.locator(".site-shell");
   const collapse = page.getByRole("button", { name: "Collapse sidebar", exact: true });
   const theme = page.getByRole("button", { name: "Dark mode", exact: true });
 

@@ -141,7 +141,6 @@ test("Menu controls remain clear at 200% text size, in RTL, and in forced colors
   await page.goto("/about");
   await page.getByRole("button", { name: "Open navigation", exact: true }).press("Enter");
   const menu = page.getByRole("dialog", { name: "Navigation", exact: true });
-  const surface = menu.locator("[data-menu-surface]");
   await expect(menu).toHaveAttribute("data-motion-state", "open");
   const close = menu.getByRole("button", { name: "Close navigation" });
   await expect(close).toBeFocused();
