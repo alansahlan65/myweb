@@ -21,6 +21,10 @@
   --scrim: #0a0a0a66;
   --tooltip-surface: #0a0a0a;
   --tooltip-ink: #fff;
+  /* A calm mint instead of a saturated iOS green. 11.9:1 on the light-theme
+     tooltip surface and 9.8:1 on the dark-theme one, so the confirmation
+     still passes WCAG 2.2 AAA without shouting. */
+  --tooltip-success: #8ed9a8;
   --radius-small: 8px;
   --radius-large: 16px;
   --radius-pill: 9999px;
@@ -283,31 +287,48 @@ main { min-width: 0; outline: none; }
 .contact-description { margin-top: 8px; color: var(--secondary); font-size: 14px; }
 .contact-channels { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; }
 .channel-button { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid var(--border-control); border-radius: var(--radius-pill); color: var(--ink); background: var(--canvas); transition: background var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+/* Both weights stack in one grid cell, so the swap is a cross-fade rather
+   than a hard icon replacement mid-hover. */
+.channel-icon { display: inline-grid; place-items: center; }
+.channel-icon > svg { grid-area: 1 / 1; transition: opacity var(--motion-base) var(--ease-out); }
+.channel-icon-fill { opacity: 0; }
+.channel-button:focus-visible .channel-icon-outline { opacity: 0; }
+.channel-button:focus-visible .channel-icon-fill { opacity: 1; }
 .channel-tooltip-positioner { z-index: 100; }
-.channel-tooltip { position: relative; padding: 6px 10px; border-radius: 4px; background: var(--tooltip-surface); color: var(--tooltip-ink); font-size: 12px; line-height: 18px; transform-origin: var(--transform-origin); transition: transform var(--motion-fast) var(--ease-out), opacity var(--motion-fast) var(--ease-out); }
-.channel-tooltip:is([data-starting-style], [data-ending-style]) { opacity: 0; transform: scale(.97); }
-.tooltip-arrow { fill: var(--tooltip-surface); }
-.tooltip-arrow[data-side="top"] { bottom: -5px; transform: rotate(180deg); }
-.tooltip-arrow[data-side="bottom"] { top: -5px; }
-.email-fallback { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--secondary); font-size: 12px; }
-.email-address { user-select: text; }
-.copy-email { display: inline-flex; align-items: center; gap: 4px; min-height: 32px; padding: 4px 8px; border: 0; border-radius: 4px; background: var(--subtle); color: var(--ink); font-size: 12px; transition: background var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
-.copy-email:active { transform: scale(.96); }
-/* Both states share one grid cell, so the button reserves the wider label
-   and never shifts the address beside it. */
-.copy-email-icon, .copy-email-label { display: inline-grid; }
-.copy-email-icon > span { display: flex; }
-.copy-email-icon > span, .copy-email-label > span { grid-area: 1 / 1; transition: opacity var(--motion-fast) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
-.copy-email-icon [data-glyph="check"] { opacity: 0; transform: scale(.6); }
-.copy-email-label [data-label="copied"] { opacity: 0; transform: translateY(3px); }
-.copy-email[data-status="copied"] .copy-email-icon [data-glyph="copy"] { opacity: 0; transform: scale(.6); }
-.copy-email[data-status="copied"] .copy-email-label [data-label="copy"] { opacity: 0; transform: translateY(-3px); }
-.copy-email[data-status="copied"] .copy-email-icon [data-glyph="check"] { opacity: 1; transform: none; }
-.copy-email[data-status="copied"] .copy-email-label [data-label="copied"] { opacity: 1; transform: none; }
+/* One tooltip surface for the whole modal: content-fit pill with generous
+   padding and a centered row. Channel labels and the email copy states share
+   it, so the pill reads as one component across the modal. */
+.contact-tooltip { position: relative; display: flex; align-items: center; justify-content: center; padding: 6px 12px; border-radius: var(--radius-pill); background: var(--tooltip-surface); color: var(--tooltip-ink); font-size: 12px; line-height: 18px; box-shadow: 0 4px 14px #00000024; white-space: nowrap; transform-origin: var(--transform-origin); transition: transform 160ms var(--ease-out), opacity 160ms var(--ease-out), color var(--spring-duration, 420ms) var(--ease-spring, var(--ease-out)); }
+.contact-tooltip:is([data-starting-style], [data-ending-style]) { opacity: 0; transform: scale(.97); }
+.email-tooltip[data-status="copied"] { color: var(--tooltip-success); }
+/* The label cross-fades inside this box. Keeping the overflow here (not on
+   the popup) means the arrow stays visible while a longer label shrinks. */
+.email-tooltip-content { display: inline-flex; align-items: center; gap: 6px; min-width: 0; overflow: hidden; }
+.email-tooltip-icon { display: inline-grid; flex: none; }
+.email-tooltip-icon > svg { grid-area: 1 / 1; transition: opacity var(--spring-duration, 420ms) var(--ease-spring, var(--ease-out)), transform var(--spring-duration, 420ms) var(--ease-spring, var(--ease-out)); }
+.email-tooltip-icon > svg[data-glyph="check"] { opacity: 0; transform: scale(.8); }
+.email-tooltip[data-status="copied"] .email-tooltip-icon > svg[data-glyph="copy"] { opacity: 0; transform: scale(.8); }
+.email-tooltip[data-status="copied"] .email-tooltip-icon > svg[data-glyph="check"] { opacity: 1; transform: none; }
+/* Only the active label takes up width, so the pill still fits the current
+   text. The outgoing label clears at once; the incoming one fades and is
+   revealed as the pill grows, which keeps the swap from looking clipped. */
+.email-tooltip-label { position: relative; display: inline-block; }
+.email-tooltip-label > span { position: absolute; inset-block-start: 0; inset-inline-start: 0; opacity: 0; transition: none; }
+.email-tooltip-label > span[data-active="true"] { position: relative; opacity: 1; transition: opacity var(--spring-duration, 420ms) var(--ease-spring, var(--ease-out)); }
+.tooltip-arrow { width: 8px; height: 8px; border-radius: 1px; background: var(--tooltip-surface); transform: rotate(45deg); }
+.tooltip-arrow[data-side="top"] { bottom: -4px; }
+.tooltip-arrow[data-side="bottom"] { top: -4px; }
+.email-fallback { display: flex; align-items: center; justify-content: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--secondary); font-size: 12px; }
+/* The address is the copy control. A thin underline marks it as interactive
+   without turning the modal footer into a second button. */
+.email-address { display: inline-flex; align-items: center; min-height: 32px; padding: 4px 6px; border: 0; border-radius: 4px; background: transparent; color: inherit; font-size: 12px; letter-spacing: .01em; user-select: text; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, var(--secondary) 65%, transparent); transition: color var(--motion-base) var(--ease-out), text-decoration-color var(--motion-base) var(--ease-out); }
 @media (hover: hover) and (pointer: fine) {
   a.nav-item:hover { background: var(--subtle); color: var(--ink); }
   .primary-button:hover { background: var(--action-hover); }
-  .secondary-button:hover, .icon-button:hover, .channel-button:hover, .sidebar-toggle:hover, .theme-toggle:hover, .copy-email:hover { background: var(--hover); }
+  .secondary-button:hover, .icon-button:hover, .channel-button:hover, .sidebar-toggle:hover, .theme-toggle:hover { background: var(--hover); }
+  .channel-button:hover .channel-icon-outline { opacity: 0; }
+  .channel-button:hover .channel-icon-fill { opacity: 1; }
+  .email-address:hover { color: var(--ink); text-decoration-color: currentColor; }
   .sidebar-toggle:hover, .theme-toggle:hover { color: var(--ink); }
   .social-links a:hover { color: var(--cobalt); }
   /* Drive the artwork from CSS so a hover registers before hydration and
