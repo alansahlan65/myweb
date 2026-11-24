@@ -36,13 +36,11 @@
 .resume { background: var(--subtle); }
 .profiles { display: flex; flex-wrap: wrap; flex-shrink: 0; gap: 4px 16px; margin-block-start: auto; padding-block-start: 12px; color: var(--secondary); font-size: 13px; line-height: 1.5; }
 .profiles a { display: inline-flex; align-items: center; gap: 2px; min-block-size: 44px; text-underline-offset: 4px; }
-.profiles a:is(:active, :focus-visible) :global(.state-icon-outline) { opacity: 0; }
-.profiles a:is(:active, :focus-visible) :global(.state-icon-fill) { opacity: 1; }
+.profiles a:active :global(.state-icon-outline) { opacity: 0; }
+.profiles a:active :global(.state-icon-fill) { opacity: 1; }
 @media (hover: hover) and (pointer: fine) {
   .link:hover { color: var(--secondary); }
   .profiles a:hover { color: var(--ink); text-decoration: underline; }
-  .profiles a:hover :global(.state-icon-outline) { opacity: 0; }
-  .profiles a:hover :global(.state-icon-fill) { opacity: 1; }
   .close:hover, .resume:hover { background: var(--hover); }
 }
 @media (max-height: 480px) {

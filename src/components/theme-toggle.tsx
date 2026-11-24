@@ -1,7 +1,7 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { IconMoon, IconMoonFilled, IconSun, IconSunFilled } from "@tabler/icons-react";
+import { IconSun, IconSunFilled } from "@tabler/icons-react";
 import { StateIcon } from "./state-icon";
 import {
   THEME_CHANGE_EVENT,
@@ -42,8 +42,7 @@ export function ThemeToggle({ className }: { className?: string }) {
       title={action}
     >
       <span className="theme-toggle-glyph" aria-hidden="true">
-        <StateIcon icon={IconMoon} filledIcon={IconMoonFilled} size={16} className="theme-icon theme-icon-moon" />
-        <StateIcon icon={IconSun} filledIcon={IconSunFilled} size={16} className="theme-icon theme-icon-sun" />
+        <StateIcon icon={IconSun} filledIcon={IconSunFilled} size={16} />
       </span>
     </button>
   );

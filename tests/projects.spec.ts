@@ -18,24 +18,28 @@ test("Projects page stays calm, omits unfinished copy, uses its own contact copy
   const projectsNav = nav.getByRole("link", { name: "Projects", exact: true });
   const homeNav = nav.getByRole("link", { name: "Home", exact: true });
   await expect(projectsNav).toHaveAttribute("aria-current", "page");
-  // Active nav item shows its filled icon, while inactive items show outline until hovered.
+  // Active nav item shows its filled icon; hovering keeps the default outline and shifts color.
   await expect(projectsNav.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
   await expect(projectsNav.locator(".state-icon-outline")).toHaveCSS("opacity", "0");
   await expect(homeNav.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
   await homeNav.hover();
-  await expect(homeNav.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
-  await expect(homeNav.locator(".state-icon-outline")).toHaveCSS("opacity", "0");
+  await expect(homeNav.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
+  await expect(homeNav.locator(".state-icon-outline")).toHaveCSS("opacity", "1");
+  await expect(homeNav).toHaveCSS("color", "rgb(10, 10, 10)");
   const resumeLink = page.getByRole("link", { name: "See my resume", exact: true });
-  await expect(resumeLink.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
   await resumeLink.hover();
-  await expect(resumeLink.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
+  await expect(resumeLink.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
+  await expect(resumeLink.locator(".state-icon")).toHaveCSS("color", "rgb(10, 10, 10)");
   const themeBtn = page.getByRole("button", { name: "Dark mode", exact: true });
+  await expect(themeBtn.locator(".state-icon")).toHaveCount(1);
   await themeBtn.hover();
-  await expect(themeBtn.locator(".theme-icon-moon .state-icon-fill")).toHaveCSS("opacity", "1");
+  await expect(themeBtn.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
+  await expect(themeBtn).toHaveCSS("color", "rgb(10, 10, 10)");
   const linkedIn = page.getByRole("link", { name: "Alan on LinkedIn", exact: true });
   await linkedIn.scrollIntoViewIfNeeded();
   await linkedIn.hover();
-  await expect(linkedIn.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
+  await expect(linkedIn.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
+  await expect(linkedIn).toHaveCSS("color", "rgb(36, 91, 194)");
   await expect(page.locator(".project-row")).toHaveCount(4);
   await expect(page.locator(".project-row h2")).toHaveText(["Paylecta", "Aurelia", "PawFriend", "Munchpal"]);
   await expect(page.getByText(/in progress|on the way/i)).toHaveCount(0);
@@ -134,6 +138,7 @@ test("Projects and Paylecta fit mobile and dark mode cleanly without horizontal 
   await visit(page, "/projects/paylecta");
   await page.getByRole("button", { name: "Dark mode", exact: true }).click();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
+  await expect(page.getByRole("button", { name: "Dark mode", exact: true }).locator(".state-icon-fill")).toHaveCSS("opacity", "1");
   await expect.poll(() => page.evaluate(() => getComputedStyle(document.body).backgroundColor)).toBe("rgb(10, 10, 10)");
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

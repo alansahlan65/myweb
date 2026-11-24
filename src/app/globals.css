@@ -159,83 +159,59 @@ svg { shape-rendering: geometricPrecision; }
 /* Rail controls share the secondary pill: subtle fill, ink glyph, and the same
    hover fill as the nav and secondary actions. Color changes ease rather than
    snap, while the press stays immediate. */
-.sidebar-toggle, .theme-toggle { flex: 0 0 44px; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--subtle); color: var(--ink); transition: background-color var(--motion-base) var(--ease-out), color var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.sidebar-toggle, .theme-toggle { flex: 0 0 44px; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--radius-pill); background: var(--subtle); color: var(--secondary); transition: background-color var(--motion-base) var(--ease-out), color var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
 .sidebar-toggle { display: none; }
 .sidebar-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
 .theme-toggle { display: inline-flex; }
+.theme-toggle[aria-pressed="true"] { color: var(--ink); }
 .theme-toggle-glyph { display: grid; place-items: center; }
-.theme-icon { grid-area: 1 / 1; }
-.theme-icon-sun { display: none; }
-[data-theme="dark"] .theme-icon-moon { display: none; }
-[data-theme="dark"] .theme-icon-sun { display: inline-grid; }
 .theme-toggle-mobile { display: none; }
 .sidebar-toggle-icon { transform: rotate(calc(180deg * var(--rail-progress, 0))); }
-/* Outline and filled weights stack in one grid cell so every interactive icon
-   cross-fades smoothly on hover, focus, active press, and active route states. */
+/* Outline and filled weights stack in one grid cell. Filled icons mark active
+   states only; hover keeps the default outline and transitions color. */
 .state-icon { display: inline-grid; place-items: center; flex: none; }
 .state-icon > svg { grid-area: 1 / 1; transition: opacity var(--motion-base) var(--ease-out); }
 .state-icon-fill { opacity: 0; }
 :is(
   .nav-item[aria-current="page"],
   .nav-item:active,
-  .nav-item:focus-visible,
   .pill-button:active,
-  .pill-button:focus-visible,
   .channel-button:active,
-  .channel-button:focus-visible,
   .social-links a:active,
-  .social-links a:focus-visible,
   .sidebar-toggle:active,
-  .sidebar-toggle:focus-visible,
+  .theme-toggle[aria-pressed="true"],
   .theme-toggle:active,
-  .theme-toggle:focus-visible,
   .icon-button:active,
-  .icon-button:focus-visible,
   .section-link:active,
-  .section-link:focus-visible,
   .project-row-link:active,
-  .project-row-link:focus-visible,
   .case-back-link:active,
-  .case-back-link:focus-visible,
   .case-footer-link:active,
-  .case-footer-link:focus-visible,
   [data-variant][data-pressed="true"],
-  [data-variant][data-open="true"],
-  [data-variant]:has(button:focus-visible)
+  [data-variant][data-open="true"]
 ) .state-icon-outline { opacity: 0; }
 :is(
   .nav-item[aria-current="page"],
   .nav-item:active,
-  .nav-item:focus-visible,
   .pill-button:active,
-  .pill-button:focus-visible,
   .channel-button:active,
-  .channel-button:focus-visible,
   .social-links a:active,
-  .social-links a:focus-visible,
   .sidebar-toggle:active,
-  .sidebar-toggle:focus-visible,
+  .theme-toggle[aria-pressed="true"],
   .theme-toggle:active,
-  .theme-toggle:focus-visible,
   .icon-button:active,
-  .icon-button:focus-visible,
   .section-link:active,
-  .section-link:focus-visible,
   .project-row-link:active,
-  .project-row-link:focus-visible,
   .case-back-link:active,
-  .case-back-link:focus-visible,
   .case-footer-link:active,
-  .case-footer-link:focus-visible,
   [data-variant][data-pressed="true"],
-  [data-variant][data-open="true"],
-  [data-variant]:has(button:focus-visible)
+  [data-variant][data-open="true"]
 ) .state-icon-fill { opacity: 1; }
-.pill-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: fit-content; min-height: 44px; padding: 12px 20px; border: 0; border-radius: var(--radius-pill); font-size: 14px; font-weight: 500; line-height: 20px; transition: background var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.pill-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; width: fit-content; min-height: 44px; padding: 12px 20px; border: 0; border-radius: var(--radius-pill); font-size: 14px; font-weight: 500; line-height: 20px; transition: background var(--motion-base) var(--ease-out), color var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
 .primary-button { background: var(--ink); color: var(--canvas); }
 .secondary-button { background: var(--subtle); }
+.secondary-button .state-icon { color: var(--secondary); transition: color var(--motion-base) var(--ease-out); }
 .pill-button:active, .icon-button:active, .channel-button:active, .sidebar-toggle:active, .theme-toggle:active { transform: scale(.97); }
-.icon-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; }
+.icon-button { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: var(--radius-pill); background: transparent; transition: background var(--motion-base) var(--ease-out), color var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
 .mobile-menu-toggle, .mobile-character { display: none; }
 main { min-width: 0; outline: none; }
 .home-page { display: flex; flex-direction: column; gap: var(--section-gap); }
@@ -385,7 +361,7 @@ main { min-width: 0; outline: none; }
 .contact-title { margin-right: 24px; font-size: 24px; line-height: 1.3; letter-spacing: -.4px; }
 .contact-description { margin-top: 8px; color: var(--secondary); font-size: 14px; }
 .contact-channels { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; }
-.channel-button { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid var(--stroke-control); border-radius: var(--radius-pill); color: var(--ink); background: var(--canvas); transition: background var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
+.channel-button { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid var(--stroke-control); border-radius: var(--radius-pill); color: var(--secondary); background: var(--canvas); transition: background var(--motion-base) var(--ease-out), color var(--motion-base) var(--ease-out), transform var(--motion-fast) var(--ease-out); }
 .channel-tooltip-positioner { z-index: 100; }
 /* One tooltip surface for the whole modal: content-fit pill with generous
    padding and a centered row. Channel labels and the email copy states share
@@ -418,36 +394,8 @@ main { min-width: 0; outline: none; }
   a.nav-item:hover { background: var(--subtle); color: var(--ink); }
   .primary-button:hover { background: var(--action-hover); }
   .secondary-button:hover, .icon-button:hover, .channel-button:hover, .sidebar-toggle:hover, .theme-toggle:hover { background: var(--hover); }
-  :is(
-    a.nav-item:hover,
-    .pill-button:hover,
-    .channel-button:hover,
-    .social-links a:hover,
-    .sidebar-toggle:hover,
-    .theme-toggle:hover,
-    .icon-button:hover,
-    .section-link:hover,
-    .project-row-link:hover,
-    .case-back-link:hover,
-    .case-footer-link:hover,
-    [data-variant]:has(button:hover)
-  ) .state-icon-outline { opacity: 0; }
-  :is(
-    a.nav-item:hover,
-    .pill-button:hover,
-    .channel-button:hover,
-    .social-links a:hover,
-    .sidebar-toggle:hover,
-    .theme-toggle:hover,
-    .icon-button:hover,
-    .section-link:hover,
-    .project-row-link:hover,
-    .case-back-link:hover,
-    .case-footer-link:hover,
-    [data-variant]:has(button:hover)
-  ) .state-icon-fill { opacity: 1; }
+  .secondary-button:hover .state-icon, .icon-button:hover, .channel-button:hover, .sidebar-toggle:hover, .theme-toggle:hover { color: var(--ink); }
   .email-address:hover { color: var(--ink); text-decoration-color: currentColor; }
-  .sidebar-toggle:hover, .theme-toggle:hover { color: var(--ink); }
   .social-links a:hover { color: var(--cobalt); }
   /* Drive the artwork from CSS so a hover registers before hydration and
      while the page is still easing under a resting pointer. Touch input sets
