@@ -1,0 +1,1706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Paylecta Product Tour Opener</title>
+<!--
+  STYLE BRIEF (Bang Motion)
+  Product + 3 mood words  : Paylecta (web & mobile financial workspace for small shops), warm, crisp, unhurried
+  Concept candidates      : 1) Single feature demo  2) Living UI ecosystem  3) Product tour with claims (SELECTED)
+  Structural fingerprint  : product tour with claims · 9 beats · Total Balance close-up / full dashboard + Gross vs Net chart / claim 1 on orange field / live invoice builder + synced preview / 55-45 split Payouts + claim 2 / Payouts table status scan / 3 stacked iOS mobile screens / claim 3 / mobile cards folding into Paylecta P mark · opening in media res on balance pull-back · closing brand lockup from mobile cards
+  Palette (from Figma)    : Primary #F8952D · Light canvas #FFFBF6 · Claim field #8C3202 to #E87D1C · Dark lockup #1A0E06 · Ink #2B2B2B · Data #22C55E / #007EE5 / #DC0000
+  Typography              : Bricolage Grotesque (500/600 display claims, sentence case, no periods) + Plus Jakarta Sans (UI product font)
+  Text emphasis           : None (word-by-word rise, directional SVG blur, weight contrast, adjacent UI)
+  Background motion (§7c) : Drifting radial warmth blobs + deterministic 12fps micro-grain from tl.time()
+  Background surface (§7d): 3 layers per surface (gradient + drifting warmth blobs + fine grain)
+  Object render (§7e)     : Tactile floating SaaS cards + rounded iOS bezels, soft elevation shadows, zero neon glow
+  Transitions             : Camera pull-back, dimmed UI + lifted card into brand field, cursor-guided camera push-in, 55/45 split screen, 3D perspective card rise folding into logo
+  Signature moment        : Live Invoice Builder click ("Add Discount"), camera pan right, live -$7.88 insert, $172.51 to $164.63 roll, PDF/Email/Payment Page toggle
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<style>
+:root{
+  --brand:#F8952D;
+  --brand-lit:#FCAE52;
+  --brand-deep:#8C3202;
+  --brand-mid:#C95709;
+  --canvas:#FFFBF6;
+  --surface:#FFFDFA;
+  --ink:#2B2B2B;
+  --muted:#736D67;
+  --line:#ECE7E0;
+  --green:#22C55E;
+  --blue:#007EE5;
+  --red:#DC0000;
+  --dark:#1A0E06;
+  --font-display:"Bricolage Grotesque",system-ui,sans-serif;
+  --font-ui:"Plus Jakarta Sans",system-ui,sans-serif;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:100%;height:100%;background:#110A05;overflow:hidden;font-family:var(--font-ui);color:var(--ink);-webkit-font-smoothing:antialiased}
+#filters{position:fixed;width:0;height:0;opacity:0;pointer-events:none}
+
+/* Fixed 1920x1080 master stage, scaled proportionally to fit viewport */
+#stage{
+  position:fixed;left:50%;top:50%;width:1920px;height:1080px;
+  transform:translate(-50%,-50%) scale(1);overflow:hidden;
+  background:var(--canvas);
+}
+
+/* Layered moving backgrounds (overscanned so camera motion never shows edges) */
+.bg-layer{position:absolute;inset:-120px;pointer-events:none}
+#bg-light{
+  background:
+    radial-gradient(60% 55% at 18% 12%, rgba(248,149,45,.13), transparent 65%),
+    radial-gradient(55% 50% at 86% 88%, rgba(252,174,82,.16), transparent 62%),
+    linear-gradient(165deg, #FFFDF9 0%, #FFF7EC 58%, #FFF2E1 100%);
+}
+#bg-light .blob{position:absolute;border-radius:50%;filter:blur(70px);will-change:transform}
+#bg-light .b1{width:960px;height:960px;left:-120px;top:-220px;background:radial-gradient(circle, rgba(248,149,45,.20), transparent 68%)}
+#bg-light .b2{width:900px;height:900px;right:-140px;bottom:-200px;background:radial-gradient(circle, rgba(252,174,82,.24), transparent 68%)}
+#bg-light .b3{width:680px;height:680px;left:640px;top:360px;background:radial-gradient(circle, rgba(0,126,229,.06), transparent 68%)}
+
+/* Rich Paylecta orange-amber brand field for claim moments */
+#bg-orange{
+  opacity:0;visibility:hidden;
+  background:
+    radial-gradient(72% 76% at 88% 92%, #F8952D 0%, rgba(248,149,45,0) 64%),
+    radial-gradient(60% 60% at 15% 15%, #A94104 0%, transparent 62%),
+    linear-gradient(135deg, #7C2B02 0%, #B34806 46%, #DA6A10 100%);
+}
+#bg-orange .blob{position:absolute;border-radius:50%;filter:blur(80px);will-change:transform}
+#bg-orange .ob1{width:920px;height:920px;left:1080px;top:-140px;background:radial-gradient(circle, rgba(255,190,108,.34), transparent 65%)}
+#bg-orange .ob2{width:880px;height:880px;left:-140px;bottom:-180px;background:radial-gradient(circle, rgba(110,32,0,.48), transparent 68%)}
+/* Subtle dark-side contrast pocket under right-column claim text */
+#bg-orange .pocket{
+  position:absolute;right:60px;top:160px;width:960px;height:760px;border-radius:50%;
+  background:radial-gradient(ellipse at center, rgba(64,19,0,.44) 0%, rgba(64,19,0,.16) 52%, transparent 74%);
+}
+
+/* Warm espresso dark ground for final Paylecta brand lockup */
+#bg-dark{
+  opacity:0;visibility:hidden;
+  background:
+    radial-gradient(68% 50% at 50% 106%, rgba(248,149,45,.34) 0%, rgba(201,87,9,.14) 44%, transparent 72%),
+    radial-gradient(50% 45% at 50% 48%, #2E1809 0%, #1A0E06 72%);
+}
+#bg-dark .blob{position:absolute;border-radius:50%;filter:blur(90px);will-change:transform}
+#bg-dark .db1{width:980px;height:640px;left:470px;bottom:-180px;background:radial-gradient(circle, rgba(248,149,45,.30), transparent 68%)}
+
+/* Loop bridge glow */
+#loop-glow{
+  position:absolute;inset:0;pointer-events:none;z-index:48;opacity:0;
+  background:radial-gradient(90% 90% at 50% 50%, #FCAE52 0%, #F8952D 55%, #DF7412 100%);
+}
+
+/* Deterministic 12fps micro-grain overlay */
+#grain{
+  position:absolute;inset:-64px;pointer-events:none;z-index:45;
+  opacity:.075;mix-blend-mode:multiply;will-change:transform;
+}
+
+/* Camera rig */
+#world{position:absolute;inset:0;transform-origin:0 0;will-change:transform}
+.layer{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none}
+
+/* Shared Paylecta Desktop Workspace Shell (1600x940 centered at 160,70) */
+.ws{
+  position:absolute;left:160px;top:70px;width:1600px;height:940px;
+  border-radius:24px;background:var(--surface);overflow:hidden;
+  display:flex;
+  border:1px solid rgba(43,27,12,.08);
+  box-shadow:0 42px 96px rgba(43,27,12,.14), 0 10px 28px rgba(43,27,12,.06);
+  transform-origin:50% 50%;will-change:transform,opacity;
+}
+.ws-side{
+  width:248px;height:100%;background:#FFFFFF;border-right:1px solid #F1ECE6;
+  padding:28px 20px;display:flex;flex-direction:column;justify-content:space-between;flex-shrink:0;
+}
+.brand-row{display:flex;align-items:center;gap:10px;padding:0 8px 24px}
+.brand-row img{width:34px;height:34px;object-fit:contain;display:block}
+.brand-row span{font-size:21px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.menu-cap{font-size:12px;font-weight:600;color:#9A948E;padding:0 12px 10px;letter-spacing:.02em}
+.nav-stack{display:flex;flex-direction:column;gap:6px}
+.nav-row{
+  display:flex;align-items:center;gap:12px;height:44px;padding:0 14px;border-radius:10px;
+  font-size:14px;font-weight:600;color:#625D57;
+}
+.nav-row svg{width:18px;height:18px;flex-shrink:0}
+.nav-row.active{background:linear-gradient(95deg,#F8952D,#FB9F3E);color:#FFF;box-shadow:0 6px 16px rgba(248,149,45,.28)}
+.side-foot{display:flex;flex-direction:column;gap:8px;padding-top:16px;border-top:1px solid #F3EFEA}
+.side-foot .nav-row{height:36px;font-size:13px;font-weight:500;color:#78726B}
+.side-foot .nav-row.logout{color:#D64545}
+
+.ws-main{flex:1;min-width:0;display:flex;flex-direction:column;background:#FAF8F5}
+.ws-top{
+  height:74px;padding:0 34px;background:#FFFFFF;border-bottom:1px solid #F1ECE6;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.crumb{font-size:14px;color:#9A948E;font-weight:500}
+.crumb b{color:var(--ink);font-weight:700}
+.top-right{display:flex;align-items:center;gap:14px}
+.search-pill{
+  width:280px;height:40px;border-radius:10px;border:1px solid #EAE5DE;background:#FCFBF9;
+  padding:0 14px;display:flex;align-items:center;gap:10px;font-size:13px;color:#9A948E;
+}
+.icon-sq{
+  width:40px;height:40px;border-radius:10px;border:1px solid #EAE5DE;background:#FFF;
+  display:flex;align-items:center;justify-content:center;color:#555;position:relative;
+}
+.icon-sq .dot{position:absolute;top:9px;right:10px;width:7px;height:7px;border-radius:50%;background:var(--brand)}
+.user-chip{
+  display:flex;align-items:center;gap:10px;height:40px;padding:0 14px 0 6px;
+  border-radius:999px;border:1px solid #EAE5DE;background:#FFF;font-size:13px;font-weight:600;color:var(--ink);
+}
+.avatar{
+  width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#2B2B2B,#57504A);
+  color:#FFF;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;
+}
+.ws-body{flex:1;padding:20px 34px 24px;display:flex;flex-direction:column;gap:14px;overflow:hidden}
+
+/* Dashboard content */
+.greet-row{display:flex;align-items:center;justify-content:space-between}
+.greet-title{font-size:21px;font-weight:700;color:var(--ink);letter-spacing:-.02em}
+.greet-title span{color:var(--brand)}
+.greet-sub{font-size:13px;color:var(--muted);margin-top:2px}
+.alert-pill{
+  display:flex;align-items:center;gap:14px;padding:10px 15px;border-radius:14px;
+  background:linear-gradient(100deg,#0C87EE,#0072D1);color:#FFF;
+  box-shadow:0 10px 24px rgba(0,126,229,.22);
+}
+.alert-pill .a-ico{width:30px;height:30px;border-radius:9px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center}
+.alert-pill .a-txt{font-size:13px;line-height:1.32}
+.alert-pill .a-txt b{display:block;font-weight:700;font-size:13.5px}
+.alert-pill .a-arr{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;margin-left:8px}
+
+.bal-card{
+  position:relative;min-height:154px;border-radius:18px;padding:20px 28px;
+  background:linear-gradient(118deg,#FCAE52 0%,#F8952D 48%,#E3740D 100%);
+  color:#FFF;display:flex;align-items:center;justify-content:space-between;overflow:hidden;
+  box-shadow:0 18px 40px rgba(248,149,45,.28);flex-shrink:0;
+}
+.bal-card::after{
+  content:"";position:absolute;right:-80px;top:-110px;width:360px;height:360px;border-radius:50%;
+  background:radial-gradient(circle, rgba(255,255,255,.22), transparent 68%);pointer-events:none;
+}
+.bal-lbl{font-size:13.5px;font-weight:500;opacity:.92;line-height:1.2}
+.bal-val{font-size:42px;line-height:1.08;font-weight:700;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums;min-width:11ch}
+.bal-delta{
+  display:inline-flex;align-items:center;gap:6px;margin-top:8px;padding:5px 12px;
+  border-radius:999px;background:rgba(255,255,255,.22);font-size:12px;font-weight:600;line-height:1.15;
+}
+.bal-btns{display:flex;align-items:center;gap:10px;position:relative;z-index:2}
+.btn-green{
+  display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 18px;border-radius:10px;
+  background:#1EB955;color:#FFF;font-size:13.5px;font-weight:600;box-shadow:0 6px 14px rgba(20,120,50,.22);
+}
+.btn-amber{
+  display:inline-flex;align-items:center;gap:7px;height:40px;padding:0 18px;border-radius:10px;
+  background:#B85B08;color:#FFF;font-size:13.5px;font-weight:600;
+}
+.btn-more{width:40px;height:40px;border-radius:10px;background:#B85B08;color:#FFF;display:flex;align-items:center;justify-content:center;font-weight:700}
+
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.ui-card{
+  background:#FFFFFF;border-radius:16px;padding:15px 19px;border:1px solid #EFEAE3;
+  box-shadow:0 4px 16px rgba(43,27,12,.03);
+}
+.kpi-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.kpi-ico{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center}
+.kpi-ico.c1{background:#FFF3E2;color:#E57B13}
+.kpi-ico.c2{background:#FDEBF3;color:#D43F80}
+.kpi-ico.c3{background:#F1EBFF;color:#7C3AED}
+.kpi-more{font-size:12px;color:#9A948E;font-weight:500}
+.kpi-lbl{font-size:13px;color:var(--muted);font-weight:500}
+.kpi-row{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.kpi-num{font-size:25px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;min-width:4ch}
+.pill-stat{display:inline-flex;align-items:center;gap:4px;padding:4px 9px;border-radius:999px;font-size:11.5px;font-weight:700}
+.pill-stat.up{background:#E7F8EE;color:#15803D}
+.pill-stat.dn{background:#FDECEC;color:#C81E1E}
+
+.mid-grid{display:grid;grid-template-columns:1fr 306px;gap:16px}
+.rev-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.card-h{font-size:16px;font-weight:700;color:var(--ink)}
+.sel-pill{padding:6px 12px;border-radius:9px;border:1px solid #EAE5DE;font-size:12.5px;font-weight:600;color:#555}
+.rev-metrics{display:flex;gap:56px;margin-bottom:10px}
+.rm-lbl{display:flex;align-items:center;gap:7px;font-size:12px;color:var(--muted);font-weight:500}
+.rm-dot{width:9px;height:9px;border-radius:3px}
+.rm-val{font-size:18px;font-weight:700;color:var(--ink);margin-top:2px;display:flex;align-items:baseline;gap:8px}
+.rm-val small{font-size:11.5px;font-weight:600;color:#15803D}
+.chart-wrap{position:relative;height:146px}
+.chart-wrap svg{width:100%;height:100%;display:block;overflow:visible}
+.chart-tip{
+  position:absolute;left:326px;top:-6px;width:146px;padding:7px 11px;border-radius:10px;
+  background:#FFFFFF;border:1px solid #EAE5DE;box-shadow:0 10px 24px rgba(43,27,12,.10);
+  font-size:11px;opacity:0;
+}
+.chart-tip b{display:block;color:var(--ink);margin-bottom:5px;font-size:11.5px}
+.chart-tip .tr{display:flex;justify-content:space-between;color:var(--muted);margin-top:2px}
+.chart-tip .tr span:last-child{font-weight:700;color:var(--ink)}
+
+.cust-bars{display:flex;align-items:flex-end;gap:12px;height:96px;padding-top:16px;margin-top:12px;border-top:1px solid #F1ECE6}
+.cbar{width:12px;border-radius:6px;background:linear-gradient(180deg,#FCAE52,#F8952D);transform-origin:bottom center}
+
+.mini-tx{display:flex;flex-direction:column;gap:8px;padding:14px 20px}
+.tx-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.tx-row{display:grid;grid-template-columns:130px 1fr 165px 150px 100px 96px;align-items:center;font-size:12.5px;padding:7px 0;border-top:1px solid #F4F0EA}
+.tx-type{display:inline-flex;align-items:center;gap:8px;font-weight:600;color:var(--ink)}
+.tx-badge{width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.tx-badge.in{background:#E7F8EE;color:#15803D}
+.tx-badge.out{background:#FFF3E2;color:#D97706}
+
+/* Semantic Status Pills */
+.st-pill{display:inline-flex;align-items:center;justify-content:center;gap:5px;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:700;width:fit-content}
+.st-pill.ok{background:#E7F8EE;color:#15803D}
+.st-pill.proc{background:#E6F3FF;color:#0064B8}
+.st-pill.warn{background:#FFF4E0;color:#C26706}
+.st-pill.bad{background:#FDECEC;color:#C81E1E}
+
+/* Beat 3: Lifted Floating Cards + Claim 1 */
+#lifted-stage{perspective:1400px}
+.lift-stack{position:absolute;left:130px;top:175px;width:780px;height:730px;transform-style:preserve-3d}
+.lift-bal{
+  position:absolute;left:0;top:18px;width:680px;height:208px;border-radius:26px;padding:34px 38px;
+  background:linear-gradient(120deg,#FDB65D 0%,#F8952D 54%,#DF700B 100%);color:#FFF;
+  box-shadow:0 36px 80px rgba(64,19,0,.38), inset 0 1px 0 rgba(255,255,255,.35);
+  will-change:transform,opacity;
+}
+.lift-bal .bal-val{font-size:58px}
+.lift-rev{
+  position:absolute;left:64px;top:256px;width:710px;border-radius:26px;padding:30px 34px;
+  background:#FFFFFF;border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 40px 88px rgba(64,19,0,.32);
+  will-change:transform,opacity;
+}
+.claim-box{position:absolute;display:flex;flex-direction:column;gap:6px}
+.claim-line{
+  font-family:var(--font-display);font-weight:600;letter-spacing:-.025em;line-height:1.08;
+  white-space:nowrap;opacity:0;
+}
+.claim-line.white{color:#FFFFFF;text-shadow:0 8px 34px rgba(56,16,0,.32)}
+.claim-line.cream{color:#FFE2BE;text-shadow:0 8px 34px rgba(56,16,0,.28)}
+.claim-line.ink{color:var(--ink);text-shadow:none}
+.wd{display:inline-block;white-space:nowrap}
+.ch{display:inline-block;will-change:transform,opacity,filter;opacity:0}
+
+/* Beat 4: Create Invoice Screen */
+.inv-grid{display:grid;grid-template-columns:560px 1fr;gap:24px;flex:1;min-height:0}
+.inv-form{
+  background:#FFFFFF;border-radius:18px;padding:24px 26px;border:1px solid #EFEAE3;
+  display:flex;flex-direction:column;gap:14px;
+}
+.inv-h{font-size:19px;font-weight:700;color:var(--ink)}
+.inv-sub{font-size:13px;color:var(--muted);margin-top:-8px}
+.f-lbl{font-size:12px;font-weight:600;color:#57524C;margin-bottom:5px}
+.f-card{
+  display:flex;align-items:center;justify-content:space-between;padding:11px 14px;
+  border-radius:12px;border:1px solid #ECE7E0;background:#FCFBF9;
+}
+.f-person{display:flex;align-items:center;gap:11px}
+.f-person b{display:block;font-size:13.5px;color:var(--ink)}
+.f-person span{font-size:12px;color:var(--muted)}
+.f-input{
+  padding:11px 14px;border-radius:11px;border:1px solid #EAE5DE;background:#FBF9F6;
+  font-size:13.5px;color:var(--ink);font-weight:500;
+}
+.prod-row{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 14px;
+  border-radius:12px;border:1px solid #ECE7E0;background:#FFF;
+}
+.prod-chip{display:flex;align-items:center;gap:12px}
+.prod-thumb{
+  width:42px;height:42px;border-radius:10px;background:#FFF4E5;
+  display:flex;align-items:center;justify-content:center;color:var(--brand);
+}
+.disc-row{
+  display:flex;align-items:center;justify-content:space-between;padding:12px 14px;
+  border-radius:12px;border:1.5px solid #EAE5DE;background:#FFF;position:relative;
+  transition:border-color .2s;
+}
+.disc-left{display:flex;align-items:center;gap:11px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.chk-box{
+  width:22px;height:22px;border-radius:6px;border:2px solid #D5CFC7;background:#FFF;
+  display:flex;align-items:center;justify-content:center;position:relative;
+}
+.chk-fill{
+  position:absolute;inset:-2px;border-radius:6px;background:var(--brand);
+  display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.6);
+}
+.disc-pill{
+  padding:6px 12px;border-radius:9px;background:#F7F4F0;border:1px solid #EAE5DE;
+  font-size:12.5px;font-weight:600;color:#625D57;
+}
+.inv-foot{display:flex;justify-content:flex-end;gap:10px;margin-top:auto;padding-top:6px}
+.btn-ghost{height:40px;padding:0 18px;border-radius:10px;border:1px solid #E5E0D8;background:#FFF;font-size:13.5px;font-weight:600;color:#555;display:inline-flex;align-items:center}
+.btn-orange{height:40px;padding:0 20px;border-radius:10px;background:var(--brand);color:#FFF;font-size:13.5px;font-weight:600;display:inline-flex;align-items:center;gap:8px;box-shadow:0 8px 18px rgba(248,149,45,.28)}
+
+.inv-prev-panel{
+  background:#FFF7EE;border-radius:18px;padding:22px 26px;border:1px solid #F3E5D5;
+  display:flex;flex-direction:column;gap:16px;
+}
+.prev-top{display:flex;align-items:center;justify-content:space-between}
+.prev-tabs{display:flex;gap:8px}
+.ptab{
+  display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:10px;
+  font-size:13px;font-weight:600;color:#6B6560;background:transparent;border:1px solid transparent;
+}
+.ptab.on{background:#FFFFFF;color:var(--ink);border-color:#EAE2D8;box-shadow:0 4px 12px rgba(43,27,12,.06)}
+
+.inv-paper{
+  flex:1;background:#FFFFFF;border-radius:14px;padding:26px 28px;border:1px solid #EFE7DC;
+  box-shadow:0 14px 36px rgba(43,27,12,.07);display:flex;flex-direction:column;gap:16px;overflow:hidden;
+}
+.email-strip{
+  background:#F8F6F2;border:1px solid #ECE7DF;border-radius:10px;padding:0 14px;
+  font-size:12px;color:#5E5852;height:0;opacity:0;overflow:hidden;
+  display:flex;flex-direction:column;justify-content:center;gap:3px;
+}
+.paper-hd{display:flex;justify-content:space-between;align-items:flex-start}
+.paper-hd h3{font-size:24px;font-weight:700;letter-spacing:.03em;color:var(--ink)}
+.paper-total{text-align:right}
+.paper-total img{width:28px;height:28px;object-fit:contain;margin-left:auto;margin-bottom:4px}
+.paper-total small{display:block;font-size:11.5px;color:var(--muted)}
+.paper-total strong{display:block;font-size:28px;font-weight:700;color:var(--brand);font-variant-numeric:tabular-nums;min-width:7ch}
+.paper-meta{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:12px 0;border-top:1px solid #F2EDE6;border-bottom:1px solid #F2EDE6;font-size:12px}
+.paper-meta small{display:block;color:#9A948E;font-size:11px;margin-bottom:3px}
+.paper-meta b{color:var(--ink);font-weight:600}
+.paper-items{display:flex;flex-direction:column;gap:10px;font-size:13px}
+.pi-row{display:flex;justify-content:space-between;color:#57524C}
+.pi-row b{color:var(--ink);font-weight:600;font-variant-numeric:tabular-nums}
+.pi-row.disc{color:#15803D;height:0;opacity:0;overflow:hidden;margin:0}
+.pi-row.disc b{color:#15803D}
+.pi-row.tot{padding-top:12px;border-top:1px solid #EFEAE3;font-size:15px;font-weight:700;color:var(--ink)}
+.pi-row.tot b{font-size:18px;color:var(--ink)}
+.pay-cta-bar{
+  margin-top:auto;border-radius:12px;background:linear-gradient(95deg,#F8952D,#EB7C14);
+  color:#FFF;padding:0 18px;height:0;opacity:0;overflow:hidden;
+  display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:700;
+}
+
+/* Custom sleek pointer cursor inside UI workspaces */
+.cursor{
+  position:absolute;left:0;top:0;width:34px;height:34px;pointer-events:none;z-index:60;
+  opacity:0;filter:drop-shadow(0 6px 12px rgba(0,0,0,.24));will-change:transform;
+}
+.click-ring{
+  position:absolute;left:-16px;top:-19px;width:44px;height:44px;border-radius:50%;
+  border:3px solid var(--brand);opacity:0;transform:scale(.4);pointer-events:none;
+}
+
+/* Beat 5: 55/45 Split Screen */
+#split-stage{display:flex}
+.split-left{
+  position:absolute;left:0;top:0;width:1056px;height:1080px;overflow:hidden;
+  background:
+    radial-gradient(60% 60% at 30% 25%, rgba(248,149,45,.10), transparent 65%),
+    linear-gradient(170deg,#FFFDF9 0%,#FAF5EE 100%);
+  display:flex;align-items:center;justify-content:center;
+}
+.split-dots{
+  position:absolute;inset:0;opacity:.35;
+  background-image:radial-gradient(#D8CEC2 1.2px, transparent 1.2px);
+  background-size:28px 28px;
+}
+.split-card{
+  position:relative;width:820px;border-radius:28px;padding:42px 44px;background:#FFFFFF;
+  border:1px solid rgba(43,27,12,.07);
+  box-shadow:0 36px 84px rgba(43,27,12,.12), 0 8px 24px rgba(43,27,12,.05);
+  display:flex;flex-direction:column;gap:28px;z-index:2;
+}
+.sc-top{display:flex;justify-content:space-between;align-items:flex-end;padding-bottom:24px;border-bottom:1px solid #F1ECE6}
+.sc-top small{display:block;font-size:15px;color:var(--muted);font-weight:500}
+.sc-top strong{display:block;font-size:44px;font-weight:700;color:var(--brand);letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+.sc-bar{display:flex;align-items:center;gap:14px}
+.sc-search{
+  flex:1;height:56px;border-radius:14px;border:1.5px solid #EAE5DE;background:#FCFBF9;
+  padding:0 18px;display:flex;align-items:center;gap:12px;font-size:16px;color:#8D8781;
+}
+.sc-ico{
+  width:56px;height:56px;border-radius:14px;border:1.5px solid #EAE5DE;background:#FFF;
+  display:flex;align-items:center;justify-content:center;color:var(--ink);
+}
+.sc-cta{
+  height:56px;padding:0 26px;border-radius:14px;background:var(--brand);color:#FFF;
+  font-size:16px;font-weight:700;display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 12px 26px rgba(248,149,45,.34);position:relative;
+}
+.sc-pills{display:flex;align-items:center;gap:12px}
+.sc-pills span{font-size:13.5px;font-weight:600;color:var(--muted)}
+
+.split-right{
+  position:absolute;left:1056px;top:0;width:864px;height:1080px;overflow:hidden;
+  background:
+    radial-gradient(80% 70% at 90% 95%, #F8952D 0%, transparent 66%),
+    linear-gradient(150deg, #7A2902 0%, #B74B06 54%, #DC6D12 100%);
+  padding:88px 82px;display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:-24px 0 60px rgba(43,27,12,.14);
+}
+.sr-brand{display:flex;align-items:center;gap:12px}
+.sr-brand .logo-badge{
+  width:42px;height:42px;border-radius:12px;background:#FFF;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 8px 20px rgba(64,19,0,.22);
+}
+.sr-brand img{width:26px;height:26px;object-fit:contain}
+.sr-brand span{font-size:22px;font-weight:700;color:#FFF;letter-spacing:-.02em}
+.sr-sub{font-size:24px;font-weight:500;color:rgba(255,238,218,.84);letter-spacing:-.01em}
+
+/* Beat 6: Payouts Table Workspace */
+.pay-kpis{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:18px}
+.pay-bal-num{font-size:34px;font-weight:700;color:var(--brand);letter-spacing:-.03em;margin:6px 0 12px;font-variant-numeric:tabular-nums}
+.pay-link{font-size:13px;font-weight:600;color:var(--brand);text-decoration:underline;text-underline-offset:3px}
+.pay-table-card{
+  flex:1;background:#FFFFFF;border-radius:16px;padding:18px 22px;border:1px solid #EFEAE3;
+  display:flex;flex-direction:column;gap:10px;position:relative;overflow:hidden;
+}
+.pt-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.pt-actions{display:flex;gap:10px}
+.pt-head,.pt-row{
+  display:grid;grid-template-columns:130px 260px 150px 150px 120px 160px 1fr;
+  align-items:center;padding:11px 14px;border-radius:10px;font-size:13.5px;
+}
+.pt-head{background:#FAF7F2;font-size:12px;font-weight:700;color:#7C766F;padding:10px 14px}
+.pt-row{border-bottom:1px solid #F3EFE9;color:var(--ink);font-weight:500;position:relative}
+.pt-row b{font-weight:700;font-variant-numeric:tabular-nums}
+.pt-row small{display:block;font-size:11.5px;color:#9A948E}
+.status-slot,.date-slot{position:relative;display:inline-flex;align-items:center;min-height:26px}
+.status-slot .overlay-el,.date-slot .overlay-el{position:absolute;left:0;top:0;white-space:nowrap}
+.settled-toast{
+  position:absolute;right:26px;bottom:112px;opacity:0;
+  display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:999px;
+  background:#15803D;color:#FFF;font-size:13px;font-weight:700;
+  box-shadow:0 12px 28px rgba(21,128,61,.28);z-index:5;
+}
+.settled-toast .st-check{
+  width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,.22);
+  display:inline-flex;align-items:center;justify-content:center;font-size:12px;
+}
+
+/* Beat 7: Three Stacked iOS Mobile Frames */
+#mobile-stage{perspective:1600px}
+.mob-title-wrap{position:absolute;left:0;right:0;top:80px;display:flex;justify-content:center}
+.phones-row{
+  position:absolute;left:50%;top:220px;transform:translateX(-50%);
+  display:flex;align-items:flex-start;gap:48px;transform-style:preserve-3d;
+}
+.phone{
+  width:366px;height:756px;border-radius:46px;background:#FFFFFF;padding:14px;
+  border:2px solid #E5DDD4;
+  box-shadow:0 36px 84px rgba(43,27,12,.15), 0 8px 24px rgba(43,27,12,.06);
+  display:flex;flex-direction:column;position:relative;overflow:hidden;
+  will-change:transform,opacity;
+}
+.phone-screen{
+  flex:1;border-radius:34px;background:#FAF8F5;overflow:hidden;
+  display:flex;flex-direction:column;padding:16px 18px 18px;gap:14px;position:relative;
+}
+.p-status{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--ink);padding:0 6px}
+.p-island{width:92px;height:24px;border-radius:999px;background:#1A1A1A}
+.p-head{display:flex;justify-content:space-between;align-items:center;font-size:18px;font-weight:700;color:var(--ink);padding-top:2px}
+.p-bal{
+  border-radius:18px;padding:18px;color:#FFF;
+  background:linear-gradient(125deg,#FCAE52 0%,#F8952D 54%,#E2720D 100%);
+  box-shadow:0 12px 24px rgba(248,149,45,.26);
+}
+.p-bal small{font-size:12px;opacity:.9}
+.p-bal strong{display:block;font-size:28px;font-weight:700;margin-top:4px;font-variant-numeric:tabular-nums}
+.p-bal span{display:inline-block;margin-top:8px;padding:3px 9px;border-radius:999px;background:rgba(255,255,255,.22);font-size:11px;font-weight:600}
+.p-grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.p-mini{background:#FFF;border-radius:14px;padding:12px;border:1px solid #EFEAE3}
+.p-mini small{display:block;font-size:11px;color:var(--muted)}
+.p-mini b{display:block;font-size:19px;font-weight:700;color:var(--ink);margin-top:4px}
+.p-mini em{font-style:normal;font-size:11px;font-weight:700;color:#15803D}
+.p-inv-row{
+  background:#FFF;border-radius:14px;padding:12px 14px;border:1px solid #EFEAE3;
+  display:flex;justify-content:space-between;align-items:center;position:relative;
+}
+.p-inv-row b{display:block;font-size:13.5px;color:var(--ink)}
+.p-inv-row small{font-size:11.5px;color:var(--muted)}
+.p-tap-dot{
+  position:absolute;right:54px;top:50%;width:38px;height:38px;margin-top:-19px;border-radius:50%;
+  background:rgba(248,149,45,.25);border:2.5px solid var(--brand);opacity:0;transform:scale(.4);
+}
+.p-timeline{display:flex;flex-direction:column;gap:12px;background:#FFF;border-radius:14px;padding:16px;border:1px solid #EFEAE3}
+.ptl-item{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--muted)}
+.ptl-dot{width:10px;height:10px;border-radius:50%;background:#E2DBD2;flex-shrink:0}
+.ptl-item.lit{color:var(--ink);font-weight:600}
+.ptl-item.lit .ptl-dot{background:#22C55E;box-shadow:0 0 0 4px rgba(34,197,94,.18)}
+.p-kv-card{background:#FFF;border-radius:14px;padding:14px 16px;border:1px solid #EFEAE3;display:flex;flex-direction:column;gap:10px}
+.p-kv-row{display:flex;justify-content:space-between;align-items:center;font-size:12px}
+.p-kv-row span{color:var(--muted);font-weight:500}
+.p-kv-row strong{color:var(--ink);font-size:12.5px;font-weight:700}
+.p-rev-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.p-rev-leg{display:flex;align-items:center;gap:8px;font-size:10.5px;color:var(--muted);font-weight:600}
+.p-rev-leg i{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:3px;vertical-align:middle}
+.p-btn-subtle{
+  margin-top:2px;height:38px;border-radius:11px;background:#FFF;border:1px solid #E9E2D9;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:12px;font-weight:700;color:var(--ink);
+}
+.p-home-bar{
+  margin-top:auto;align-self:center;width:104px;height:4px;border-radius:99px;
+  background:rgba(43,35,28,.16);flex-shrink:0;
+}
+
+/* Beat 8: Closing Brand Lockup */
+#end-stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px}
+.end-lockup{display:flex;align-items:center;gap:26px}
+.end-mark{
+  width:118px;height:118px;border-radius:28px;background:#FFFFFF;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 24px 64px rgba(248,149,45,.34), 0 0 0 1px rgba(255,255,255,.16);
+  opacity:0;will-change:transform,opacity;
+}
+.end-mark img{width:74px;height:74px;object-fit:contain}
+.end-word{
+  font-family:var(--font-ui);font-size:96px;font-weight:700;letter-spacing:-.035em;
+  color:#FFFBF6;opacity:0;white-space:nowrap;
+}
+.end-tag{
+  font-family:var(--font-display);font-size:40px;font-weight:500;letter-spacing:-.015em;
+  color:#E5C6A5;opacity:0;white-space:nowrap;
+}
+
+/* Developer scrub HUD, hidden by default; enabled only with ?debug=1 or pressing H */
+#ui{
+  position:fixed;left:50%;bottom:20px;transform:translateX(-50%);
+  display:none;align-items:center;gap:14px;padding:10px 18px;border-radius:14px;
+  background:rgba(20,12,6,.92);border:1px solid rgba(255,255,255,.12);
+  font-size:13px;color:#D8C8B8;z-index:100;
+}
+#ui.on{display:flex}
+#ui button{background:#332011;color:#FFF;border:none;padding:7px 14px;border-radius:8px;font:inherit;cursor:pointer}
+#scrub{width:340px;accent-color:var(--brand)}
+#clock{font-variant-numeric:tabular-nums;min-width:5.4ch;text-align:right;color:#FFF}
+</style>
+</head>
+<body>
+
+<svg id="filters"><defs></defs></svg>
+
+<div id="stage">
+  <!-- Background layers -->
+  <div class="bg-layer" id="bg-light"><i class="blob b1"></i><i class="blob b2"></i><i class="blob b3"></i></div>
+  <div class="bg-layer" id="bg-orange"><i class="blob ob1"></i><i class="blob ob2"></i><div class="pocket"></div></div>
+  <div class="bg-layer" id="bg-dark"><i class="blob db1"></i></div>
+
+  <!-- Camera-driven world -->
+  <div id="world">
+
+    <!-- BEAT 1 & 2: Full Paylecta Desktop Dashboard -->
+    <div class="layer" id="ws-dash-layer">
+      <div class="ws" id="ws-dash">
+        <div class="ws-side">
+          <div>
+            <div class="brand-row"><img src="./paylecta-logo.png" alt="Paylecta"><span>Paylecta</span></div>
+            <div class="menu-cap">Main Menu</div>
+            <div class="nav-stack">
+              <div class="nav-row active">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>
+                Dashboard
+              </div>
+              <div class="nav-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                Customers
+              </div>
+              <div class="nav-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>
+                Invoices
+              </div>
+              <div class="nav-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+                Payouts
+              </div>
+              <div class="nav-row">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.6.85 1 1.51 1H21a2 2 0 1 1 0 4h-.09c-.66 0-1.25.4-1.51 1z"/></svg>
+                Settings
+              </div>
+            </div>
+          </div>
+          <div class="side-foot">
+            <div class="nav-row">FAQs</div>
+            <div class="nav-row">Help Center</div>
+            <div class="nav-row logout">Log out</div>
+          </div>
+        </div>
+        <div class="ws-main">
+          <div class="ws-top">
+            <div class="crumb">Page &nbsp;/&nbsp; <b>Dashboard</b></div>
+            <div class="top-right">
+              <div class="search-pill">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F8952D" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Search anything...
+              </div>
+              <div class="icon-sq">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                <span class="dot"></span>
+              </div>
+              <div class="user-chip"><div class="avatar">AS</div>Alan Sahlan</div>
+            </div>
+          </div>
+          <div class="ws-body">
+            <div class="greet-row">
+              <div>
+                <div class="greet-title">Good morning, <span>Alan</span>!</div>
+                <div class="greet-sub">Check your recent performance</div>
+              </div>
+              <div class="alert-pill" id="dash-alert">
+                <div class="a-ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+                <div class="a-txt"><b>Hey!</b>You have 3 pending transactions</div>
+                <div class="a-arr"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="2.4"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+              </div>
+            </div>
+
+            <div class="bal-card" id="bal-card">
+              <div>
+                <div class="bal-lbl">Total Balance</div>
+                <div class="bal-val" id="bal-num">$548,200.00</div>
+                <div class="bal-delta" id="bal-delta">+15.3% from last month</div>
+              </div>
+              <div class="bal-btns">
+                <div class="btn-green">Send ↑</div>
+                <div class="btn-amber">Receive ↓</div>
+                <div class="btn-more">•••</div>
+              </div>
+            </div>
+
+            <div class="kpi-grid">
+              <div class="ui-card kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-ico c1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                  <span class="kpi-more">View more</span>
+                </div>
+                <div class="kpi-lbl">Today's Transactions</div>
+                <div class="kpi-row"><span class="kpi-num" id="kpi-1">0</span><span class="pill-stat dn">↓ 2%</span></div>
+              </div>
+              <div class="ui-card kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-ico c2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                  <span class="kpi-more">View more</span>
+                </div>
+                <div class="kpi-lbl">This month's Transactions</div>
+                <div class="kpi-row"><span class="kpi-num" id="kpi-2">0</span><span class="pill-stat up">↑ 10%</span></div>
+              </div>
+              <div class="ui-card kpi-card">
+                <div class="kpi-top">
+                  <div class="kpi-ico c3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+                  <span class="kpi-more">View more</span>
+                </div>
+                <div class="kpi-lbl">This year's Transactions</div>
+                <div class="kpi-row"><span class="kpi-num" id="kpi-3">0</span><span class="pill-stat up">↑ 100%</span></div>
+              </div>
+            </div>
+
+            <div class="mid-grid">
+              <div class="ui-card" id="rev-card">
+                <div class="rev-head">
+                  <div class="card-h">Revenue Overview</div>
+                  <div class="sel-pill">Yearly ▾</div>
+                </div>
+                <div class="rev-metrics">
+                  <div>
+                    <div class="rm-lbl"><span class="rm-dot" style="background:#007EE5"></span>Gross Volume</div>
+                    <div class="rm-val">$70,145 <small>↑ +10.7% last year</small></div>
+                  </div>
+                  <div>
+                    <div class="rm-lbl"><span class="rm-dot" style="background:#9A948E"></span>Net Volume</div>
+                    <div class="rm-val">$30,145 <small>↑ +11.8% last year</small></div>
+                  </div>
+                </div>
+                <div class="chart-wrap">
+                  <svg viewBox="0 0 860 150">
+                    <line x1="40" y1="20" x2="845" y2="20" stroke="#F2EDE6" stroke-width="1"/>
+                    <line x1="40" y1="60" x2="845" y2="60" stroke="#F2EDE6" stroke-width="1"/>
+                    <line x1="40" y1="100" x2="845" y2="100" stroke="#F2EDE6" stroke-width="1"/>
+                    <line x1="40" y1="132" x2="845" y2="132" stroke="#E5DFD7" stroke-width="1"/>
+                    <text x="0" y="24" fill="#A09A94" font-size="11">100k</text>
+                    <text x="8" y="64" fill="#A09A94" font-size="11">60k</text>
+                    <text x="8" y="104" fill="#A09A94" font-size="11">20k</text>
+                    <text x="18" y="136" fill="#A09A94" font-size="11">0</text>
+                    <path id="line-net" d="M 48 124 C 120 116, 170 100, 240 104 C 310 108, 380 96, 460 88 C 540 80, 610 92, 690 78 C 760 66, 800 58, 840 52" fill="none" stroke="#B7B1AA" stroke-width="2.6" stroke-linecap="round"/>
+                    <path id="line-gross" d="M 48 112 C 120 92, 180 78, 250 86 C 320 94, 390 74, 460 64 C 540 52, 620 68, 700 44 C 770 28, 810 30, 840 26" fill="none" stroke="#007EE5" stroke-width="3.2" stroke-linecap="round"/>
+                    <line id="chart-marker" x1="460" y1="14" x2="460" y2="132" stroke="#D5CFC7" stroke-width="1.5" stroke-dasharray="4 4" opacity="0"/>
+                    <circle id="dot-gross" cx="460" cy="64" r="5.5" fill="#007EE5" stroke="#FFF" stroke-width="2.5" opacity="0"/>
+                    <circle id="dot-net" cx="460" cy="88" r="5" fill="#9A948E" stroke="#FFF" stroke-width="2.5" opacity="0"/>
+                    <g fill="#A09A94" font-size="11" text-anchor="middle">
+                      <text x="58" y="148">Jan</text><text x="130" y="148">Feb</text><text x="202" y="148">Mar</text><text x="274" y="148">Apr</text>
+                      <text x="346" y="148">May</text><text x="418" y="148">Jun</text><text x="490" y="148">Jul</text><text x="562" y="148">Aug</text>
+                      <text x="634" y="148">Sep</text><text x="706" y="148">Oct</text><text x="778" y="148">Nov</text><text x="838" y="148">Dec</text>
+                    </g>
+                  </svg>
+                  <div class="chart-tip" id="chart-tip">
+                    <b>July 2025</b>
+                    <div class="tr"><span>Gross Volume</span><span>$42K</span></div>
+                    <div class="tr"><span>Net Volume</span><span>$23K</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="ui-card">
+                <div class="kpi-top" style="margin-bottom:10px">
+                  <div style="display:flex;align-items:center;gap:10px">
+                    <div class="kpi-ico" style="background:#E8F4FF;color:#007EE5"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div>
+                    <span class="card-h" style="font-size:15px">New Customers</span>
+                  </div>
+                </div>
+                <div style="display:flex;align-items:baseline;gap:8px;margin-top:8px">
+                  <span style="font-size:28px;font-weight:700;color:var(--ink)">20</span>
+                  <span style="font-size:12.5px;color:var(--muted)">new this week</span>
+                </div>
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-top:6px">
+                  <span style="font-size:12px;color:#9A948E">vs. 5 last week</span>
+                  <span class="pill-stat up">↑ 300%</span>
+                </div>
+                <div class="cust-bars" id="cust-bars">
+                  <div class="cbar" style="height:36px"></div>
+                  <div class="cbar" style="height:64px"></div>
+                  <div class="cbar" style="height:48px"></div>
+                  <div class="cbar" style="height:72px"></div>
+                  <div class="cbar" style="height:56px"></div>
+                  <div class="cbar" style="height:82px"></div>
+                  <div class="cbar" style="height:88px"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="ui-card mini-tx">
+              <div class="tx-head"><span class="card-h" style="font-size:15px">Recent Transactions</span><span class="kpi-more">View all →</span></div>
+              <div class="tx-row">
+                <span class="tx-type"><span class="tx-badge in">↙</span>Received</span>
+                <span>Payment for Electrical Bicycle (x1)</span>
+                <span style="color:var(--muted)">Jan 01, 2025 · 12:35 PM</span>
+                <span>Arnold Sebastian</span>
+                <b style="color:#15803D">+$97.00</b>
+                <span class="st-pill warn">Pending</span>
+              </div>
+              <div class="tx-row">
+                <span class="tx-type"><span class="tx-badge in">↙</span>Received</span>
+                <span>Payment for Laptop (x1)</span>
+                <span style="color:var(--muted)">Jan 01, 2025 · 12:35 PM</span>
+                <span>Archibald Kingston</span>
+                <b style="color:#15803D">+$132.00</b>
+                <span class="st-pill ok">Success</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 4: Live Invoice Builder & Synced Preview -->
+    <div class="layer" id="ws-inv-layer">
+      <div class="ws" id="ws-inv">
+        <div class="ws-side">
+          <div>
+            <div class="brand-row"><img src="./paylecta-logo.png" alt="Paylecta"><span>Paylecta</span></div>
+            <div class="menu-cap">Main Menu</div>
+            <div class="nav-stack">
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Dashboard</div>
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</div>
+              <div class="nav-row active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Invoices</div>
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Payouts</div>
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>Settings</div>
+            </div>
+          </div>
+          <div class="side-foot"><div class="nav-row">FAQs</div><div class="nav-row">Help Center</div></div>
+        </div>
+        <div class="ws-main">
+          <div class="ws-top">
+            <div class="crumb">Page &nbsp;/&nbsp; Invoices &nbsp;/&nbsp; <b>Create new invoice</b></div>
+            <div class="top-right">
+              <div class="search-pill">Search anything...</div>
+              <div class="user-chip"><div class="avatar">AS</div>Alan Sahlan</div>
+            </div>
+          </div>
+          <div class="ws-body">
+            <div class="inv-grid">
+              <div class="inv-form">
+                <div class="inv-h">Invoice Details</div>
+                <div class="inv-sub">Fill in the details before sending an invoice</div>
+                <div>
+                  <div class="f-lbl">Sender</div>
+                  <div class="f-card">
+                    <div class="f-person"><div class="avatar">AS</div><div><b>Alan Sahlan</b><span>alansahlanwork@gmail.com</span></div></div>
+                    <span class="st-pill warn">User</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="f-lbl">Customer</div>
+                  <div class="f-card">
+                    <div class="f-person"><div class="avatar" style="background:#0C7CD5">BS</div><div><b>Bagas Satria</b><span>bagas123@gmail.com</span></div></div>
+                    <span class="st-pill proc">Active</span>
+                  </div>
+                </div>
+                <div>
+                  <div class="f-lbl">Subject</div>
+                  <div class="f-input">Payment for Electrical Bicycle (x1)</div>
+                </div>
+                <div>
+                  <div class="f-lbl">Product Details</div>
+                  <div class="prod-row">
+                    <div class="prod-chip">
+                      <div class="prod-thumb"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="5.5" cy="17.5" r="3.5"/><circle cx="18.5" cy="17.5" r="3.5"/><path d="M15 6a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-3 11.5V14l-3-3 4-3 2 3h2"/></svg></div>
+                      <div><b style="display:block;font-size:13.5px">Electrical Bicycle</b><span style="font-size:12px;color:var(--muted)">$157.54 · Qty 1 · Tax 10%</span></div>
+                    </div>
+                    <b style="font-size:14px">$157.54</b>
+                  </div>
+                </div>
+                <div class="disc-row" id="inv-disc-row">
+                  <div class="disc-left">
+                    <div class="chk-box" id="inv-chk">
+                      <div class="chk-fill" id="inv-chk-fill">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FFF" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg>
+                      </div>
+                    </div>
+                    Add Discount
+                  </div>
+                  <div class="disc-pill" id="inv-disc-pill">Summer sale · 5% ▾</div>
+                </div>
+                <div class="inv-foot">
+                  <span class="btn-ghost">Cancel</span>
+                  <span class="btn-orange">Send invoice →</span>
+                </div>
+              </div>
+
+              <div class="inv-prev-panel" id="inv-prev-panel">
+                <div class="prev-top">
+                  <span class="card-h" style="font-size:18px">Preview</span>
+                  <div class="prev-tabs">
+                    <div class="ptab" id="tab-pdf">PDF</div>
+                    <div class="ptab" id="tab-email">Email</div>
+                    <div class="ptab" id="tab-pay">Payment Page</div>
+                  </div>
+                </div>
+                <div class="inv-paper" id="inv-paper">
+                  <div class="email-strip" id="inv-email-bar">
+                    <div><b>To:</b> bagas123@gmail.com</div>
+                    <div><b>Subject:</b> Invoice #AB2324-01 from Alan Sahlan</div>
+                  </div>
+                  <div class="paper-hd">
+                    <h3>INVOICE</h3>
+                    <div class="paper-total">
+                      <img src="./paylecta-logo.png" alt="Paylecta">
+                      <small>Invoice of (USD)</small>
+                      <strong id="inv-total-top">$172.51</strong>
+                    </div>
+                  </div>
+                  <div class="paper-meta">
+                    <div><small>Billed to</small><b>Bagas Satria</b></div>
+                    <div><small>Invoice number</small><b>#AB2324-01</b></div>
+                    <div><small>Due date</small><b>13 Nov 2025</b></div>
+                  </div>
+                  <div class="paper-items">
+                    <div class="pi-row"><span>Electrical Bicycle (x1)</span><b>$157.54</b></div>
+                    <div class="pi-row"><span>Subtotal</span><b>$157.54</b></div>
+                    <div class="pi-row disc" id="inv-disc-line"><span>Discount (Summer sale · 5%)</span><b>-$7.88</b></div>
+                    <div class="pi-row"><span>Tax (10%)</span><b>$14.97</b></div>
+                    <div class="pi-row tot"><span>Total</span><b id="inv-total-bot">$172.51</b></div>
+                  </div>
+                  <div class="pay-cta-bar" id="inv-pay-cta">
+                    <span>Pay securely online</span>
+                    <span>Pay $164.63 →</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Live cursor inside invoice workspace so it scales with camera zoom -->
+        <div class="cursor" id="cur-inv">
+          <div class="click-ring" id="ring-inv"></div>
+          <svg viewBox="0 0 28 28" width="32" height="32"><path d="M5 3l17 10.5-7.4 1.9L11.2 23 5 3z" fill="#1F1B18" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 6: Payouts Table Workspace -->
+    <div class="layer" id="ws-pay-layer" style="perspective:1400px">
+      <div class="ws" id="ws-pay">
+        <div class="ws-side">
+          <div>
+            <div class="brand-row"><img src="./paylecta-logo.png" alt="Paylecta"><span>Paylecta</span></div>
+            <div class="menu-cap">Main Menu</div>
+            <div class="nav-stack">
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg>Dashboard</div>
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>Customers</div>
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/></svg>Invoices</div>
+              <div class="nav-row active"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>Payouts</div>
+              <div class="nav-row"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/></svg>Settings</div>
+            </div>
+          </div>
+          <div class="side-foot"><div class="nav-row">FAQs</div><div class="nav-row">Help Center</div></div>
+        </div>
+        <div class="ws-main">
+          <div class="ws-top">
+            <div class="crumb">Page &nbsp;/&nbsp; <b>Payouts</b></div>
+            <div class="top-right">
+              <div class="search-pill">Search anything...</div>
+              <div class="user-chip"><div class="avatar">AS</div>Alan Sahlan</div>
+            </div>
+          </div>
+          <div class="ws-body">
+            <div class="pay-kpis">
+              <div class="ui-card">
+                <div class="kpi-lbl">Available Balance to withdraw</div>
+                <div class="pay-bal-num">$562,000.34</div>
+                <div class="pay-link">Manage Funding Accounts</div>
+              </div>
+              <div class="ui-card">
+                <div class="kpi-top"><div class="kpi-ico c3"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg></div><span class="kpi-more">View more</span></div>
+                <div class="kpi-lbl">Total Payouts</div>
+                <div class="kpi-row"><span class="kpi-num" id="pay-tot-num">150</span><span class="kpi-more" id="pay-tot-sub">15 settled this month</span></div>
+              </div>
+              <div class="ui-card">
+                <div class="kpi-top"><div class="kpi-ico c2"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><span class="kpi-more">View more</span></div>
+                <div class="kpi-lbl">Pending Payouts</div>
+                <div class="kpi-row"><span class="kpi-num" id="pay-pend-num">16</span><span class="kpi-more">16 payouts requested</span></div>
+              </div>
+            </div>
+
+            <div class="pay-table-card">
+              <div class="pt-bar">
+                <span class="card-h" style="font-size:18px">Payouts List</span>
+                <div class="pt-actions">
+                  <span class="btn-ghost" style="height:36px;padding:0 14px;font-size:12.5px">Import ↓</span>
+                  <span class="btn-ghost" style="height:36px;padding:0 14px;font-size:12.5px">Export ↑</span>
+                  <span class="btn-orange" style="height:36px;padding:0 16px;font-size:12.5px">Request new payout</span>
+                </div>
+              </div>
+              <div class="pt-head">
+                <span>Reference</span><span>Channel</span><span>Requested</span><span>Finished</span><span>Amount</span><span>Status</span><span></span>
+              </div>
+              <div class="pt-row pay-r"><span>PAY-001</span><div>United States Bank<small>•••• 667</small></div><span>Jan 10, 2025</span><span>Jan 11, 2025</span><b>$97.00</b><span class="st-pill ok pay-p">Success</span><span></span></div>
+              <div class="pt-row pay-r" id="pay-row-2">
+                <span>PAY-002</span><div>ShopeePay<small>•••• 881</small></div><span>Jan 09, 2025</span>
+                <span class="date-slot"><span id="pay-r2-dash">-</span><span class="overlay-el" id="pay-r2-done" style="opacity:0;color:#15803D;font-weight:600">Jan 10, 2025</span></span>
+                <b>$100.00</b>
+                <span class="status-slot">
+                  <span class="st-pill proc pay-p" id="pay-row-2-proc">Processing</span>
+                  <span class="st-pill ok overlay-el" id="pay-row-2-ok" style="opacity:0">Success</span>
+                </span>
+                <span></span>
+              </div>
+              <div class="pt-row pay-r"><span>PAY-003</span><div>PayPal<small>•••• 876</small></div><span>Jan 08, 2025</span><span>-</span><b>$100.32</b><span class="st-pill bad pay-p">Canceled</span><span></span></div>
+              <div class="pt-row pay-r"><span>PAY-004</span><div>GoPay<small>•••• 667</small></div><span>Jan 07, 2025</span><span>Jan 08, 2025</span><b>$123.32</b><span class="st-pill ok pay-p">Success</span><span></span></div>
+              <div class="pt-row pay-r"><span>PAY-005</span><div>Bank Central Asia<small>•••• 543</small></div><span>Jan 06, 2025</span><span>Jan 07, 2025</span><b>$163.00</b><span class="st-pill ok pay-p">Success</span><span></span></div>
+              <div class="settled-toast" id="settled-toast"><span class="st-check">✓</span>PAY-002 settled · $100.00 to ShopeePay</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BEAT 7: Three Stacked iOS Mobile Screens -->
+    <div class="layer" id="mobile-stage">
+      <div class="phones-row">
+        <div class="phone" id="ph-1">
+          <div class="phone-screen">
+            <div class="p-status"><span>9:41</span><div class="p-island"></div><span>5G 100%</span></div>
+            <div class="p-head"><span>Dashboard</span><span style="font-size:14px;color:var(--brand)">●</span></div>
+            <div class="p-bal">
+              <small>Total Balance</small>
+              <strong>$562,000.34</strong>
+              <span>+15.3% from last month</span>
+            </div>
+            <div class="p-grid2">
+              <div class="p-mini"><small>Today</small><b>15</b><em style="color:#C81E1E">↓ 2%</em></div>
+              <div class="p-mini"><small>This month</small><b>150</b><em>↑ 10%</em></div>
+              <div class="p-mini"><small>This year</small><b>1,500</b><em>↑ 100%</em></div>
+              <div class="p-mini"><small>New buyers</small><b>20</b><em>↑ 300%</em></div>
+            </div>
+            <div class="p-mini" style="flex:1;display:flex;flex-direction:column;justify-content:space-between;padding:14px">
+              <div class="p-rev-head">
+                <small style="font-weight:700;color:var(--ink);font-size:12px">Revenue overview</small>
+                <div class="p-rev-leg"><span><i style="background:#007EE5"></i>Gross</span><span><i style="background:#B7B1AA"></i>Net</span></div>
+              </div>
+              <svg viewBox="0 0 280 132" width="100%" height="132" style="display:block">
+                <defs>
+                  <linearGradient id="mobGrossFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stop-color="#007EE5" stop-opacity="0.18"/>
+                    <stop offset="100%" stop-color="#007EE5" stop-opacity="0"/>
+                  </linearGradient>
+                </defs>
+                <line x1="6" y1="22" x2="274" y2="22" stroke="#F1ECE6" stroke-width="1"/>
+                <line x1="6" y1="58" x2="274" y2="58" stroke="#F1ECE6" stroke-width="1"/>
+                <line x1="6" y1="94" x2="274" y2="94" stroke="#F1ECE6" stroke-width="1"/>
+                <line x1="6" y1="114" x2="274" y2="114" stroke="#E5DFD7" stroke-width="1"/>
+                <path d="M 8 88 C 58 72, 95 54, 145 62 C 195 70, 228 32, 272 18 L 272 114 L 8 114 Z" fill="url(#mobGrossFill)"/>
+                <path d="M 8 102 C 58 94, 100 84, 150 86 C 200 88, 228 66, 272 54" fill="none" stroke="#C0B9B1" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M 8 88 C 58 72, 95 54, 145 62 C 195 70, 228 32, 272 18" fill="none" stroke="#007EE5" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="222" cy="40" r="4.5" fill="#007EE5" stroke="#FFF" stroke-width="2"/>
+                <g fill="#A09A94" font-size="9.5" text-anchor="middle">
+                  <text x="18" y="128">Jan</text><text x="84" y="128">Apr</text><text x="148" y="128">Jul</text><text x="210" y="128">Oct</text><text x="264" y="128">Dec</text>
+                </g>
+              </svg>
+            </div>
+            <div class="p-home-bar"></div>
+          </div>
+        </div>
+
+        <div class="phone" id="ph-2" style="z-index:3">
+          <div class="phone-screen">
+            <div class="p-status"><span>9:41</span><div class="p-island"></div><span>5G 100%</span></div>
+            <div class="p-head"><span>Invoices</span><span class="btn-orange" style="height:30px;padding:0 12px;font-size:12px;border-radius:8px">+ New</span></div>
+            <div class="p-grid2">
+              <div class="p-mini"><small>Total invoices</small><b>150</b><em>15 paid today</em></div>
+              <div class="p-mini"><small>Pending</small><b>16</b><em style="color:#C26706">3 overdue</em></div>
+            </div>
+            <div class="p-inv-row" id="mob-inv-1">
+              <div><b>INV-001 · Bagas</b><small>Electrical Bicycle</small></div>
+              <div style="text-align:right"><b>$164.63</b><span class="st-pill ok" style="font-size:10.5px;padding:3px 9px;margin-top:4px">Paid</span></div>
+              <div class="p-tap-dot" id="mob-tap"></div>
+            </div>
+            <div class="p-inv-row">
+              <div><b>INV-002 · Sarah</b><small>Bike Helmet (x2)</small></div>
+              <div style="text-align:right"><b>$94.00</b><span class="st-pill warn" style="font-size:10.5px;padding:3px 9px;margin-top:4px">Unpaid</span></div>
+            </div>
+            <div class="p-inv-row">
+              <div><b>INV-003 · Dimas</b><small>Service Bundle</small></div>
+              <div style="text-align:right"><b>$210.00</b><span class="st-pill bad" style="font-size:10.5px;padding:3px 9px;margin-top:4px">Overdue</span></div>
+            </div>
+            <div class="p-inv-row">
+              <div><b>INV-004 · Nadia</b><small>Wheel Set</small></div>
+              <div style="text-align:right"><b>$188.00</b><span class="st-pill ok" style="font-size:10.5px;padding:3px 9px;margin-top:4px">Paid</span></div>
+            </div>
+            <div class="p-home-bar"></div>
+          </div>
+        </div>
+
+        <div class="phone" id="ph-3">
+          <div class="phone-screen">
+            <div class="p-status"><span>9:41</span><div class="p-island"></div><span>5G 100%</span></div>
+            <div class="p-head"><span>← Payout PAY-001</span></div>
+            <div class="p-bal" style="padding:16px">
+              <div style="display:flex;justify-content:space-between;align-items:center">
+                <small>Requester · Alan Sahlan</small>
+                <span style="margin:0;background:#1EB955;padding:3px 9px">Success</span>
+              </div>
+              <strong style="margin-top:10px">$157.00</strong>
+            </div>
+            <div class="p-kv-card">
+              <div class="p-kv-row"><span>Channel</span><strong>United States Bank</strong></div>
+              <div class="p-kv-row"><span>Account</span><strong>•••• 667</strong></div>
+              <div class="p-kv-row"><span>Reference</span><strong>PAY-001</strong></div>
+              <div class="p-kv-row"><span>Settled</span><strong>Jan 11, 2025</strong></div>
+            </div>
+            <div class="p-timeline">
+              <small style="font-weight:700;color:var(--ink);font-size:12.5px">Activity timeline</small>
+              <div class="ptl-item" id="tl-step-1"><span class="ptl-dot"></span>Request submitted · 09:10 AM</div>
+              <div class="ptl-item" id="tl-step-2"><span class="ptl-dot"></span>Bank verified · 11:24 AM</div>
+              <div class="ptl-item" id="tl-step-3"><span class="ptl-dot"></span>Funds settled · 02:18 PM</div>
+            </div>
+            <div class="p-btn-subtle">Download receipt ↓</div>
+            <div class="p-home-bar"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#world -->
+
+  <!-- HUD / Claim & Split Layers (outside zoom rig so claims stay razor-sharp & uncropped) -->
+
+  <!-- BEAT 3: Lifted Floating Cards + Claim 1 on Brand Orange -->
+  <div class="layer" id="lifted-stage">
+    <div class="lift-stack">
+      <div class="lift-bal" id="lift-bal">
+        <div class="bal-lbl">Total Balance</div>
+        <div class="bal-val">$562,000.34</div>
+        <div class="bal-delta">+15.3% from last month</div>
+      </div>
+      <div class="lift-rev" id="lift-rev">
+        <div class="rev-head"><span class="card-h" style="font-size:19px">Revenue Overview</span><span class="sel-pill">Yearly ▾</span></div>
+        <div class="rev-metrics" style="margin-bottom:14px">
+          <div><div class="rm-lbl"><span class="rm-dot" style="background:#007EE5"></span>Gross Volume</div><div class="rm-val" style="font-size:22px">$70,145 <small>+10.7%</small></div></div>
+          <div><div class="rm-lbl"><span class="rm-dot" style="background:#9A948E"></span>Net Volume</div><div class="rm-val" style="font-size:22px">$30,145 <small>+11.8%</small></div></div>
+        </div>
+        <svg viewBox="0 0 640 120" width="100%" height="120">
+          <path d="M 10 92 C 95 72, 160 60, 240 68 C 320 76, 400 44, 485 32 C 555 22, 600 26, 632 18" fill="none" stroke="#007EE5" stroke-width="4" stroke-linecap="round"/>
+          <path d="M 10 104 C 95 94, 170 84, 250 88 C 330 92, 410 72, 495 62 C 565 52, 605 46, 632 42" fill="none" stroke="#B7B1AA" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="485" cy="32" r="7" fill="#007EE5" stroke="#FFF" stroke-width="3"/>
+        </svg>
+      </div>
+    </div>
+
+    <div class="claim-box" style="left:1020px;top:405px">
+      <div class="claim-line white" id="c1-l1" style="font-size:96px">Your numbers,</div>
+      <div class="claim-line cream" id="c1-l2" style="font-size:96px">first thing</div>
+    </div>
+  </div>
+
+  <!-- BEAT 5: 55/45 Split Screen (UI controls left / Brand Claim 2 right) -->
+  <div class="layer" id="split-stage">
+    <div class="split-left" id="split-left">
+      <div class="split-dots"></div>
+      <div class="split-card" id="split-card">
+        <div class="sc-top">
+          <div>
+            <small>Available Balance to withdraw</small>
+            <strong>$562,000.34</strong>
+          </div>
+          <span class="st-pill ok" style="font-size:13.5px;padding:7px 14px">15 settled this month</span>
+        </div>
+        <div class="sc-bar">
+          <div class="sc-search">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F8952D" stroke-width="2.2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            Search reference or channel...
+          </div>
+          <div class="sc-ico"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg></div>
+          <div class="sc-cta" id="split-cta">
+            Request new payout
+            <div class="click-ring" id="ring-split" style="left:50%;top:50%;margin:-22px 0 0 -22px;border-color:#FFFFFF"></div>
+          </div>
+        </div>
+        <div class="sc-pills">
+          <span class="st-pill ok">Success</span>
+          <span class="st-pill proc">Processing</span>
+          <span class="st-pill bad">Canceled</span>
+          <span style="margin-left:auto">Customers · Invoices · Payouts</span>
+        </div>
+      </div>
+      <div class="cursor" id="cur-split">
+        <svg viewBox="0 0 28 28" width="34" height="34"><path d="M5 3l17 10.5-7.4 1.9L11.2 23 5 3z" fill="#1F1B18" stroke="#FFFFFF" stroke-width="2" stroke-linejoin="round"/></svg>
+      </div>
+    </div>
+    <div class="split-right" id="split-right">
+      <div class="sr-brand">
+        <div class="logo-badge"><img src="./paylecta-logo.png" alt="Paylecta"></div>
+        <span>Paylecta</span>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div class="claim-line white" id="c2-l1" style="font-size:84px">Same controls,</div>
+        <div class="claim-line cream" id="c2-l2" style="font-size:84px">every page</div>
+      </div>
+      <div class="sr-sub" id="c2-sub">Search, filter, act</div>
+    </div>
+  </div>
+
+  <!-- BEAT 7 HUD Claim 3 -->
+  <div class="mob-title-wrap" style="pointer-events:none;z-index:20">
+    <div class="claim-line ink" id="c3-l1" style="font-size:80px">Built for one hand</div>
+  </div>
+
+  <!-- BEAT 8: Brand Lockup -->
+  <div class="layer" id="end-stage" style="z-index:30">
+    <div class="end-lockup">
+      <div class="end-mark" id="end-mark"><img src="./paylecta-logo.png" alt="Paylecta"></div>
+      <div class="end-word" id="end-word">Paylecta</div>
+    </div>
+    <div class="end-tag" id="end-tag">Shop finances, made simple</div>
+  </div>
+
+  <div id="grain"></div>
+  <div id="loop-glow"></div>
+</div>
+
+<!-- Hidden developer scrub bar (?debug=1 or H) -->
+<div id="ui">
+  <button id="btn-play">Pause</button>
+  <button id="btn-restart">Restart</button>
+  <input id="scrub" type="range" min="0" max="1000" value="0">
+  <span id="clock">0.00s</span>
+</div>
+
+<script>
+(() => {
+  const W = 1920, H = 1080, DURATION = 30.0;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const Q = new URLSearchParams(location.search);
+
+  /* ---- Deterministic 256x256 micro-grain tile (seeded LCG) ---- */
+  const grainEl = $('#grain');
+  {
+    const c = document.createElement('canvas');
+    c.width = c.height = 256;
+    const ctx = c.getContext('2d'), img = ctx.createImageData(256, 256), d = img.data;
+    let seed = 421973;
+    for (let i = 0; i < d.length; i += 4) {
+      seed = (seed * 1664525 + 1013904223) >>> 0;
+      const v = (seed >>> 24) & 255;
+      d[i] = d[i + 1] = d[i + 2] = v;
+      d[i + 3] = 255;
+    }
+    ctx.putImageData(img, 0, 0);
+    grainEl.style.backgroundImage = `url(${c.toDataURL()})`;
+  }
+
+  /* ---- Directional SVG motion blur helper ---- */
+  const defs = $('#filters defs');
+  let fc = 0;
+  function makeBlur() {
+    const id = 'mb' + (fc++), NS = 'http://www.w3.org/2000/svg';
+    const f = document.createElementNS(NS, 'filter');
+    f.id = id;
+    f.setAttribute('x', '-70%'); f.setAttribute('y', '-70%');
+    f.setAttribute('width', '240%'); f.setAttribute('height', '240%');
+    const g = document.createElementNS(NS, 'feGaussianBlur');
+    g.setAttribute('stdDeviation', '0 0');
+    f.appendChild(g); defs.appendChild(f);
+    return { url: `url(#${id})`, node: g };
+  }
+  function blurTween(tl, target, at, from, to, dur, { ease = 'power3.out', ax = 1, ay = .08 } = {}) {
+    const b = makeBlur(), o = { v: from };
+    tl.set(target, { filter: b.url }, at);
+    tl.to(o, {
+      v: to, duration: dur, ease,
+      onUpdate() { b.node.setAttribute('stdDeviation', `${(o.v * ax).toFixed(2)} ${(o.v * ay).toFixed(2)}`); }
+    }, at);
+    tl.set(target, { filter: 'none' }, at + dur);
+  }
+  const VERT = { ax: .08, ay: 1 };
+
+  function splitWords(el) {
+    const words = (el.textContent || '').trim().split(/\s+/);
+    el.textContent = '';
+    const out = [];
+    words.forEach((w, i) => {
+      const sp = document.createElement('span');
+      sp.className = 'wd';
+      sp.textContent = w;
+      el.appendChild(sp);
+      out.push(sp);
+      if (i < words.length - 1) el.appendChild(document.createTextNode(' '));
+    });
+    return out;
+  }
+
+  /* ---- Unified deterministic camera rig (#world) ---- */
+  const world = $('#world');
+  const CAM = { s: 1, fx: W / 2, fy: H / 2, breathe: 1 };
+  const rectIn = (el, root) => {
+    let x = 0, y = 0, n = el;
+    while (n && n !== root && n !== document.body) {
+      x += n.offsetLeft;
+      y += n.offsetTop;
+      n = n.offsetParent;
+    }
+    return { x, y, w: el.offsetWidth, h: el.offsetHeight };
+  };
+  const centerOf = (el) => {
+    const r = rectIn(el, world);
+    return { fx: r.x + r.w / 2, fy: r.y + r.h / 2 };
+  };
+  const ptCenterIn = (el, root) => {
+    const r = rectIn(el, root);
+    return { x: r.x + r.w / 2, y: r.y + r.h / 2 };
+  };
+
+  /* ---- Deterministic state driven purely by tl.time() ---- */
+  const NUM = { bal: 548200.00, k1: 0, k2: 0, k3: 0, invTotal: 172.51, payTot: 150, paySettled: 15, payPend: 16 };
+  const balEl = $('#bal-num'), k1El = $('#kpi-1'), k2El = $('#kpi-2'), k3El = $('#kpi-3');
+  const invTopEl = $('#inv-total-top'), invBotEl = $('#inv-total-bot');
+  const payTotEl = $('#pay-tot-num'), payTotSubEl = $('#pay-tot-sub'), payPendEl = $('#pay-pend-num');
+  const fmtMoney = v => '$' + v.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+  const bL1 = $('#bg-light .b1'), bL2 = $('#bg-light .b2'), bL3 = $('#bg-light .b3');
+  const bO1 = $('#bg-orange .ob1'), bO2 = $('#bg-orange .ob2'), bD1 = $('#bg-dark .db1');
+
+  function render(t) {
+    /* Camera transform with subtle continuous breath */
+    const br = 1 + (CAM.breathe * 0.007 * Math.sin(t * 0.85));
+    const s = CAM.s * br;
+    const tx = W / 2 - CAM.fx * s;
+    const ty = H / 2 - CAM.fy * s;
+    world.style.transform = `translate3d(${tx.toFixed(2)}px, ${ty.toFixed(2)}px, 0) scale(${s.toFixed(5)})`;
+
+    /* Deterministic drifting background warmth blobs */
+    bL1.style.transform = `translate3d(${(Math.sin(t * .42) * 58).toFixed(1)}px, ${(Math.cos(t * .36) * 42).toFixed(1)}px, 0)`;
+    bL2.style.transform = `translate3d(${(Math.cos(t * .38) * -62).toFixed(1)}px, ${(Math.sin(t * .32) * 48).toFixed(1)}px, 0)`;
+    bL3.style.transform = `translate3d(${(Math.sin(t * .28 + 1.2) * 44).toFixed(1)}px, ${(Math.cos(t * .31) * -36).toFixed(1)}px, 0)`;
+    bO1.style.transform = `translate3d(${(Math.sin(t * .5) * 55).toFixed(1)}px, ${(Math.cos(t * .4) * 45).toFixed(1)}px, 0)`;
+    bO2.style.transform = `translate3d(${(Math.cos(t * .45) * 48).toFixed(1)}px, ${(Math.sin(t * .48) * -40).toFixed(1)}px, 0)`;
+    bD1.style.transform = `translate3d(${(Math.sin(t * .6) * 40).toFixed(1)}px, ${(Math.cos(t * .5) * 24).toFixed(1)}px, 0)`;
+
+    /* Deterministic 12fps living grain */
+    const k = Math.floor(t * 12);
+    grainEl.style.transform = `translate3d(${(k * 37 % 56) - 28}px, ${(k * 61 % 56) - 28}px, 0)`;
+
+    /* Deterministic counters */
+    balEl.textContent = fmtMoney(NUM.bal);
+    k1El.textContent = String(Math.round(NUM.k1));
+    k2El.textContent = String(Math.round(NUM.k2));
+    k3El.textContent = Math.round(NUM.k3).toLocaleString('en-US');
+    const invStr = fmtMoney(NUM.invTotal);
+    invTopEl.textContent = invStr;
+    invBotEl.textContent = invStr;
+    payTotEl.textContent = String(Math.round(NUM.payTot));
+    payTotSubEl.textContent = Math.round(NUM.paySettled) + ' settled this month';
+    payPendEl.textContent = String(Math.round(NUM.payPend));
+  }
+
+  /* ---- Prepare SVG chart paths & split claim words ---- */
+  const lineGross = $('#line-gross'), lineNet = $('#line-net');
+  const lenGross = lineGross.getTotalLength(), lenNet = lineNet.getTotalLength();
+
+  const c1w1 = splitWords($('#c1-l1')), c1w2 = splitWords($('#c1-l2'));
+  const c2w1 = splitWords($('#c2-l1')), c2w2 = splitWords($('#c2-l2'));
+  const c3w1 = splitWords($('#c3-l1'));
+  const tagWords = splitWords($('#end-tag'));
+
+  /* ---- Master 30.00s Timeline (built after fonts load so layout measurements are exact) ---- */
+  const tl = gsap.timeline({ paused: true });
+
+  function buildTimeline() {
+    const balCenter = centerOf($('#bal-card'));
+    const revCenter = centerOf($('#rev-card'));
+    const discCenter = centerOf($('#inv-disc-row'));
+    const prevCenter = centerOf($('#inv-prev-panel'));
+    const payRow2Center = centerOf($('#pay-row-2'));
+
+    const wsInv = $('#ws-inv');
+    const ptChk = ptCenterIn($('#inv-chk'), wsInv);
+    const ptEmail = ptCenterIn($('#tab-email'), wsInv);
+    const ptPay = ptCenterIn($('#tab-pay'), wsInv);
+    const ptSplitCta = ptCenterIn($('#split-cta'), $('#split-left'));
+
+    const openCam = { s: 1.42, fx: balCenter.fx - 46, fy: balCenter.fy + 34, breathe: 1 };
+
+    /* Initial state at t = 0 (clean loop reset) */
+    tl.set(['#ws-dash-layer', '#ws-inv-layer', '#ws-pay-layer', '#lifted-stage', '#split-stage', '#mobile-stage', '#end-stage', '#bg-orange', '#bg-dark'], { autoAlpha: 0 }, 0);
+    tl.set('#ws-dash-layer', { autoAlpha: 1 }, 0);
+    tl.set('#ws-dash', { scale: 1, y: 0, opacity: 1 }, 0);
+    tl.set('#end-stage', { scale: 1, opacity: 1 }, 0);
+    tl.set('#loop-glow', { opacity: 0 }, 0);
+    tl.set(grainEl, { opacity: .065, mixBlendMode: 'multiply' }, 0);
+    tl.set(CAM, openCam, 0);
+    tl.set(NUM, { bal: 548200.00, k1: 0, k2: 0, k3: 0, invTotal: 172.51, payTot: 150, paySettled: 15, payPend: 16 }, 0);
+    tl.set('#bal-delta', { opacity: 0, y: 12 }, 0);
+    tl.set('#dash-alert', { opacity: 0, x: 24 }, 0);
+    tl.set(lineGross, { strokeDasharray: lenGross, strokeDashoffset: lenGross, opacity: 0 }, 0);
+    tl.set(lineNet, { strokeDasharray: lenNet, strokeDashoffset: lenNet, opacity: 0 }, 0);
+    tl.set(['#chart-marker', '#dot-gross', '#dot-net', '#chart-tip'], { opacity: 0 }, 0);
+    tl.set('#cust-bars .cbar', { scaleY: 0 }, 0);
+    tl.set('#tab-pdf', { backgroundColor: '#FFFFFF', borderColor: '#EAE2D8', color: '#2B2B2B', boxShadow: '0 4px 12px rgba(43,27,12,.06)' }, 0);
+    tl.set(['#tab-email', '#tab-pay'], { backgroundColor: 'transparent', borderColor: 'transparent', color: '#6B6560', boxShadow: 'none' }, 0);
+    tl.set('#cur-inv', { transformOrigin: '6px 3px' }, 0);
+    tl.set('#cur-split', { transformOrigin: '6px 4px' }, 0);
+    tl.set('#mob-inv-1', { borderColor: '#EFEAE3', backgroundColor: '#FFFFFF' }, 0);
+    tl.set(['#tl-step-1', '#tl-step-2', '#tl-step-3'], { color: '#736D67', fontWeight: 400 }, 0);
+    tl.set(['#tl-step-1 .ptl-dot', '#tl-step-2 .ptl-dot', '#tl-step-3 .ptl-dot'], { backgroundColor: '#E2DBD2', boxShadow: 'none' }, 0);
+
+    /* ================================================================
+       BEAT 1 (0.0s to 3.0s): In media res close-up on Balance Card to pull-back
+       ================================================================ */
+    tl.to(NUM, { bal: 562000.34, duration: 1.9, ease: 'power3.out' }, 0.15);
+    tl.to('#bal-delta', { opacity: 1, y: 0, duration: .6, ease: 'power3.out' }, 0.55);
+    tl.to('#dash-alert', { opacity: 1, x: 0, duration: .65, ease: 'power3.out' }, 1.65);
+    tl.to(CAM, { s: 1.0, fx: W / 2, fy: H / 2, duration: 1.55, ease: 'power3.inOut' }, 1.35);
+
+    /* ================================================================
+       BEAT 2 (3.0s to 6.8s): Dashboard Tour: KPIs tick, SVG chart draws, tooltip pops
+       ================================================================ */
+    tl.to(NUM, { k1: 15, duration: .9, ease: 'power2.out' }, 2.75);
+    tl.to(NUM, { k2: 150, duration: 1.05, ease: 'power2.out' }, 2.9);
+    tl.to(NUM, { k3: 1500, duration: 1.2, ease: 'power2.out' }, 3.05);
+
+    tl.to(CAM, { s: 1.26, fx: revCenter.fx + 80, fy: revCenter.fy - 16, duration: 1.5, ease: 'power2.inOut' }, 3.15);
+    tl.to(lineGross, { opacity: 1, duration: .04 }, 3.38);
+    tl.to(lineGross, { strokeDashoffset: 0, duration: 1.85, ease: 'power2.inOut' }, 3.4);
+    tl.to(lineNet, { opacity: 1, duration: .04 }, 3.58);
+    tl.to(lineNet, { strokeDashoffset: 0, duration: 1.75, ease: 'power2.inOut' }, 3.6);
+    tl.to('#cust-bars .cbar', { scaleY: 1, duration: .75, ease: 'back.out(1.4)', stagger: .07 }, 3.85);
+
+    tl.to('#chart-marker', { opacity: 1, duration: .35 }, 5.05);
+    tl.fromTo(['#dot-gross', '#dot-net'], { opacity: 0, scale: .4, transformOrigin: 'center' }, { opacity: 1, scale: 1, duration: .4, ease: 'back.out(2)', stagger: .08 }, 5.15);
+    tl.fromTo('#chart-tip', { opacity: 0, y: 12, scale: .94 }, { opacity: 1, y: 0, scale: 1, duration: .5, ease: 'power3.out' }, 5.3);
+    tl.to(CAM, { s: 1.34, fx: revCenter.fx + 40, fy: revCenter.fy - 8, duration: 1.1, ease: 'sine.inOut' }, 5.4);
+
+    /* ================================================================
+       BEAT 3 (6.8s to 10.2s): UI dims & cards lift onto Orange Brand Field + Claim 1
+       ================================================================ */
+    tl.to('#ws-dash', { scale: .92, opacity: 0, duration: .75, ease: 'power2.inOut' }, 6.65);
+    tl.to(CAM, { s: 1.0, fx: W / 2, fy: H / 2, duration: .8, ease: 'power2.inOut' }, 6.65);
+    tl.set('#ws-dash-layer', { autoAlpha: 0 }, 7.45);
+
+    tl.set('#bg-orange', { autoAlpha: 1, clipPath: 'inset(100% 0% 0% 0%)' }, 6.7);
+    tl.to('#bg-orange', { clipPath: 'inset(0% 0% 0% 0%)', duration: .85, ease: 'power3.inOut' }, 6.7);
+    tl.set(grainEl, { opacity: .12, mixBlendMode: 'overlay' }, 7.0);
+
+    tl.set('#lifted-stage', { autoAlpha: 1 }, 6.85);
+    tl.fromTo('#lift-bal', { opacity: 0, y: 120, rotateX: 16, rotateY: -10, scale: .9 }, { opacity: 1, y: 0, rotateX: 4, rotateY: -6, scale: 1, duration: .95, ease: 'power4.out' }, 6.9);
+    tl.fromTo('#lift-rev', { opacity: 0, y: 160, rotateX: 20, rotateY: -8, scale: .88 }, { opacity: 1, y: 0, rotateX: 2, rotateY: -5, scale: 1, duration: 1.05, ease: 'power4.out' }, 7.1);
+    tl.to('#lift-bal', { y: -12, duration: 2.1, ease: 'sine.inOut' }, 7.85);
+    tl.to('#lift-rev', { y: -6, duration: 2.1, ease: 'sine.inOut' }, 7.95);
+
+    /* Claim 1: "Your numbers, first thing" */
+    tl.set(['#c1-l1', '#c1-l2'], { opacity: 1 }, 7.25);
+    tl.fromTo(c1w1, { opacity: 0, yPercent: 65 }, { opacity: 1, yPercent: 0, duration: .75, ease: 'power4.out', stagger: .12 }, 7.25);
+    blurTween(tl, '#c1-l1', 7.25, 24, 0, .7, VERT);
+    tl.fromTo(c1w2, { opacity: 0, yPercent: 65 }, { opacity: 1, yPercent: 0, duration: .75, ease: 'power4.out', stagger: .12 }, 7.65);
+    blurTween(tl, '#c1-l2', 7.65, 24, 0, .7, VERT);
+
+    /* Exit Beat 3 cleanly into light workspace */
+    tl.to(['#c1-l1', '#c1-l2'], { opacity: .45, duration: .25, ease: 'power1.in' }, 9.5);
+    tl.to([c1w1, c1w2], { opacity: 0, yPercent: -55, duration: .42, ease: 'power2.in', stagger: .03 }, 9.7);
+    blurTween(tl, '#c1-l1', 9.7, 0, 32, .42, { ease: 'power2.in', ...VERT });
+    blurTween(tl, '#c1-l2', 9.7, 0, 32, .42, { ease: 'power2.in', ...VERT });
+    tl.to(['#lift-bal', '#lift-rev'], { opacity: 0, y: -90, scale: .94, duration: .55, ease: 'power2.in', stagger: .06 }, 9.65);
+    tl.to('#bg-orange', { clipPath: 'inset(0% 0% 100% 0%)', duration: .75, ease: 'power3.inOut' }, 9.85);
+    tl.set(['#lifted-stage', '#bg-orange'], { autoAlpha: 0 }, 10.65);
+    tl.set(grainEl, { opacity: .065, mixBlendMode: 'multiply' }, 10.15);
+
+    /* ================================================================
+       BEAT 4 (10.2s to 16.4s): SIGNATURE MOMENT, Live Invoice Builder & Preview
+       ================================================================ */
+    tl.set('#ws-inv-layer', { autoAlpha: 1 }, 10.05);
+    tl.fromTo('#ws-inv', { opacity: 0, y: 64, scale: .96 }, { opacity: 1, y: 0, scale: 1, duration: .85, ease: 'power3.out' }, 10.1);
+    tl.set('#inv-chk-fill', { opacity: 0, scale: .5 }, 10.05);
+    tl.set('#inv-disc-row', { borderColor: '#EAE5DE', backgroundColor: '#FFFFFF' }, 10.05);
+    tl.set('#inv-disc-pill', { backgroundColor: '#F7F4F0', borderColor: '#EAE5DE', color: '#625D57' }, 10.05);
+    tl.set('#inv-disc-line', { height: 0, opacity: 0 }, 10.05);
+    tl.set('#inv-email-bar', { height: 0, opacity: 0, paddingTop: 0, paddingBottom: 0 }, 10.05);
+    tl.set('#inv-pay-cta', { height: 0, opacity: 0 }, 10.05);
+    tl.set('#cur-inv', { opacity: 0, x: ptChk.x + 150, y: ptChk.y - 80, scale: 1 }, 10.05);
+    tl.set('#ring-inv', { opacity: 0, scale: .4 }, 10.05);
+
+    /* Camera glides in on Add Discount row & cursor targets exact checkbox center */
+    tl.to(CAM, { s: 1.56, fx: discCenter.fx + 30, fy: discCenter.fy - 20, duration: .95, ease: 'power2.inOut' }, 11.15);
+    tl.to('#cur-inv', { opacity: 1, duration: .25 }, 11.35);
+    tl.to('#cur-inv', { x: ptChk.x - 6, y: ptChk.y - 3, duration: .65, ease: 'power3.out' }, 11.4);
+
+    /* Tactile click on Add Discount checkbox at t = 12.15s */
+    tl.to('#cur-inv', { scale: .86, duration: .1, ease: 'power2.in' }, 12.12);
+    tl.to('#cur-inv', { scale: 1, duration: .18, ease: 'back.out(2)' }, 12.22);
+    tl.fromTo('#ring-inv', { opacity: .9, scale: .4 }, { opacity: 0, scale: 1.7, duration: .48, ease: 'power2.out' }, 12.18);
+    tl.to('#inv-chk-fill', { opacity: 1, scale: 1, duration: .28, ease: 'back.out(2.2)' }, 12.18);
+    tl.to('#inv-disc-row', { borderColor: '#F8952D', backgroundColor: '#FFF9F2', duration: .25 }, 12.18);
+    tl.to('#inv-disc-pill', { backgroundColor: '#FFF1DE', borderColor: '#F8952D', color: '#C25B06', duration: .25 }, 12.2);
+
+    /* Camera glides across to Live Preview panel with full clearance above Preview header & tabs */
+    tl.to(CAM, { s: 1.28, fx: prevCenter.fx - 12, fy: prevCenter.fy - 32, duration: .95, ease: 'power2.inOut' }, 12.65);
+
+    /* Live discount line slides in & totals roll $172.51 to $164.63 */
+    tl.to('#inv-disc-line', { height: 22, opacity: 1, duration: .42, ease: 'power3.out' }, 13.18);
+    tl.to(NUM, { invTotal: 164.63, duration: .65, ease: 'power2.out' }, 13.2);
+    tl.fromTo(['#inv-total-top', '#inv-total-bot'], { scale: 1 }, { scale: 1.07, duration: .18, yoyo: true, repeat: 1, ease: 'sine.inOut' }, 13.3);
+
+    /* Cursor glides smoothly from checkbox right onto Email tab center and clicks at t = 14.32s */
+    tl.to('#cur-inv', { x: ptEmail.x - 6, y: ptEmail.y - 3, duration: .95, ease: 'power2.inOut' }, 13.3);
+    tl.to('#cur-inv', { scale: .86, duration: .09 }, 14.32);
+    tl.to('#cur-inv', { scale: 1, duration: .16 }, 14.41);
+    tl.fromTo('#ring-inv', { opacity: .85, scale: .4 }, { opacity: 0, scale: 1.6, duration: .42, ease: 'power2.out', immediateRender: false }, 14.36);
+    tl.to('#tab-pdf', { backgroundColor: 'transparent', borderColor: 'transparent', color: '#6B6560', boxShadow: 'none', duration: .15 }, 14.36);
+    tl.to('#tab-email', { backgroundColor: '#FFFFFF', borderColor: '#EAE2D8', color: '#2B2B2B', boxShadow: '0 4px 12px rgba(43,27,12,.06)', duration: .15 }, 14.36);
+    tl.to('#inv-email-bar', { height: 50, opacity: 1, paddingTop: 8, paddingBottom: 8, duration: .38, ease: 'power3.out' }, 14.38);
+
+    /* Cursor glides to Payment Page tab center and clicks at t = 15.22s while camera widens to show CTA */
+    tl.to(CAM, { s: 1.20, fx: prevCenter.fx - 28, fy: prevCenter.fy + 2, duration: .8, ease: 'power2.inOut' }, 14.82);
+    tl.to('#cur-inv', { x: ptPay.x - 6, y: ptPay.y - 3, duration: .42, ease: 'power2.inOut' }, 14.76);
+    tl.to('#cur-inv', { scale: .86, duration: .09 }, 15.22);
+    tl.to('#cur-inv', { scale: 1, duration: .16 }, 15.31);
+    tl.fromTo('#ring-inv', { opacity: .85, scale: .4 }, { opacity: 0, scale: 1.6, duration: .42, ease: 'power2.out', immediateRender: false }, 15.24);
+    tl.to('#tab-email', { backgroundColor: 'transparent', borderColor: 'transparent', color: '#6B6560', boxShadow: 'none', duration: .15 }, 15.24);
+    tl.to('#tab-pay', { backgroundColor: '#FFFFFF', borderColor: '#EAE2D8', color: '#2B2B2B', boxShadow: '0 4px 12px rgba(43,27,12,.06)', duration: .15 }, 15.24);
+    tl.to('#inv-email-bar', { height: 0, opacity: 0, paddingTop: 0, paddingBottom: 0, duration: .28 }, 15.25);
+    tl.to('#inv-pay-cta', { height: 50, opacity: 1, duration: .42, ease: 'power3.out' }, 15.28);
+
+    /* ================================================================
+       BEAT 5 (16.4s to 19.6s): 55/45 Split Screen, Controls Left / Claim 2 Right
+       ================================================================ */
+    tl.set('#split-stage', { autoAlpha: 1 }, 16.25);
+    tl.fromTo('#split-left', { xPercent: -100, opacity: 1, scale: 1 }, { xPercent: 0, duration: .75, ease: 'power3.inOut' }, 16.25);
+    tl.fromTo('#split-right', { xPercent: 100 }, { xPercent: 0, duration: .75, ease: 'power3.inOut' }, 16.25);
+    tl.set('#ws-inv-layer', { autoAlpha: 0 }, 17.0);
+    tl.set(CAM, { s: 1.0, fx: W / 2, fy: H / 2 }, 17.0);
+
+    tl.fromTo('#split-card', { opacity: 0, y: 40, scale: .95 }, { opacity: 1, y: 0, scale: 1, duration: .7, ease: 'power3.out' }, 16.55);
+
+    /* Claim 2: "Same controls, every page" */
+    tl.set(['#c2-l1', '#c2-l2'], { opacity: 1 }, 16.75);
+    tl.fromTo(c2w1, { opacity: 0, xPercent: 45 }, { opacity: 1, xPercent: 0, duration: .68, ease: 'power4.out', stagger: .1 }, 16.75);
+    blurTween(tl, '#c2-l1', 16.75, 34, 0, .65);
+    tl.fromTo(c2w2, { opacity: 0, xPercent: 45 }, { opacity: 1, xPercent: 0, duration: .68, ease: 'power4.out', stagger: .1 }, 17.1);
+    blurTween(tl, '#c2-l2', 17.1, 34, 0, .65);
+    tl.fromTo('#c2-sub', { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: .5, ease: 'power3.out' }, 17.45);
+
+    /* Cursor glides dynamically to exact center of "Request new payout" button & clicks at t = 17.9s */
+    tl.set('#cur-split', { opacity: 0, x: ptSplitCta.x - 240, y: ptSplitCta.y + 150, scale: 1 }, 16.8);
+    tl.to('#cur-split', { opacity: 1, duration: .2 }, 17.15);
+    tl.to('#cur-split', { x: ptSplitCta.x - 6, y: ptSplitCta.y - 4, duration: .65, ease: 'power3.out' }, 17.2);
+    tl.to('#cur-split', { scale: .88, duration: .1, ease: 'power2.in' }, 17.9);
+    tl.to('#cur-split', { scale: 1, duration: .2, ease: 'back.out(2)' }, 18.0);
+    tl.to('#split-cta', { scale: .93, duration: .1, ease: 'power2.in' }, 17.9);
+    tl.to('#split-cta', { scale: 1, duration: .22, ease: 'back.out(2)' }, 18.0);
+    tl.fromTo('#ring-split', { opacity: .9, scale: .5 }, { opacity: 0, scale: 2.1, duration: .55, ease: 'power2.out' }, 17.95);
+
+    /* Split closes cleanly into full Payouts workspace */
+    tl.to('#split-right', { xPercent: 100, duration: .68, ease: 'power3.inOut' }, 19.0);
+    tl.to('#split-left', { opacity: 0, scale: 1.04, duration: .62, ease: 'power2.inOut' }, 19.05);
+    tl.set('#split-stage', { autoAlpha: 0 }, 19.72);
+
+    /* ================================================================
+       BEAT 6 (19.6s to 22.8s): Payouts Table, 3D Settle & Live Status Update
+       ================================================================ */
+    tl.set('#ws-pay-layer', { autoAlpha: 1 }, 19.25);
+    tl.fromTo('#ws-pay', { opacity: 0, rotateX: 9, y: 48, scale: .95 }, { opacity: 1, rotateX: 0, y: 0, scale: 1, duration: .85, ease: 'power3.out' }, 19.28);
+    tl.set('#pay-row-2', { backgroundColor: 'transparent' }, 19.25);
+    tl.set('#pay-row-2-proc', { opacity: 1, scale: 1 }, 19.25);
+    tl.set('#pay-row-2-ok', { opacity: 0, scale: .72 }, 19.25);
+    tl.set('#pay-r2-dash', { opacity: 1 }, 19.25);
+    tl.set('#pay-r2-done', { opacity: 0 }, 19.25);
+    tl.set('#settled-toast', { opacity: 0, y: 18, scale: .94 }, 19.25);
+
+    const payRows = $$('.pay-r'), payPills = $$('.pay-p');
+    tl.fromTo(payRows, { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .45, ease: 'power3.out', stagger: .07 }, 19.65);
+    tl.fromTo(payPills, { scale: .75, opacity: 0 }, { scale: 1, opacity: 1, duration: .38, ease: 'back.out(1.8)', stagger: .07 }, 19.95);
+
+    /* Camera zooms cleanly onto Payouts table & KPIs with comfortable left/right framing */
+    tl.to(CAM, { s: 1.24, fx: 1096, fy: payRow2Center.fy - 34, duration: .9, ease: 'power2.inOut' }, 20.85);
+    tl.to('#pay-row-2', { backgroundColor: '#FFF6EC', duration: .28 }, 21.45);
+    tl.to('#pay-row-2-proc', { opacity: 0, scale: .78, duration: .18, ease: 'power2.in' }, 21.50);
+    tl.to('#pay-row-2-ok', { opacity: 1, scale: 1, duration: .36, ease: 'back.out(2)' }, 21.56);
+    tl.to('#pay-r2-dash', { opacity: 0, duration: .16 }, 21.52);
+    tl.to('#pay-r2-done', { opacity: 1, duration: .28 }, 21.58);
+    tl.to(NUM, { payTot: 151, paySettled: 16, payPend: 15, duration: .32, ease: 'power2.out' }, 21.56);
+    tl.to('#settled-toast', { opacity: 1, y: 0, scale: 1, duration: .42, ease: 'back.out(1.6)' }, 21.62);
+
+    /* Pull back & clear desktop before mobile frames rise */
+    tl.to('#ws-pay', { opacity: 0, scale: .92, y: -36, duration: .6, ease: 'power2.in' }, 22.35);
+    tl.to(CAM, { s: 1.0, fx: W / 2, fy: H / 2, duration: .65, ease: 'power2.inOut' }, 22.35);
+    tl.set('#ws-pay-layer', { autoAlpha: 0 }, 23.0);
+
+    /* ================================================================
+       BEAT 7 (22.8s to 26.5s): Mobile Parity, 3 Stacked iOS Cards + Claim 3
+       ================================================================ */
+    tl.set('#mobile-stage', { autoAlpha: 1 }, 22.75);
+    tl.set('#mob-tap', { opacity: 0, scale: .4 }, 22.75);
+    tl.set('#mob-inv-1', { borderColor: '#EFEAE3', backgroundColor: '#FFFFFF' }, 22.75);
+    tl.set(['#tl-step-1', '#tl-step-2', '#tl-step-3'], { color: '#736D67', fontWeight: 400 }, 22.75);
+    tl.set(['#tl-step-1 .ptl-dot', '#tl-step-2 .ptl-dot', '#tl-step-3 .ptl-dot'], { backgroundColor: '#E2DBD2', boxShadow: 'none' }, 22.75);
+
+    /* Claim 3: "Built for one hand" */
+    tl.set('#c3-l1', { opacity: 1 }, 22.85);
+    tl.fromTo(c3w1, { opacity: 0, yPercent: -55 }, { opacity: 1, yPercent: 0, duration: .7, ease: 'power4.out', stagger: .09 }, 22.85);
+    blurTween(tl, '#c3-l1', 22.85, 22, 0, .65, VERT);
+
+    /* Three rounded iPhones rise in staggered 3D fan */
+    tl.fromTo('#ph-2', { opacity: 0, y: 380, rotateX: 18, scale: .92 }, { opacity: 1, y: 0, rotateX: 0, scale: 1.03, duration: .95, ease: 'power4.out' }, 23.0);
+    tl.fromTo('#ph-1', { opacity: 0, y: 420, x: 40, rotate: 0, rotateX: 18 }, { opacity: 1, y: 32, x: 0, rotate: -3.5, rotateX: 0, duration: 1.0, ease: 'power4.out' }, 23.15);
+    tl.fromTo('#ph-3', { opacity: 0, y: 420, x: -40, rotate: 0, rotateX: 18 }, { opacity: 1, y: 32, x: 0, rotate: 3.5, rotateX: 0, duration: 1.0, ease: 'power4.out' }, 23.22);
+
+    /* Subtle push-in + live mobile tap & timeline steps lighting up */
+    tl.to(CAM, { s: 1.06, fx: W / 2, fy: H / 2 + 40, duration: 2.3, ease: 'sine.inOut' }, 23.8);
+    tl.fromTo('#mob-tap', { opacity: .9, scale: .4 }, { opacity: 0, scale: 1.8, duration: .6, ease: 'power2.out' }, 24.45);
+    tl.to('#mob-inv-1', { borderColor: '#F8952D', backgroundColor: '#FFF9F2', duration: .25 }, 24.5);
+    tl.to('#tl-step-1', { color: '#2B2B2B', fontWeight: 600, duration: .25 }, 24.55);
+    tl.to('#tl-step-1 .ptl-dot', { backgroundColor: '#22C55E', boxShadow: '0 0 0 4px rgba(34,197,94,.2)', duration: .25 }, 24.55);
+    tl.to('#tl-step-2', { color: '#2B2B2B', fontWeight: 600, duration: .25 }, 24.95);
+    tl.to('#tl-step-2 .ptl-dot', { backgroundColor: '#22C55E', boxShadow: '0 0 0 4px rgba(34,197,94,.2)', duration: .25 }, 24.95);
+    tl.to('#tl-step-3', { color: '#2B2B2B', fontWeight: 600, duration: .25 }, 25.35);
+    tl.to('#tl-step-3 .ptl-dot', { backgroundColor: '#22C55E', boxShadow: '0 0 0 4px rgba(34,197,94,.2)', duration: .25 }, 25.35);
+
+    /* ================================================================
+       BEAT 8 (26.5s to 30.0s): Mobile Cards Fold into Paylecta Mark + Seamless Loop
+       ================================================================ */
+    tl.to(c3w1, { opacity: 0, yPercent: -60, duration: .4, ease: 'power2.in', stagger: .03 }, 26.15);
+    blurTween(tl, '#c3-l1', 26.15, 0, 28, .4, { ease: 'power2.in', ...VERT });
+
+    tl.to('#ph-1', { x: 410, y: -40, rotate: 0, scale: .32, opacity: 0, duration: .75, ease: 'power3.in' }, 26.25);
+    tl.to('#ph-3', { x: -410, y: -40, rotate: 0, scale: .32, opacity: 0, duration: .75, ease: 'power3.in' }, 26.25);
+    tl.to('#ph-2', { y: -40, scale: .32, opacity: 0, duration: .75, ease: 'power3.in' }, 26.3);
+    tl.set('#mobile-stage', { autoAlpha: 0 }, 27.1);
+
+    /* Warm dark espresso ground expands radially */
+    tl.set('#bg-dark', { autoAlpha: 1, opacity: 1, clipPath: 'circle(0% at 50% 50%)' }, 26.55);
+    tl.to('#bg-dark', { clipPath: 'circle(85% at 50% 50%)', duration: .85, ease: 'power3.inOut' }, 26.55);
+    tl.set(grainEl, { opacity: .13, mixBlendMode: 'overlay' }, 26.9);
+    tl.set(CAM, { s: 1.0, fx: W / 2, fy: H / 2 }, 27.1);
+
+    /* Authentic Paylecta P mark blooms, wordmark reveals, tagline settles cleanly by 28.45s */
+    tl.set('#end-stage', { autoAlpha: 1, opacity: 1, scale: 1 }, 26.92);
+    tl.fromTo('#end-mark', { opacity: 0, scale: .55, x: 185 }, { opacity: 1, scale: 1, x: 185, duration: .6, ease: 'back.out(1.6)' }, 26.95);
+    tl.to('#end-mark', { x: 0, duration: .55, ease: 'power3.inOut' }, 27.45);
+    tl.set('#end-word', { opacity: 1, clipPath: 'inset(0% 100% 0% 0%)' }, 27.52);
+    tl.to('#end-word', { clipPath: 'inset(0% 0% 0% 0%)', duration: .6, ease: 'power3.out' }, 27.52);
+
+    tl.set('#end-tag', { opacity: 1 }, 27.78);
+    tl.fromTo(tagWords, { opacity: 0, yPercent: 45 }, { opacity: 1, yPercent: 0, duration: .48, ease: 'power3.out', stagger: .07 }, 27.78);
+
+    /* Gentle hold push, then smooth crossfade directly back to Beat 1 t = 0 framing for seamless loop */
+    tl.to('#end-stage', { scale: 1.04, duration: 1.5, ease: 'sine.inOut' }, 27.75);
+    tl.to('#end-stage', { opacity: 0, scale: 1.07, duration: .34, ease: 'power2.in' }, 29.32);
+    tl.set('#end-stage', { autoAlpha: 0 }, 29.68);
+    tl.to('#bg-dark', { opacity: 0, duration: .48, ease: 'power2.inOut' }, 29.38);
+    tl.set('#bg-dark', { autoAlpha: 0 }, 29.88);
+
+    /* Pre-stage Beat 1 opening pose invisibly, then fade in so t = 29.96s matches t = 0.00s */
+    tl.set(CAM, openCam, 29.35);
+    tl.set(NUM, { bal: 548200.00, k1: 0, k2: 0, k3: 0 }, 29.35);
+    tl.set('#ws-dash', { scale: 1, y: 0, opacity: 1 }, 29.35);
+    tl.set('#bal-delta', { opacity: 0, y: 12 }, 29.35);
+    tl.set('#dash-alert', { opacity: 0, x: 24 }, 29.35);
+    tl.set(lineGross, { strokeDashoffset: lenGross, opacity: 0 }, 29.35);
+    tl.set(lineNet, { strokeDashoffset: lenNet, opacity: 0 }, 29.35);
+    tl.set(['#chart-marker', '#dot-gross', '#dot-net', '#chart-tip'], { opacity: 0 }, 29.35);
+    tl.set('#cust-bars .cbar', { scaleY: 0 }, 29.35);
+    tl.set(grainEl, { opacity: .065, mixBlendMode: 'multiply' }, 29.55);
+    tl.fromTo('#ws-dash-layer', { autoAlpha: 0 }, { autoAlpha: 1, duration: .46, ease: 'power2.out', immediateRender: false }, 29.46);
+    tl.to({}, { duration: .01 }, DURATION);
+  }
+
+  /* ---- Responsive viewport fitting ---- */
+  const stage = $('#stage');
+  const fit = () => {
+    const s = Math.min(innerWidth / W, innerHeight / H);
+    stage.style.transform = `translate(-50%,-50%) scale(${s})`;
+  };
+  addEventListener('resize', fit);
+  fit();
+
+  /* Deterministic seek API for snap/export scripts */
+  const seek = t => {
+    tl.pause();
+    tl.time(t, false);
+    if (gsap.ticker.tick) gsap.ticker.tick();
+    render(t);
+  };
+  window.OPENER = { W, H, tl, DURATION, seek, ready: false };
+
+  /* ---- Render loop & controls ---- */
+  const clock = $('#clock'), scrub = $('#scrub'), btn = $('#btn-play');
+  let scrubbing = false;
+  (function loop() {
+    if (window.OPENER.ready) {
+      const t = tl.time();
+      render(t);
+      clock.textContent = t.toFixed(2) + 's';
+      if (!scrubbing) scrub.value = String((t / DURATION) * 1000);
+    }
+    requestAnimationFrame(loop);
+  })();
+
+  const toggle = () => {
+    if (tl.paused() || tl.progress() >= 1) {
+      if (tl.progress() >= 1) tl.progress(0);
+      tl.play(); btn.textContent = 'Pause';
+    } else {
+      tl.pause(); btn.textContent = 'Play';
+    }
+  };
+  btn.onclick = toggle;
+  $('#btn-restart').onclick = () => { tl.pause(0); tl.play(); btn.textContent = 'Pause'; };
+  scrub.addEventListener('pointerdown', () => { scrubbing = true; tl.pause(); btn.textContent = 'Play'; });
+  addEventListener('pointerup', () => scrubbing = false);
+  scrub.addEventListener('input', () => { tl.pause(); tl.time((scrub.value / 1000) * DURATION); });
+  addEventListener('keydown', e => {
+    if (e.code === 'Space') { e.preventDefault(); toggle(); }
+    if (/^[rR]$/.test(e.key)) { tl.pause(0); tl.play(); btn.textContent = 'Pause'; }
+    if (/^[hH]$/.test(e.key)) $('#ui').classList.toggle('on');
+  });
+  if (Q.has('debug')) $('#ui').classList.add('on');
+  tl.eventCallback('onComplete', () => { tl.play(0); });
+
+  document.fonts.ready.then(() => {
+    buildTimeline();
+    window.OPENER.ready = true;
+    seek(0);
+    if (!Q.has('clean')) tl.play(0);
+  });
+})();
+</script>
+</body>
+</html>

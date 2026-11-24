@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore, type ReactNode } from "react";
-import { ChevronsLeft, HouseHeart, BookUser, SquareMenu } from "lucide-react";
+import { ChevronsLeft, FolderKanban, HouseHeart, BookUser, SquareMenu } from "lucide-react";
 import { AlanCharacter } from "./alan-character";
 import { BlobBuddy } from "./blob-buddy";
 import { ContactProvider } from "./contact";
@@ -24,8 +24,10 @@ const serverDesktop = () => true;
 
 export function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [compact, setCompact] = useState(false);
+  const [manualCompact, setManualCompact] = useState<boolean | null>(null);
   const desktop = useSyncExternalStore(subscribeDesktop, isDesktop, serverDesktop);
+  const isCaseStudy = pathname.startsWith("/projects/");
+  const compact = manualCompact ?? isCaseStudy;
   const compactRail = compact && desktop;
   const shell = useSidebarMotion(compactRail);
   function navigate() { scrollToTop(); }
@@ -70,6 +72,9 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <Link className="nav-item" href="/" scroll={false} onNavigate={navigate} aria-current={pathname === "/" ? "page" : undefined} title={compactRail ? "Home" : undefined}>
                 <HouseHeart size={16} aria-hidden="true" /><span className="nav-label">Home</span>
               </Link>
+              <Link className="nav-item" href="/projects" scroll={false} onNavigate={navigate} aria-current={pathname === "/projects" || isCaseStudy ? "page" : undefined} title={compactRail ? "Projects" : undefined}>
+                <FolderKanban size={16} aria-hidden="true" /><span className="nav-label">Projects</span>
+              </Link>
               <Link className="nav-item" href="/about" scroll={false} onNavigate={navigate} aria-current={pathname === "/about" ? "page" : undefined} title={compactRail ? "Know me better" : undefined}>
                 <BookUser size={16} aria-hidden="true" /><span className="nav-label">Know me better</span>
               </Link>
@@ -84,7 +89,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
               <button
                 type="button"
                 className="sidebar-toggle"
-                onClick={() => setCompact(current => !current)}
+                onClick={() => setManualCompact((current) => !(current ?? isCaseStudy))}
                 aria-expanded={!compactRail}
                 aria-controls="site-sidebar"
                 aria-label={compactRail ? "Expand sidebar" : "Collapse sidebar"}

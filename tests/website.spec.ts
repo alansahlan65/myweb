@@ -97,7 +97,7 @@ test("Home and About fit desktop, tablet, and narrow mobile screens", async ({ p
       await visit(page, route);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), `${route} at ${width}px`).toBe(true);
       await expect(page.getByRole("heading", { level: 1 })).toHaveText(route === "/" ? "Good design needs a little personality." : "Hi, I'm Alan!");
-      await expect(page.getByRole("link", { name: "Projects", exact: true })).toHaveCount(0);
+      if (width > 1000) await expect(page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Projects", exact: true })).toHaveCount(1);
       if (route === "/" && width > 1000) {
         await expect(page.locator(".home-character")).toBeHidden();
         await expect(page.locator(".sidebar-character")).toBeVisible();

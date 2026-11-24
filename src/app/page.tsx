@@ -1,14 +1,9 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { AlanCharacter } from "@/components/alan-character";
 import { ContactPanel } from "@/components/contact-panel";
-
-const projects = [
-  { title: "Paylecta", slug: "paylecta", image: "paylecta-preview.jpg", alt: "Paylecta financial dashboard on a laptop and mobile phone" },
-  { title: "Aurelia", slug: "aurelia", image: "aurelia-preview.jpg", alt: "Aurelia resort booking website and mobile experience" },
-  { title: "PawFriend", slug: "pawfriend", image: "pawfriend-preview.jpg", alt: "PawFriend pet adoption website and mobile app" },
-  { title: "Munchpal", slug: "munchpal", image: "munchpal-preview.jpg", alt: "Munchpal food-sharing website and mobile app" },
-];
+import { projects } from "@/data/projects";
 
 export default function HomePage() {
   return (
@@ -23,18 +18,30 @@ export default function HomePage() {
         <div className="home-character mobile-character"><AlanCharacter /></div>
       </header>
       <section className="selected-work" aria-labelledby="work-heading">
-        <div className="section-heading"><h2 id="work-heading">Selected work</h2></div>
+        <div className="section-heading">
+          <h2 id="work-heading">Selected work</h2>
+          <Link href="/projects" className="section-link">
+            <span>All projects</span>
+            <ArrowUpRight size={15} aria-hidden="true" />
+          </Link>
+        </div>
         <div className="project-grid">
           {projects.map((project, index) => (
-            <article key={project.title} className={`project-card project-${project.slug}`} tabIndex={0} aria-labelledby={`project-${project.slug}`}>
-              <div className="project-image">
-                <Image src={`/images/design/${project.image}`} alt={project.alt} fill sizes="(max-width: 359px) calc(200vw - 80px), (max-width: 599px) calc(200vw - 96px), (max-width: 848px) calc(100vw - 72px), (max-width: 1000px) 776px, (max-width: 1250px) calc(100vw - 364px), (max-width: 1328px) calc(100vw - 396px), 932px" preload={index < 2} />
-                <div className="project-reveal" aria-hidden="true">
-                  <span className="project-name">{project.title}</span>
-                  <ArrowUpRight className="project-arrow" size={20} />
+            <article key={project.slug} className={`project-card project-${project.slug}`}>
+              <Link
+                href={project.href ?? `/projects#${project.slug}`}
+                className="project-card-link"
+                aria-labelledby={`project-${project.slug}`}
+              >
+                <div className="project-image">
+                  <Image src={project.image} alt={project.alt} fill sizes="(max-width: 359px) calc(200vw - 80px), (max-width: 599px) calc(200vw - 96px), (max-width: 848px) calc(100vw - 72px), (max-width: 1000px) 776px, (max-width: 1250px) calc(100vw - 364px), (max-width: 1328px) calc(100vw - 396px), 932px" preload={index < 2} />
+                  <div className="project-reveal" aria-hidden="true">
+                    <span className="project-name">{project.title}</span>
+                    <ArrowUpRight className="project-arrow" size={20} />
+                  </div>
                 </div>
-              </div>
-              <h3 id={`project-${project.slug}`} className="sr-only">{project.title}</h3>
+                <h3 id={`project-${project.slug}`} className="sr-only">{project.title}</h3>
+              </Link>
             </article>
           ))}
         </div>

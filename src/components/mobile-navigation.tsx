@@ -11,6 +11,7 @@ import styles from "./mobile-navigation.module.css";
 
 const pages = [
   { href: "/", label: "Home" },
+  { href: "/projects", label: "Projects" },
   { href: "/about", label: "Know me better" },
 ];
 const profiles = [
@@ -89,7 +90,7 @@ function MenuPanel({ expanded, pathname, trigger, onClosed, onToggle, onSelect, 
               <nav className={styles.links} aria-label="Main navigation">
                 {pages.map(({ href, label }) => (
                   <div key={href} data-menu-reveal>
-                    <Link href={href} className={styles.link} scroll={false} onClick={onSelect} onNavigate={onNavigate} aria-current={pathname === href ? "page" : undefined}>
+                    <Link href={href} className={styles.link} scroll={false} onClick={onSelect} onNavigate={onNavigate} aria-current={pathname === href || (href === "/projects" && pathname.startsWith("/projects/")) ? "page" : undefined}>
                       <span>{label}</span><span className={styles.current} aria-hidden="true" />
                     </Link>
                   </div>
