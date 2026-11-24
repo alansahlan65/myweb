@@ -70,11 +70,12 @@ export default function PaylectaCaseStudyPage() {
     <div className="case-study-shell">
       <article className="case-study">
         <header className="case-hero">
+          <Link href="/projects" className="case-back-link">
+            <ArrowLeft size={14} aria-hidden="true" />
+            <span>Projects</span>
+          </Link>
+          <PaylectaOpenerEmbed />
           <div className="case-hero-copy">
-            <Link href="/projects" className="case-back-link">
-              <ArrowLeft size={14} aria-hidden="true" />
-              <span>Projects</span>
-            </Link>
             <div className="case-title-block">
               <h1>Making daily finances feel simpler for small shops.</h1>
               <p className="case-subtitle">
@@ -101,7 +102,6 @@ export default function PaylectaCaseStudyPage() {
               </div>
             </dl>
           </div>
-          <PaylectaOpenerEmbed />
         </header>
 
         <section id="overview" className="case-section" aria-labelledby="overview-heading">
@@ -118,6 +118,23 @@ export default function PaylectaCaseStudyPage() {
               every screen I made.
             </p>
           </div>
+          <figure className="case-figure">
+            <div className="case-stage case-stage-warm case-dashboard-stage">
+              <div className="case-screen-frame case-screen-hero">
+                <Image
+                  src="/images/projects/paylecta/web-dashboard.png"
+                  alt="Paylecta desktop dashboard showing Total Balance, transactions, revenue overview, and recent activity"
+                  width={1440}
+                  height={1279}
+                  sizes="(max-width: 1000px) calc(100vw - 48px), 825px"
+                  loading="eager"
+                />
+              </div>
+            </div>
+            <figcaption className="case-caption">
+              The desktop dashboard. Everything a shop owner checks first thing in the morning.
+            </figcaption>
+          </figure>
           <div className="case-goals">
             {goals.map((goal) => (
               <div key={goal.number} className="case-goal-card">

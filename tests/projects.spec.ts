@@ -40,7 +40,7 @@ test("Projects page filters work, uses its own contact copy, and opens Paylecta"
   expect(errors).toEqual([]);
 });
 
-test("Paylecta case study defaults to compact rail, embeds the opener, loads all screens, and uses the prev/next footer only", async ({ page }) => {
+test("Paylecta case study defaults to compact rail, places seamless opener below back link, shows dashboard in Overview, and uses the prev/next footer only", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
 
@@ -49,23 +49,32 @@ test("Paylecta case study defaults to compact rail, embeds the opener, loads all
 
   await expect(page.locator(".site-shell")).toHaveAttribute("data-sidebar-state", "compact");
   await expect(page.locator(".case-toc")).toBeVisible();
-  await expect(page.locator(".case-opener-iframe")).toBeVisible();
-  await expect(page.locator(".case-opener-iframe")).toHaveAttribute("src", "/motion/paylecta-opener/index.html");
 
-  // Switch hero view to static desktop dashboard screen and verify image loads cleanly.
-  await page.getByRole("button", { name: "Dashboard", exact: true }).click();
-  const heroImg = page.locator(".case-screen-hero img");
-  await expect(heroImg).toBeVisible();
-  await expect.poll(() => heroImg.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);
+  const backBox = (await page.locator(".case-back-link").boundingBox())!;
+  const opener = page.locator(".case-opener-iframe");
+  await expect(opener).toBeVisible();
+  await expect(opener).toHaveAttribute("src", "/motion/paylecta-opener/index.html?embed=1");
+  const openerBox = (await opener.boundingBox())!;
+  const headingBox = (await page.getByRole("heading", { level: 1 }).boundingBox())!;
+  expect(openerBox.y).toBeGreaterThan(backBox.y);
+  expect(openerBox.y + openerBox.height).toBeLessThan(headingBox.y);
 
-  // Switch back to live product tour.
-  await page.getByRole("button", { name: "Product tour", exact: true }).click();
-  await expect(page.locator(".case-opener-iframe")).toBeVisible();
+  // Seamless opener has no toggle buttons or fullscreen link.
+  await expect(page.getByRole("button", { name: "Product tour", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Dashboard", exact: true })).toHaveCount(0);
+  await expect(page.getByRole("link", { name: /Full screen/ })).toHaveCount(0);
 
-  // Verify all case study images loaded without broken assets.
+  // Static desktop dashboard sits inside Overview above the 3 design goal cards.
+  const overviewDash = page.locator("#overview .case-screen-hero img");
+  await expect(overviewDash).toBeVisible();
+  const dashBox = (await overviewDash.boundingBox())!;
+  const goalsBox = (await page.locator("#overview .case-goals").boundingBox())!;
+  expect(dashBox.y + dashBox.height).toBeLessThan(goalsBox.y);
+
+  // Verify all 8 case study images loaded without broken assets.
   const images = page.locator(".case-study img");
   const count = await images.count();
-  expect(count).toBeGreaterThanOrEqual(7);
+  expect(count).toBeGreaterThanOrEqual(8);
   for (let i = 0; i < count; i++) {
     await images.nth(i).scrollIntoViewIfNeeded();
     await expect.poll(() => images.nth(i).evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth > 0)).toBe(true);

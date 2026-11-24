@@ -41,14 +41,16 @@
   --font-ui:"Plus Jakarta Sans",system-ui,sans-serif;
 }
 *{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;height:100%;background:#110A05;overflow:hidden;font-family:var(--font-ui);color:var(--ink);-webkit-font-smoothing:antialiased}
+html,body{width:100%;height:100%;background:var(--canvas);overflow:hidden;font-family:var(--font-ui);color:var(--ink);-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+svg{shape-rendering:geometricPrecision}
+svg path,svg rect,svg circle,svg line,svg polyline,svg polygon{stroke-linecap:round;stroke-linejoin:round}
 #filters{position:fixed;width:0;height:0;opacity:0;pointer-events:none}
 
 /* Fixed 1920x1080 master stage, scaled proportionally to fit viewport */
 #stage{
   position:fixed;left:50%;top:50%;width:1920px;height:1080px;
   transform:translate(-50%,-50%) scale(1);overflow:hidden;
-  background:var(--canvas);
+  background:var(--canvas);backface-visibility:hidden;
 }
 
 /* Layered moving backgrounds (overscanned so camera motion never shows edges) */
@@ -112,8 +114,8 @@ html,body{width:100%;height:100%;background:#110A05;overflow:hidden;font-family:
   position:absolute;left:160px;top:70px;width:1600px;height:940px;
   border-radius:24px;background:var(--surface);overflow:hidden;
   display:flex;
-  border:1px solid rgba(43,27,12,.08);
-  box-shadow:0 42px 96px rgba(43,27,12,.14), 0 10px 28px rgba(43,27,12,.06);
+  border:0;outline:1px solid transparent;backface-visibility:hidden;
+  box-shadow:0 0 0 1px rgba(43,27,12,.07), 0 42px 96px rgba(43,27,12,.13), 0 10px 28px rgba(43,27,12,.05);
   transform-origin:50% 50%;will-change:transform,opacity;
 }
 .ws-side{
@@ -266,14 +268,15 @@ html,body{width:100%;height:100%;background:#110A05;overflow:hidden;font-family:
 .lift-bal{
   position:absolute;left:0;top:18px;width:680px;height:208px;border-radius:26px;padding:34px 38px;
   background:linear-gradient(120deg,#FDB65D 0%,#F8952D 54%,#DF700B 100%);color:#FFF;
+  outline:1px solid transparent;backface-visibility:hidden;
   box-shadow:0 36px 80px rgba(64,19,0,.38), inset 0 1px 0 rgba(255,255,255,.35);
   will-change:transform,opacity;
 }
 .lift-bal .bal-val{font-size:58px}
 .lift-rev{
   position:absolute;left:64px;top:256px;width:710px;border-radius:26px;padding:30px 34px;
-  background:#FFFFFF;border:1px solid rgba(255,255,255,.9);
-  box-shadow:0 40px 88px rgba(64,19,0,.32);
+  background:#FFFFFF;border:0;outline:1px solid transparent;backface-visibility:hidden;
+  box-shadow:0 0 0 1px rgba(255,255,255,.85), 0 40px 88px rgba(64,19,0,.32);
   will-change:transform,opacity;
 }
 .claim-box{position:absolute;display:flex;flex-direction:column;gap:6px}
@@ -488,14 +491,15 @@ html,body{width:100%;height:100%;background:#110A05;overflow:hidden;font-family:
 }
 .phone{
   width:366px;height:756px;border-radius:46px;background:#FFFFFF;padding:14px;
-  border:2px solid #E5DDD4;
-  box-shadow:0 36px 84px rgba(43,27,12,.15), 0 8px 24px rgba(43,27,12,.06);
+  border:0;outline:1px solid transparent;backface-visibility:hidden;
+  box-shadow:0 0 0 1.5px rgba(43,27,12,.10), 0 36px 84px rgba(43,27,12,.15), 0 8px 24px rgba(43,27,12,.06);
   display:flex;flex-direction:column;position:relative;overflow:hidden;
   will-change:transform,opacity;
 }
 .phone-screen{
   flex:1;border-radius:34px;background:#FAF8F5;overflow:hidden;
   display:flex;flex-direction:column;padding:16px 18px 18px;gap:14px;position:relative;
+  box-shadow:inset 0 0 0 1px rgba(43,27,12,.04);
 }
 .p-status{display:flex;justify-content:space-between;align-items:center;font-size:12.5px;font-weight:700;color:var(--ink);padding:0 6px}
 .p-island{width:92px;height:24px;border-radius:999px;background:#1A1A1A}
@@ -1644,8 +1648,11 @@ html,body{width:100%;height:100%;background:#110A05;overflow:hidden;font-family:
 
   /* ---- Responsive viewport fitting ---- */
   const stage = $('#stage');
+  const embedded = window.self !== window.top || Q.has('embed');
   const fit = () => {
-    const s = Math.min(innerWidth / W, innerHeight / H);
+    const s = embedded
+      ? Math.max(innerWidth / W, innerHeight / H) * 1.004
+      : Math.min(innerWidth / W, innerHeight / H);
     stage.style.transform = `translate(-50%,-50%) scale(${s})`;
   };
   addEventListener('resize', fit);
