@@ -64,10 +64,13 @@ export default function PaylectaCaseStudyPage() {
     <div className="case-study-shell">
       <article className="case-study">
         <header className="case-hero">
-          <Link href="/projects" className="case-back-link">
-            <ArrowLeft size={14} aria-hidden="true" />
-            <span>Projects</span>
-          </Link>
+          <div className="case-topbar">
+            <Link href="/projects" className="case-back-link">
+              <ArrowLeft size={14} aria-hidden="true" />
+              <span>Projects</span>
+            </Link>
+            <span className="case-project-name">Paylecta</span>
+          </div>
           <PaylectaOpenerEmbed />
           <div className="case-hero-copy">
             <div className="case-title-block">

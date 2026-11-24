@@ -54,6 +54,11 @@ test("Paylecta case study defaults to compact rail, places seamless opener below
   await expect(page.locator(".case-toc")).toBeVisible();
 
   const backBox = (await page.locator(".case-back-link").boundingBox())!;
+  const projectName = page.locator(".case-project-name");
+  await expect(projectName).toHaveText("Paylecta");
+  const nameBox = (await projectName.boundingBox())!;
+  expect(nameBox.x).toBeGreaterThan(backBox.x + backBox.width);
+  expect(Math.abs(nameBox.y - backBox.y)).toBeLessThanOrEqual(4);
   const opener = page.locator(".case-opener-iframe");
   await expect(opener).toBeVisible();
   await expect(opener).toHaveAttribute("src", "/motion/paylecta-opener/index.html?embed=1");
