@@ -6,7 +6,7 @@ async function visit(page: Page, path: string) {
   await page.evaluate(() => document.fonts.ready);
 }
 
-test("Projects page filters work, uses its own contact copy, and opens Paylecta", async ({ page }) => {
+test("Projects page stays calm, omits unfinished copy, uses its own contact copy, and opens Paylecta", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(error.message));
 
@@ -16,22 +16,11 @@ test("Projects page filters work, uses its own contact copy, and opens Paylecta"
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Projects");
   await expect(page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Projects", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.locator(".project-row")).toHaveCount(4);
+  await expect(page.locator(".project-row h2")).toHaveText(["Paylecta", "Aurelia", "PawFriend", "Munchpal"]);
+  await expect(page.getByText(/in progress|on the way/i)).toHaveCount(0);
 
-  await page.getByRole("button", { name: /Web app/ }).click();
-  await expect(page.locator(".project-row")).toHaveCount(2);
-
-  await page.getByRole("button", { name: /Mobile app/ }).click();
-  await expect(page.locator(".project-row")).toHaveCount(3);
-
-  await page.getByRole("button", { name: /Design systems/ }).click();
-  await expect(page.locator(".project-row")).toHaveCount(1);
-  await expect(page.locator(".project-row h2")).toHaveText(["Paylecta"]);
-
-  await page.getByRole("button", { name: /All/ }).click();
-  await expect(page.locator(".project-row")).toHaveCount(4);
-
-  await expect(page.locator("#contact-heading")).toHaveText("Want the full story?");
-  await expect(page.locator(".contact-panel > p")).toContainText("Happy to walk through any of these");
+  await expect(page.locator("#contact-heading")).toHaveText("Want to talk through a project?");
+  await expect(page.locator(".contact-panel > p")).toContainText("Happy to walk through my process");
 
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
   await page.getByRole("link", { name: /Paylecta/ }).click();

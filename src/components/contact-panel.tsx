@@ -13,8 +13,8 @@ const copyByVariant: Record<ContactVariant, { heading: string; body: string }> =
     body: "A film recommendation is a perfectly good reason.",
   },
   projects: {
-    heading: "Want the full story?",
-    body: "Happy to walk through any of these, or talk about what you're building.",
+    heading: "Want to talk through a project?",
+    body: "Happy to walk through my process, or chat about what you're building.",
   },
 };
 

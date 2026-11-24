@@ -4,7 +4,7 @@ import { ProjectsCatalog } from "@/components/projects-catalog";
 
 export const metadata: Metadata = {
   title: "Projects",
-  description: "Selected web and mobile product design work by Alan Sahlan, including the Paylecta case study.",
+  description: "Selected web and mobile product design work by Alan Sahlan.",
 };
 
 export default function ProjectsPage() {
@@ -13,10 +13,7 @@ export default function ProjectsPage() {
       <header className="projects-header">
         <div className="projects-header-copy">
           <h1>Projects</h1>
-          <p>
-            A few product projects I&apos;ve worked on across web and mobile. Paylecta has the full
-            write-up ready, and the rest are on the way.
-          </p>
+          <p>Selected work across web and mobile.</p>
         </div>
       </header>
       <ProjectsCatalog />
