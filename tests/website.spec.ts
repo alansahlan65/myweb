@@ -251,7 +251,7 @@ test("Contact arrow pulls magnetically, squishes with a crisp icon, and keeps it
     const body = magnet.locator("span[style*='translate3d']").first();
     await expect.poll(async () => (await body.boundingBox())!.x - hit.x).toBeGreaterThan(3);
     expect(await trigger.boundingBox()).toEqual(hit);
-    const icon = trigger.locator("svg");
+    const icon = trigger.locator("svg").first();
     await expect(icon).toHaveCSS("filter", "none");
     expect(await icon.evaluate(e => !!e.closest("[data-gooey-svg]"))).toBe(false);
     await page.screenshot({ path: `docs/references/contact-magnetic-${route === "/" ? "home" : "about"}.png` });
@@ -291,7 +291,7 @@ test("Magnetic pill keeps native cursors, its fixed target, and gooey feedback",
   expect(await trigger.boundingBox()).toEqual(hit);
   await expect(trigger).toHaveText("Get in touch");
   await expect(trigger).toHaveCSS("filter", "none");
-  await expect(trigger.locator("svg")).toHaveCSS("filter", "none");
+  await expect(trigger.locator("svg").first()).toHaveCSS("filter", "none");
   const body = pill.locator("span[style*='translate3d']").first();
   await expect.poll(async () => (await body.boundingBox())!.x - hit.x).toBeGreaterThan(2);
   await page.screenshot({ path: "docs/references/magnetic-pill.png", clip: { x: Math.max(0, hit.x - 24), y: Math.max(0, hit.y - 32), width: hit.width + 48, height: hit.height + 112 } });

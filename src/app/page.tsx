@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { AlanCharacter } from "@/components/alan-character";
 import { ContactPanel } from "@/components/contact-panel";
+import { StateIcon } from "@/components/state-icon";
 import { projects } from "@/data/projects";
 
 export default function HomePage() {
@@ -22,7 +23,7 @@ export default function HomePage() {
           <h2 id="work-heading">Selected work</h2>
           <Link href="/projects" className="section-link">
             <span>All projects</span>
-            <ArrowUpRight size={15} aria-hidden="true" />
+            <StateIcon icon={ArrowUpRight} size={15} activeWeight="bold" />
           </Link>
         </div>
         <div className="project-grid">

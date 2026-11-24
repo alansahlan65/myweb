@@ -3,8 +3,9 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { Tooltip } from "@base-ui/react/tooltip";
-import { EnvelopeSimple, WhatsappLogo, InstagramLogo, X, Copy, Check } from "@phosphor-icons/react";
+import { EnvelopeSimple, WhatsappLogo, InstagramLogo, X, Copy, Check } from "@phosphor-icons/react/dist/ssr";
 import { lockScroll, unlockScroll } from "./smooth-scroll";
+import { StateIcon } from "./state-icon";
 
 const EMAIL = "alansahlanwork@gmail.com";
 const EMAIL_TRIGGER_ID = "contact-email-copy";
@@ -122,7 +123,7 @@ export function ContactProvider({ children }: { children: ReactNode }) {
         <Dialog.Portal>
           <Dialog.Backdrop className="contact-backdrop" />
           <Dialog.Popup className="contact-modal" data-lenis-prevent>
-            <Dialog.Close className="modal-close icon-button" aria-label="Close contact dialog"><X size={20} /></Dialog.Close>
+            <Dialog.Close className="modal-close icon-button" aria-label="Close contact dialog"><StateIcon icon={X} size={18} activeWeight="bold" /></Dialog.Close>
             <Dialog.Title className="contact-title">Get in touch</Dialog.Title>
             <Dialog.Description className="contact-description">Choose how you&apos;d like to reach me</Dialog.Description>
             <Tooltip.Provider delay={100}>
@@ -130,10 +131,7 @@ export function ContactProvider({ children }: { children: ReactNode }) {
                 {channels.map(({ label, href, Icon, external }) => (
                   <Tooltip.Root key={label}>
                     <Tooltip.Trigger render={<a href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} />} className="channel-button" aria-label={label}>
-                      <span className="channel-icon" aria-hidden="true">
-                        <Icon size={23} weight="regular" className="channel-icon-outline" />
-                        <Icon size={23} weight="fill" className="channel-icon-fill" />
-                      </span>
+                      <StateIcon icon={Icon} size={23} className="channel-icon" />
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
                       <Tooltip.Positioner side="top" sideOffset={9} className="channel-tooltip-positioner">

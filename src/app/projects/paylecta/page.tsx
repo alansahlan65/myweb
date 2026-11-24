@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "@phosphor-icons/react/dist/ssr";
 import { PaylectaOpenerEmbed } from "@/components/paylecta-opener-embed";
 import { ProjectToc } from "@/components/project-toc";
+import { StateIcon } from "@/components/state-icon";
 import { paylectaToc } from "@/data/projects";
 
 export const metadata: Metadata = {
@@ -66,7 +67,7 @@ export default function PaylectaCaseStudyPage() {
         <header className="case-hero">
           <div className="case-topbar">
             <Link href="/projects" className="case-back-link">
-              <ArrowLeft size={14} aria-hidden="true" />
+              <StateIcon icon={ArrowLeft} size={14} activeWeight="bold" />
               <span>Projects</span>
             </Link>
             <span className="case-project-name">Paylecta</span>
@@ -335,7 +336,7 @@ export default function PaylectaCaseStudyPage() {
 
         <nav className="case-footer" aria-label="Project navigation">
           <Link href="/projects" className="case-footer-link">
-            <ArrowLeft size={15} aria-hidden="true" />
+            <StateIcon icon={ArrowLeft} size={15} activeWeight="bold" />
             <span className="case-footer-label">
               <strong>Previous:</strong> All projects
             </span>
@@ -344,7 +345,7 @@ export default function PaylectaCaseStudyPage() {
             <span className="case-footer-label">
               <strong>Next project:</strong> Aurelia
             </span>
-            <ArrowRight size={15} aria-hidden="true" />
+            <StateIcon icon={ArrowRight} size={15} activeWeight="bold" />
           </Link>
         </nav>
       </article>

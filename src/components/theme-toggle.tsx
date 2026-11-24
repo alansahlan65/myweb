@@ -1,7 +1,8 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun } from "@phosphor-icons/react/dist/ssr";
+import { StateIcon } from "./state-icon";
 import {
   THEME_CHANGE_EVENT,
   applyTheme,
@@ -41,8 +42,8 @@ export function ThemeToggle({ className }: { className?: string }) {
       title={action}
     >
       <span className="theme-toggle-glyph" aria-hidden="true">
-        <Moon className="theme-icon theme-icon-moon" size={16} />
-        <Sun className="theme-icon theme-icon-sun" size={16} />
+        <StateIcon icon={Moon} size={16} className="theme-icon theme-icon-moon" />
+        <StateIcon icon={Sun} size={16} className="theme-icon theme-icon-sun" />
       </span>
     </button>
   );

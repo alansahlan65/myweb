@@ -14,7 +14,28 @@ test("Projects page stays calm, omits unfinished copy, uses its own contact copy
   await visit(page, "/projects");
 
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Projects");
-  await expect(page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name: "Projects", exact: true })).toHaveAttribute("aria-current", "page");
+  const nav = page.getByRole("navigation", { name: "Main navigation" });
+  const projectsNav = nav.getByRole("link", { name: "Projects", exact: true });
+  const homeNav = nav.getByRole("link", { name: "Home", exact: true });
+  await expect(projectsNav).toHaveAttribute("aria-current", "page");
+  // Active nav item shows its filled icon, while inactive items show outline until hovered.
+  await expect(projectsNav.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
+  await expect(projectsNav.locator(".state-icon-outline")).toHaveCSS("opacity", "0");
+  await expect(homeNav.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
+  await homeNav.hover();
+  await expect(homeNav.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
+  await expect(homeNav.locator(".state-icon-outline")).toHaveCSS("opacity", "0");
+  const resumeLink = page.getByRole("link", { name: "See my resume", exact: true });
+  await expect(resumeLink.locator(".state-icon-fill")).toHaveCSS("opacity", "0");
+  await resumeLink.hover();
+  await expect(resumeLink.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
+  const themeBtn = page.getByRole("button", { name: "Dark mode", exact: true });
+  await themeBtn.hover();
+  await expect(themeBtn.locator(".theme-icon-moon .state-icon-fill")).toHaveCSS("opacity", "1");
+  const linkedIn = page.getByRole("link", { name: "Alan on LinkedIn", exact: true });
+  await linkedIn.scrollIntoViewIfNeeded();
+  await linkedIn.hover();
+  await expect(linkedIn.locator(".state-icon-fill")).toHaveCSS("opacity", "1");
   await expect(page.locator(".project-row")).toHaveCount(4);
   await expect(page.locator(".project-row h2")).toHaveText(["Paylecta", "Aurelia", "PawFriend", "Munchpal"]);
   await expect(page.getByText(/in progress|on the way/i)).toHaveCount(0);

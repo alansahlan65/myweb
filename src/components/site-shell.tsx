@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore, type ReactNode } from "react";
-import { ChevronsLeft, FolderKanban, HouseHeart, BookUser, SquareMenu } from "lucide-react";
+import { AddressBook, Article, CaretDoubleLeft, Folder, House } from "@phosphor-icons/react/dist/ssr";
 import { AlanCharacter } from "./alan-character";
 import { BlobBuddy } from "./blob-buddy";
 import { ContactProvider } from "./contact";
 import { MagneticContactButton } from "./magnetic-contact-button";
 import { MobileNavigation } from "./mobile-navigation";
 import { scrollToTop } from "./smooth-scroll";
+import { StateIcon } from "./state-icon";
 import { ThemeToggle } from "./theme-toggle";
 import { useSidebarMotion } from "./use-sidebar-motion";
 
@@ -70,19 +71,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="sidebar-menu">
             <nav className="navigation" aria-label="Main navigation">
               <Link className="nav-item" href="/" scroll={false} onNavigate={navigate} aria-current={pathname === "/" ? "page" : undefined} title={compactRail ? "Home" : undefined}>
-                <HouseHeart size={16} aria-hidden="true" /><span className="nav-label">Home</span>
+                <StateIcon icon={House} size={16} /><span className="nav-label">Home</span>
               </Link>
               <Link className="nav-item" href="/projects" scroll={false} onNavigate={navigate} aria-current={pathname === "/projects" || isCaseStudy ? "page" : undefined} title={compactRail ? "Projects" : undefined}>
-                <FolderKanban size={16} aria-hidden="true" /><span className="nav-label">Projects</span>
+                <StateIcon icon={Folder} size={16} /><span className="nav-label">Projects</span>
               </Link>
               <Link className="nav-item" href="/about" scroll={false} onNavigate={navigate} aria-current={pathname === "/about" ? "page" : undefined} title={compactRail ? "Know me better" : undefined}>
-                <BookUser size={16} aria-hidden="true" /><span className="nav-label">Know me better</span>
+                <StateIcon icon={AddressBook} size={16} /><span className="nav-label">Know me better</span>
               </Link>
             </nav>
             <div className="sidebar-actions">
               <MagneticContactButton variant="pill" title={compactRail ? "Get in touch" : undefined} />
               <a className="pill-button secondary-button sidebar-resume" href="/resume/alan-sahlan-resume.pdf" download="Alan-Sahlan-Resume.pdf" aria-label="See my resume" title={compactRail ? "See my resume" : undefined}>
-                <SquareMenu size={16} aria-hidden="true" /><span className="action-label">See my resume</span>
+                <StateIcon icon={Article} size={16} /><span className="action-label">See my resume</span>
               </a>
             </div>
             <div className="sidebar-controls">
@@ -95,7 +96,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 aria-label={compactRail ? "Expand sidebar" : "Collapse sidebar"}
                 title={compactRail ? "Expand sidebar" : "Collapse sidebar"}
               >
-                <ChevronsLeft className="sidebar-toggle-icon" size={16} aria-hidden="true" />
+                <StateIcon icon={CaretDoubleLeft} size={16} activeWeight="bold" className="sidebar-toggle-icon" />
               </button>
               <ThemeToggle />
             </div>

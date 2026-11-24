@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, MessageCircle } from "lucide-react";
+import { ArrowUpRight, ChatCircle } from "@phosphor-icons/react/dist/ssr";
 import { Liquid } from "liquid-gooey";
 import { ContactTrigger, useContactOpen } from "./contact";
+import { StateIcon } from "./state-icon";
 import styles from "./magnetic-contact-button.module.css";
 
 type Spring = { value: number; velocity: number; target: number };
@@ -148,7 +149,7 @@ export function MagneticContactButton({ variant = "arrow", title }: { variant?: 
   }, [modalOpen]);
 
   return (
-    <div ref={root} className={`${styles.magnet} ${variant === "pill" ? styles.pill : ""}`} data-variant={variant} data-enhanced={enhanced} data-magnetic="false" data-pressed="false" data-settled="true">
+    <div ref={root} className={`${styles.magnet} ${variant === "pill" ? styles.pill : ""}`} data-variant={variant} data-enhanced={enhanced} data-magnetic="false" data-pressed="false" data-open={modalOpen ? "true" : "false"} data-settled="true">
       <span className={styles.fallback} aria-hidden="true" />
       {enhanced ? <Liquid className={styles.liquid} fill="var(--magnetic-fill)" blur={5} contrast={24} filterPadding={32} aria-hidden="true">
         <Liquid.Item effect="move" move={{ springiness: .88, wobble: .06, stretch: .03, trail: 0 }}>
@@ -156,7 +157,7 @@ export function MagneticContactButton({ variant = "arrow", title }: { variant?: 
         </Liquid.Item>
       </Liquid> : null}
       <ContactTrigger className={styles.trigger} label="Get in touch" title={title}>
-        <span ref={icon} className={styles.icon}>{variant === "pill" ? <><MessageCircle size={16} aria-hidden="true" /><span className={styles.pillLabel}>Get in touch</span></> : <ArrowUpRight size={28} aria-hidden="true" />}</span>
+        <span ref={icon} className={styles.icon}>{variant === "pill" ? <><StateIcon icon={ChatCircle} size={16} /><span className={styles.pillLabel}>Get in touch</span></> : <StateIcon icon={ArrowUpRight} size={28} activeWeight="bold" />}</span>
       </ContactTrigger>
     </div>
   );

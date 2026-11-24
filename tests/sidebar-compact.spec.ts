@@ -62,7 +62,7 @@ test("Compact rail centers every control and keeps the labels as accessible name
   }
 
   const home = topNavItem(page, "Home");
-  const homeIcon = (await home.locator("svg").boundingBox())!;
+  const homeIcon = (await home.locator("svg").first().boundingBox())!;
   expect(homeIcon.x + homeIcon.width / 2).toBeCloseTo(center, 0);
   const compactSidebar = (await sidebar.boundingBox())!;
   const compactToggle = (await expand.boundingBox())!;

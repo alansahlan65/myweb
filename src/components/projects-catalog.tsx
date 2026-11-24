@@ -2,9 +2,10 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
 import { projects } from "@/data/projects";
 import { scrollToTop } from "./smooth-scroll";
+import { StateIcon } from "./state-icon";
 
 export function ProjectsCatalog() {
   return (
@@ -32,7 +33,7 @@ export function ProjectsCatalog() {
             {project.href ? (
               <span className="project-row-cta">
                 <span>Read case study</span>
-                <ArrowUpRight size={15} aria-hidden="true" />
+                <StateIcon icon={ArrowUpRight} size={15} activeWeight="bold" />
               </span>
             ) : null}
           </div>

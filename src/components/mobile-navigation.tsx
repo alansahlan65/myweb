@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type MouseEvent, type RefObject } from "react";
 import { Dialog } from "@base-ui/react/dialog";
-import { ArrowUpRight, MessageCircle, SquareMenu } from "lucide-react";
+import { ArrowUpRight, Article, ChatCircle } from "@phosphor-icons/react/dist/ssr";
 import { ContactTrigger } from "./contact";
+import { StateIcon } from "./state-icon";
 import { useMenuMotion } from "./use-menu-motion";
 import { lockScroll, unlockScroll } from "./smooth-scroll";
 import styles from "./mobile-navigation.module.css";
@@ -97,11 +98,11 @@ function MenuPanel({ expanded, pathname, trigger, onClosed, onToggle, onSelect, 
                 ))}
               </nav>
               <div className={`sidebar-actions ${styles.actions}`} data-menu-reveal>
-                <ContactTrigger className={`pill-button primary-button ${styles.action}`} label="Get in touch"><MessageCircle size={16} aria-hidden="true" />Get in touch</ContactTrigger>
-                <a className={`pill-button ${styles.action} ${styles.resume}`} href="/resume/alan-sahlan-resume.pdf" download="Alan-Sahlan-Resume.pdf"><SquareMenu size={16} aria-hidden="true" />See my resume</a>
+                <ContactTrigger className={`pill-button primary-button ${styles.action}`} label="Get in touch"><StateIcon icon={ChatCircle} size={16} />Get in touch</ContactTrigger>
+                <a className={`pill-button ${styles.action} ${styles.resume}`} href="/resume/alan-sahlan-resume.pdf" download="Alan-Sahlan-Resume.pdf"><StateIcon icon={Article} size={16} />See my resume</a>
               </div>
               <div className={styles.profiles} aria-label="Social profiles" data-menu-reveal>
-                {profiles.map(({ href, label }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}<ArrowUpRight size={14} aria-hidden="true" /></a>)}
+                {profiles.map(({ href, label }) => <a key={label} href={href} target="_blank" rel="noopener noreferrer">{label}<StateIcon icon={ArrowUpRight} size={14} activeWeight="bold" /></a>)}
               </div>
             </div>
           </div>
