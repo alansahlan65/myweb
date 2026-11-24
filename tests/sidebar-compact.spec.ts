@@ -9,8 +9,8 @@ async function visit(page: Page, path = "/") {
 
 const shell = (page: Page) => page.locator(".site-shell");
 
-function topNavItem(page: Page, name: "Home" | "Know me better") {
-  return page.getByRole("link", { name, exact: true });
+function topNavItem(page: Page, name: "Home" | "Projects" | "Know me better") {
+  return page.getByRole("navigation", { name: "Main navigation" }).getByRole("link", { name, exact: true });
 }
 
 test("Compact rail centers every control and keeps the labels as accessible names", async ({ page }) => {
@@ -48,6 +48,7 @@ test("Compact rail centers every control and keeps the labels as accessible name
 
   const controls = [
     topNavItem(page, "Home"),
+    topNavItem(page, "Projects"),
     topNavItem(page, "Know me better"),
     contact,
     page.getByRole("link", { name: "See my resume", exact: true }),

@@ -39,7 +39,7 @@ test("Mobile side menu fits phones, tablets, and landscape without shifting the 
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
       const current = menu.getByRole("link", { name: route === "/" ? "Home" : "Know me better", exact: true });
       await expect(current).toHaveAttribute("aria-current", "page");
-      for (const name of ["Home", "Know me better", "See my resume", "LinkedIn", "Instagram", "Behance"]) {
+      for (const name of ["Home", "Projects", "Know me better", "See my resume", "LinkedIn", "Instagram", "Behance"]) {
         const link = menu.getByRole("link", { name, exact: true });
         await link.scrollIntoViewIfNeeded();
         await expect(link).toBeInViewport({ ratio: 1 });

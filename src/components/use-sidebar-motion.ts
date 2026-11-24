@@ -12,7 +12,7 @@ const clamp = (value: number) => Math.max(0, Math.min(1, value));
  */
 export function useSidebarMotion(compact: boolean) {
   const shell = useRef<HTMLDivElement>(null);
-  const spring = useRef({ value: 0, velocity: 0 });
+  const spring = useRef({ value: Number(compact), velocity: 0 });
   const target = useRef(Number(compact));
   const retarget = useRef<(() => void) | null>(null);
 
