@@ -3,7 +3,17 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useSyncExternalStore, type ReactNode } from "react";
-import { AddressBook, Article, CaretDoubleLeft, Folder, House } from "@phosphor-icons/react/dist/ssr";
+import {
+  IconChevronsLeft,
+  IconFileText,
+  IconFileTextFilled,
+  IconFolder,
+  IconFolderFilled,
+  IconHome,
+  IconHomeFilled,
+  IconMoodSmile,
+  IconMoodSmileFilled,
+} from "@tabler/icons-react";
 import { AlanCharacter } from "./alan-character";
 import { BlobBuddy } from "./blob-buddy";
 import { ContactProvider } from "./contact";
@@ -71,19 +81,19 @@ export function SiteShell({ children }: { children: ReactNode }) {
           <div className="sidebar-menu">
             <nav className="navigation" aria-label="Main navigation">
               <Link className="nav-item" href="/" scroll={false} onNavigate={navigate} aria-current={pathname === "/" ? "page" : undefined} title={compactRail ? "Home" : undefined}>
-                <StateIcon icon={House} size={16} /><span className="nav-label">Home</span>
+                <StateIcon icon={IconHome} filledIcon={IconHomeFilled} size={16} /><span className="nav-label">Home</span>
               </Link>
               <Link className="nav-item" href="/projects" scroll={false} onNavigate={navigate} aria-current={pathname === "/projects" || isCaseStudy ? "page" : undefined} title={compactRail ? "Projects" : undefined}>
-                <StateIcon icon={Folder} size={16} /><span className="nav-label">Projects</span>
+                <StateIcon icon={IconFolder} filledIcon={IconFolderFilled} size={16} /><span className="nav-label">Projects</span>
               </Link>
               <Link className="nav-item" href="/about" scroll={false} onNavigate={navigate} aria-current={pathname === "/about" ? "page" : undefined} title={compactRail ? "Know me better" : undefined}>
-                <StateIcon icon={AddressBook} size={16} /><span className="nav-label">Know me better</span>
+                <StateIcon icon={IconMoodSmile} filledIcon={IconMoodSmileFilled} size={16} /><span className="nav-label">Know me better</span>
               </Link>
             </nav>
             <div className="sidebar-actions">
               <MagneticContactButton variant="pill" title={compactRail ? "Get in touch" : undefined} />
               <a className="pill-button secondary-button sidebar-resume" href="/resume/alan-sahlan-resume.pdf" download="Alan-Sahlan-Resume.pdf" aria-label="See my resume" title={compactRail ? "See my resume" : undefined}>
-                <StateIcon icon={Article} size={16} /><span className="action-label">See my resume</span>
+                <StateIcon icon={IconFileText} filledIcon={IconFileTextFilled} size={16} /><span className="action-label">See my resume</span>
               </a>
             </div>
             <div className="sidebar-controls">
@@ -96,7 +106,7 @@ export function SiteShell({ children }: { children: ReactNode }) {
                 aria-label={compactRail ? "Expand sidebar" : "Collapse sidebar"}
                 title={compactRail ? "Expand sidebar" : "Collapse sidebar"}
               >
-                <StateIcon icon={CaretDoubleLeft} size={16} activeWeight="bold" className="sidebar-toggle-icon" />
+                <StateIcon icon={IconChevronsLeft} size={16} stroke={1.85} activeStroke={2.45} className="sidebar-toggle-icon" />
               </button>
               <ThemeToggle />
             </div>

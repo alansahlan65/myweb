@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUpRight, ChatCircle } from "@phosphor-icons/react/dist/ssr";
+import { IconArrowUpRight, IconMessageCircle, IconMessageCircleFilled } from "@tabler/icons-react";
 import { Liquid } from "liquid-gooey";
 import { ContactTrigger, useContactOpen } from "./contact";
 import { StateIcon } from "./state-icon";
@@ -157,7 +157,7 @@ export function MagneticContactButton({ variant = "arrow", title }: { variant?: 
         </Liquid.Item>
       </Liquid> : null}
       <ContactTrigger className={styles.trigger} label="Get in touch" title={title}>
-        <span ref={icon} className={styles.icon}>{variant === "pill" ? <><StateIcon icon={ChatCircle} size={16} /><span className={styles.pillLabel}>Get in touch</span></> : <StateIcon icon={ArrowUpRight} size={28} activeWeight="bold" />}</span>
+        <span ref={icon} className={styles.icon}>{variant === "pill" ? <><StateIcon icon={IconMessageCircle} filledIcon={IconMessageCircleFilled} size={16} /><span className={styles.pillLabel}>Get in touch</span></> : <StateIcon icon={IconArrowUpRight} size={28} stroke={1.85} activeStroke={2.45} />}</span>
       </ContactTrigger>
     </div>
   );

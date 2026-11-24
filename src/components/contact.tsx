@@ -3,7 +3,17 @@
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { Dialog } from "@base-ui/react/dialog";
 import { Tooltip } from "@base-ui/react/tooltip";
-import { EnvelopeSimple, WhatsappLogo, InstagramLogo, X, Copy, Check } from "@phosphor-icons/react/dist/ssr";
+import {
+  IconBrandInstagram,
+  IconBrandInstagramFilled,
+  IconBrandWhatsapp,
+  IconBrandWhatsappFilled,
+  IconCheck,
+  IconCopy,
+  IconMail,
+  IconMailFilled,
+  IconX,
+} from "@tabler/icons-react";
 import { lockScroll, unlockScroll } from "./smooth-scroll";
 import { StateIcon } from "./state-icon";
 
@@ -36,9 +46,9 @@ export function ContactTrigger({ children, className = "", onClick, label, title
 }
 
 const channels = [
-  { label: "Email Alan", href: `mailto:${EMAIL}`, Icon: EnvelopeSimple, external: false },
-  { label: "WhatsApp Alan", href: "https://wa.me/62881027208832", Icon: WhatsappLogo, external: true },
-  { label: "Instagram", href: "https://www.instagram.com/alannshln/", Icon: InstagramLogo, external: true },
+  { label: "Email Alan", href: `mailto:${EMAIL}`, Icon: IconMail, FilledIcon: IconMailFilled, external: false },
+  { label: "WhatsApp Alan", href: "https://wa.me/62881027208832", Icon: IconBrandWhatsapp, FilledIcon: IconBrandWhatsappFilled, external: true },
+  { label: "Instagram", href: "https://www.instagram.com/alannshln/", Icon: IconBrandInstagram, FilledIcon: IconBrandInstagramFilled, external: true },
 ];
 
 export function ContactProvider({ children }: { children: ReactNode }) {
@@ -123,18 +133,18 @@ export function ContactProvider({ children }: { children: ReactNode }) {
         <Dialog.Portal>
           <Dialog.Backdrop className="contact-backdrop" />
           <Dialog.Popup className="contact-modal" data-lenis-prevent>
-            <Dialog.Close className="modal-close icon-button" aria-label="Close contact dialog"><StateIcon icon={X} size={18} activeWeight="bold" /></Dialog.Close>
+            <Dialog.Close className="modal-close icon-button" aria-label="Close contact dialog"><StateIcon icon={IconX} size={18} stroke={1.85} activeStroke={2.45} /></Dialog.Close>
             <Dialog.Title className="contact-title">Get in touch</Dialog.Title>
             <Dialog.Description className="contact-description">Choose how you&apos;d like to reach me</Dialog.Description>
             <Tooltip.Provider delay={100}>
               <div className="contact-channels">
-                {channels.map(({ label, href, Icon, external }) => (
+                {channels.map(({ label, href, Icon, FilledIcon, external }) => (
                   <Tooltip.Root key={label}>
                     <Tooltip.Trigger render={<a href={href} target={external ? "_blank" : undefined} rel={external ? "noopener noreferrer" : undefined} />} className="channel-button" aria-label={label}>
-                      <StateIcon icon={Icon} size={23} className="channel-icon" />
+                      <StateIcon icon={Icon} filledIcon={FilledIcon} size={22} className="channel-icon" />
                     </Tooltip.Trigger>
                     <Tooltip.Portal>
-                      <Tooltip.Positioner side="top" sideOffset={9} className="channel-tooltip-positioner">
+                      <Tooltip.Positioner side="bottom" sideOffset={8} className="channel-tooltip-positioner">
                         <Tooltip.Popup className="contact-tooltip channel-tooltip"><Tooltip.Arrow className="tooltip-arrow" />{label}</Tooltip.Popup>
                       </Tooltip.Positioner>
                     </Tooltip.Portal>
@@ -177,8 +187,8 @@ export function ContactProvider({ children }: { children: ReactNode }) {
                         <Tooltip.Arrow className="tooltip-arrow" />
                         <span className="email-tooltip-content">
                           <span className="email-tooltip-icon" aria-hidden="true">
-                            <Copy size={13} data-glyph="copy" />
-                            <Check size={13} data-glyph="check" />
+                            <IconCopy size={13} stroke={1.9} data-glyph="copy" />
+                            <IconCheck size={13} stroke={2.2} data-glyph="check" />
                           </span>
                           <span className="email-tooltip-label">
                             <span data-label="idle" data-active={copyStatus === "idle"} aria-hidden={copyStatus !== "idle"}>Copy email</span>

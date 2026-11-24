@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { AlanCharacter } from "@/components/alan-character";
 import { ContactPanel } from "@/components/contact-panel";
 import { StateIcon } from "@/components/state-icon";
@@ -23,7 +23,7 @@ export default function HomePage() {
           <h2 id="work-heading">Selected work</h2>
           <Link href="/projects" className="section-link">
             <span>All projects</span>
-            <StateIcon icon={ArrowUpRight} size={15} activeWeight="bold" />
+            <StateIcon icon={IconArrowUpRight} size={15} stroke={1.85} activeStroke={2.45} />
           </Link>
         </div>
         <div className="project-grid">
@@ -38,7 +38,7 @@ export default function HomePage() {
                   <Image src={project.image} alt={project.alt} fill sizes="(max-width: 359px) calc(200vw - 80px), (max-width: 599px) calc(200vw - 96px), (max-width: 848px) calc(100vw - 72px), (max-width: 1000px) 776px, (max-width: 1250px) calc(100vw - 364px), (max-width: 1328px) calc(100vw - 396px), 932px" preload={index < 2} />
                   <div className="project-reveal" aria-hidden="true">
                     <span className="project-name">{project.title}</span>
-                    <ArrowUpRight className="project-arrow" size={20} />
+                    <IconArrowUpRight className="project-arrow" size={20} stroke={1.9} />
                   </div>
                 </div>
                 <h3 id={`project-${project.slug}`} className="sr-only">{project.title}</h3>

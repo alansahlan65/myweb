@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react/dist/ssr";
+import { IconArrowUpRight } from "@tabler/icons-react";
 import { projects } from "@/data/projects";
 import { scrollToTop } from "./smooth-scroll";
 import { StateIcon } from "./state-icon";
@@ -33,7 +33,7 @@ export function ProjectsCatalog() {
             {project.href ? (
               <span className="project-row-cta">
                 <span>Read case study</span>
-                <StateIcon icon={ArrowUpRight} size={15} activeWeight="bold" />
+                <StateIcon icon={IconArrowUpRight} size={15} stroke={1.85} activeStroke={2.45} />
               </span>
             ) : null}
           </div>

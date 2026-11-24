@@ -23,10 +23,9 @@ export function ProjectToc({ items }: { items: readonly TocItem[] }) {
         return;
       }
 
-      const threshold = window.scrollY + 180;
       let current = sections[0].id;
       for (const section of sections) {
-        if (section.offsetTop <= threshold) {
+        if (section.getBoundingClientRect().top <= 180) {
           current = section.id;
         }
       }
@@ -43,7 +42,7 @@ export function ProjectToc({ items }: { items: readonly TocItem[] }) {
   }, [items]);
 
   return (
-    <aside className="case-toc" aria-label="On this page">
+    <nav className="case-toc" aria-label="On this page">
       <p className="case-toc-title">On this page</p>
       <ol className="case-toc-list">
         {items.map((item) => {
@@ -63,6 +62,6 @@ export function ProjectToc({ items }: { items: readonly TocItem[] }) {
           );
         })}
       </ol>
-    </aside>
+    </nav>
   );
 }

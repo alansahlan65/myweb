@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MapPin } from "@phosphor-icons/react/dist/ssr";
+import { IconMapPin } from "@tabler/icons-react";
 import { Portrait } from "@/components/portrait";
 import { Shelf } from "@/components/shelf";
 import { ContactPanel } from "@/components/contact-panel";
@@ -18,7 +18,7 @@ export default function AboutPage() {
   return (
     <div className="about-page">
       <header className="about-prologue">
-        <div className="about-introduction"><Portrait /><h1>Hi, I&apos;m Alan!</h1><p className="location-note"><MapPin size={16} aria-hidden="true" />Bandung, Indonesia</p>
+        <div className="about-introduction"><Portrait /><h1>Hi, I&apos;m Alan!</h1><p className="location-note"><IconMapPin size={16} stroke={1.75} aria-hidden="true" />Bandung, Indonesia</p>
           <p>Music, art, games. That&apos;s where this all started for me. Computer got me curious about coding, and I went on to study Informatics at Universitas Brawijaya.</p>
           <p>Then I started building apps. Somewhere between getting a page to work and figuring out how people would use it, I found out about Product Design.<br />Long story short, here we are.</p>
         </div>
