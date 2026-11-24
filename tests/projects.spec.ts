@@ -37,6 +37,20 @@ test("Projects page filters work, uses its own contact copy, and opens Paylecta"
   await page.getByRole("link", { name: /Paylecta/ }).click();
   await expect(page).toHaveURL(/\/projects\/paylecta$/);
   await expect(page.getByRole("heading", { level: 1 })).toHaveText("Making daily finances feel simpler for small shops.");
+
+  // Returning to /projects must keep full-resolution preview images (no blurry 2x vertical upscale).
+  await page.locator(".case-back-link").click();
+  await expect(page).toHaveURL(/\/projects$/);
+  const previews = page.locator(".project-row-media img");
+  const previewCount = await previews.count();
+  expect(previewCount).toBe(4);
+  for (let i = 0; i < previewCount; i++) {
+    await previews.nth(i).scrollIntoViewIfNeeded();
+    await expect.poll(() => previews.nth(i).evaluate((img: HTMLImageElement) => {
+      const box = img.getBoundingClientRect();
+      return img.complete && img.naturalHeight >= Math.floor(box.height) && img.naturalWidth >= Math.floor(box.width);
+    })).toBe(true);
+  }
   expect(errors).toEqual([]);
 });
 

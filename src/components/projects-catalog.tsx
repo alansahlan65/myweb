@@ -47,7 +47,7 @@ export function ProjectsCatalog() {
                 src={project.image}
                 alt={project.alt}
                 fill
-                sizes="(max-width: 820px) calc(100vw - 48px), 456px"
+                sizes="(max-width: 820px) calc(200vw - 96px), 932px"
                 preload={index < 2}
               />
             </div>

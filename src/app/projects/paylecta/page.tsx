@@ -35,12 +35,6 @@ const colorSwatches = [
   { name: "Status colors", hex: "#22C55E · #007EE5 · #DC0000 · 10% cues", swatch: "#007EE5" },
 ];
 
-const payoutBullets = [
-  "Available balance stays pinned right above the payout list.",
-  "Payout forms auto-fill your details so there is less to retype.",
-  "Account and security live on separate tabs so settings stay calm.",
-];
-
 const mobileScreens = [
   {
     src: "/images/projects/paylecta/mobile-dashboard.png",
@@ -248,11 +242,6 @@ export default function PaylectaCaseStudyPage() {
                 I kept search, filters, and the main button in the exact same spot across Customers,
                 Invoices, and Payouts. Once you learn one table, you know all of them.
               </p>
-              <ul className="case-bullets">
-                {payoutBullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
-                ))}
-              </ul>
             </div>
           </div>
 
